@@ -61,13 +61,7 @@
     <div class="login-container">
         <h2>Login</h2>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="alert alert-{{ messages[0] }}">
-                    {{ messages[1] }}
-                </div>
-        {% endif %}
-        {% endwith %}
+        {% include 'debug.html' %}
         <form method="POST">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>

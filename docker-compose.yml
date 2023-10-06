@@ -1,13 +1,13 @@
 version: "3"
 services:
-  rtapinginx:
-    container_name: ng999_web
+  rt999web:
+    container_name: rt999web
     image: "ng999:web"
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "9032:80"
+      - "9032:5000"
     networks:
       - internal
 
