@@ -2,6 +2,8 @@ from flask import Flask, render_template, redirect, url_for, request, json, sess
 from passlib.context import CryptContext
 from flask_login import LoginManager, login_required, login_user, UserMixin, logout_user, current_user
 import requests
+import pandas as pd
+import io
 import asyncio
 import waitress
 import MySQLdb
@@ -92,10 +94,26 @@ def logout():
 @app.route("/") 
 @login_required
 async def index(): 
-    if session['role_id'] == '1':
-        return render_template("index.html", session=session) 
+    try:
+        if session['role_id'] == '1':
+            return render_template("index.html", session=session) 
+        
+        url = 'http://localhost:8888/ng999/customer/getList'
+        payload = {"wholesellerID": session['user_id'], "mode": "4"}
+        
+        response = requests.post(url, json=payload)
+        
+        body = {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
+        
+        if response.status_code == 200:
+            body = response.json()
+            
+        print(body)
+        return render_template("dashboardWholeseller.html", session=session, listCount=body)
     
-    return render_template("dashboardWholeseller.html", session=session)
+    except Exception as e:
+        print(e)
+        return redirect(url_for('logout'))
 
 async def hello():
     return "x"
@@ -141,14 +159,115 @@ def dataMigration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
+        url = 'http://localhost:8888/ng999/customer/getList'
+        payload = {"wholesellerID": session['user_id'], "mode": "3"}
         
+        response = requests.post(url, json=payload)
         
-        return render_template('dataMigration.html', session=session)
+        if response.status_code == 200:
+            custList = response.json()
+            return render_template('dataMigration.html', session=session, customerList=custList)
         
     except Exception as e:
         print(e)
+        flash(str(e))
         return redirect(url_for('index'))
     
+@app.route("/withDeclaration", methods=["GET"])
+@login_required
+def withDeclaration():
+    try:
+        if session['role_id'] != '2':
+            return redirect(url_for('logout'))
+        
+        url = 'http://localhost:8888/ng999/customer/getList'
+        payload = {"wholesellerID": session['user_id'], "mode": "1"}
+        
+        response = requests.post(url, json=payload)
+        
+        if response.status_code == 200:
+            custList = response.json()
+            return render_template('withDeclaration.html', session=session, customerList=custList)
+        
+    except Exception as e:
+        print(e)
+        flash(str(e))
+        return redirect(url_for('index'))
+    
+    
+@app.route("/withoutDeclaration", methods=["GET"])
+@login_required
+def withoutDeclaration():
+    try:
+        if session['role_id'] != '2':
+            return redirect(url_for('logout'))
+        
+        url = 'http://localhost:8888/ng999/customer/getList'
+        payload = {"wholesellerID": session['user_id'], "mode": "2"}
+        
+        response = requests.post(url, json=payload)
+        
+        if response.status_code == 200:
+            custList = response.json()
+            return render_template('withoutDeclaration.html', session=session, customerList=custList)
+        
+    except Exception as e:
+        print(e)
+        flash(str(e))
+        return redirect(url_for('index'))
+    
+def allowed_file(filename, allowed_extensions):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+def convert_to_string(value):
+            if pd.notna(value):
+                if isinstance(value, int):
+                    return str(value).zfill(3)
+                else:
+                    return str(value)
+            else:
+                return ""
+    
+@app.route("/uploadMigration", methods=['POST'])
+@login_required
+def uploadMigration():
+    validExtension = ['xls', 'xlsx']
+    
+    if session['role_id'] != '2':
+        return redirect(url_for('logout'))
+    
+    try:
+        if 'file' not in request.files:
+            raise Exception("No file found")
+        
+        file = request.files['file']
+        
+        if file.filename == '':
+            raise Exception("Invalid File Name")
+        if not allowed_file(file.filename, validExtension):
+            raise Exception("Invalid File Extension")
+        
+        fileContent = file.read()
+        df = pd.read_excel(io.BytesIO(fileContent), dtype={'CarllerNo': str})
+        
+        rows_list = []
+        for index, row in df.iterrows():
+            cleaned_row = {column: str(value) if pd.notna(value) else "" for column, value in row.items()}
+            print(cleaned_row)
+            rows_list.append(cleaned_row)
+        
+
+        payload = {'data': rows_list, 'wholesellerID': session['user_id']}
+
+        url = "http://localhost:8888/ng999/customer/add"
+        response = requests.post(url, json=payload)
+        
+        return redirect(url_for('dataMigration'))
+        
+    except Exception as e:
+        print(e)
+        flash(str(e))
+        return redirect(url_for('dataMigration'))
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9032, threaded=True, use_reloader=True,debug=False)

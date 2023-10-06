@@ -20,6 +20,7 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body>
@@ -141,10 +142,41 @@
           </h2>
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">
-
- 
-                </h4>
+                <div class="row">
+                  <div class="col-md-3">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="card-title">Active User</h4>
+                              <p class="card-text">{{listCount['active']}}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="card-title">TOTAL MIGRATE USER(S)</h4>
+                              <p class="card-text">{{listCount['totalUser']}}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="card">
+                          <div class="card-body">
+                              <h4 class="card-title">MIGRATE WITH DECLARATION</h4>
+                              <p class="card-text">{{listCount['withMigrate']}}</p>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="card">
+                          <div class="card-body">
+                              <!-- Card content for Card 4 -->
+                              <h4 class="card-title">MIGRATE WITHOUT DECLARATION</h4>
+                              <p class="card-text">{{listCount['withoutMigrate']}}</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
               </div>
             </div>
           </div>
