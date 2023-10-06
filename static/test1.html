@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="signal"></div>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script type="text/javascript">
+
+
+$.getJSON( "3.json", function( data ) {
+  var items = [];
+  $.each( JSON.stringify(data), function( key, val ) {
+    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  });
+ 
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+});
+
+
+        let testData = [{
+    cell_id: 5833307,
+    datetime: ["2019-05-07 11:28:16.406795+03", "2019-05-07 11:28:38.764628+03", "2019-05-07 12:18:38.21369+03", "2019-05-07 12:33:47.889552+03", "2019-05-08 08:45:51.154047+03"],
+    rsrq: ["108", "108", "108", "108", "109"]
+  },
+  {
+    cell_id: 2656007,
+    datetime: ["2019-07-23 15:29:16.572813+03", "2019-07-23 15:29:16.71938+03", "2019-07-23 15:29:16.781606+03", "2019-07-23 15:29:50.375931+03", "2019-07-23 15:30:01.902013+03"],
+    rsrq: ["120", "119", "116", "134", "114"]
+  }
+];
+
+let series = [];
+let categories = [];
+
+
+for (let x = 0; x < testData.length; x++) {
+  series.push({
+    name: testData[x].cell_id,
+    data: testData[x].rsrq
+  });
+  categories = categories.concat(testData[x].datetime);
+}
+
+var chart = new ApexCharts(document.querySelector("#signal"), {
+  chart: {
+    height: 380,
+    width: "100%",
+    type: "line"
+  },
+  stroke: {
+    curve: 'smooth',
+    width: 1.5,
+  },
+  markers: {
+    size: 4,
+  },
+  legend: {
+    show: true,
+    position: 'top'
+  },
+  series: series,
+  xaxis: {
+    categories: categories,
+    title: {
+      text: "Date"
+    }
+  },
+  yaxis: {
+    title: {
+      text: "RSSI"
+    }
+  }
+});
+
+chart.render();
+    </script>
+</body>
+</html>

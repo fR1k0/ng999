@@ -1,0 +1,80 @@
+sitemap ui1 label="IOT" {
+
+
+
+		Frame label="watercondition" {
+				Text item=Water_EC  icon="water" label="EC[%.2f  mS/cm]"
+				Text item=Water_EC_Temperature  icon="temperature4" label="Temperature[%.1f °C]"
+				Text item=Water_PH  icon="ph" label="PH[%.2f]"
+		}
+
+
+		Frame label="waterlevel" {
+  Text item=WL_BJ1  icon="water2"         label="Tank 1 [%s mh2o]"	
+	Text item=WL_AB1  icon="water2"         label="AB1 Tank [%s mh2o]"
+	Text item=WL_AB2  icon="water2"         label="AB2 Tank [%s mh2o]"	
+	Text item=WL_Mixing  icon="water2"         label="Mixing Tank [%s mh2o]"	
+  Text item=WL_Storage  icon="water2"         label="Storage Tank [%s mh2o]"
+
+		}
+
+		Frame label="ambient" {
+          Text item=temperature  icon="temperature3" label="Temperature[%s C]"
+          Text item=Humidity  icon="humidity2" label="Humidity[%s %%]"
+		  Text item=Lux  icon="light" label="Lights[%s lux]"
+		}
+		
+		Frame label="othersensors" {
+				    Frame label="Soil Conditions - Plot 1" {
+				          Text item=SoilTemperature1  icon="temperature3" label="Temperature[%s C]"
+				          Text item=SoilVWC1  icon="humidity2" label="VWC[%s %%]"
+				          Text item=SoilEC1  icon="ec" label="EC[%s uS/cm]"
+				          
+				          Text item=SoilPH1  icon="ph" label="PH[%s]"
+				          Text item=SoilN1  icon="npk" label="N[%s mg/kg]"
+				          Text item=SoilP1  icon="npk" label="P[%s mg/kg]"
+				          Text item=SoilK1  icon="npk" label="K[%s mg/kg]"
+
+					}
+		}	
+
+		Frame label="insights" {
+	  		Switch item=ScheduleMode mappings=[ "ON"="ON", "OFF"="OFF" ] icon="config7" label="Schedule"
+				Text item=WL_AB1  icon="error" label="AB1 Tank too low [%s mh2o]"  visibility=[WL_AB1<100]
+				Text item=WL_AB2  icon="error" label="AB2 Tank too low [%s mh2o]"  visibility=[WL_AB2<100]
+ 				Text item=InternetPing icon="alert1" label="Internet [%s]"  visibility=[InternetPing!=ON]
+				Text item=SNode1 icon="alert1" label="DTU[%s]"  visibility=[SNode1!=ON]
+		    Text item=Task_AB_Mix1 icon="star" label="A/B Mix is running"  visibility=[Task_AB_Mix==ON]
+			  Text item=Task_Fertigation1 icon="star" label="Fertigation is running"  visibility=[Task_Fertigation==ON]
+			  Text item=Task_Irrigation1 icon="star" label="Irrigation is running"  visibility=[Task_Irrigation==ON]
+			  Text item=Task_Refill1 icon="star" label="Refill is running"  visibility=[Task_Refill==ON]
+
+	 			
+				Text item=WL_Mixing  icon="water2"         label="Mixing Tank [%s mh2o]"  visibility=[Task_Refill1==ON]
+
+		}	
+
+		Frame label="control" {
+		Switch item=Relay01 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="sunset" label="C1 - Delivery 1"  
+		Switch item=Relay04 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="pump" label="C4 - Dosing Pump"
+		Switch item=Relay05 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="faucet" label="C5 - Water In"	
+		Switch item=Relay06 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="pump" label="C6 - Mixing Pump"
+		Switch item=Relay07 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="pump" label="C7 - Fertigation Plot 1"
+		Switch item=Relay08 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="pump" label="C8 - Irrigation Plot 1"
+
+		}	
+
+
+    Frame label="Task" {
+					  Switch item=Task_Fertigation1 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="task1" label="Fertigation"
+					  Switch item=Task_Irrigation1 mappings=[ "ON"="ON" , "OFF"="OFF"] icon="task1" label="Irrigation"
+						Switch item=Task_AB_Mix1 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="task1" label="A/B Mix"
+						Switch item=Task_AB_Send1 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="task1" label="A/B Delivery"
+						Switch item=Task_Refill1 mappings=[ "ON"="ON", "OFF"="OFF" ] icon="task1" label="Refill1"
+    }
+
+
+}
+
+
+

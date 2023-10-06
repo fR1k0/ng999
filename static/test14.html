@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>REDtone </title>
+    <link
+      rel="canonical"
+      href="https://www.wrappixel.com/templates/materialpro/"
+    />
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/static/assets/images/favicon.png"
+    />
+    <link
+      rel="stylesheet"
+      href="/static/assets/libs/apexcharts/dist/apexcharts.css"
+    />
+    <!-- Custom CSS -->
+    <link href="/static/dist/css/style.min.css" rel="stylesheet" />
+    <link href="/static/dist/css/stepper.css" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+      <svg
+        class="tea lds-ripple"
+        width="37"
+        height="48"
+        viewbox="0 0 37 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M27.0819 17H3.02508C1.91076 17 1.01376 17.9059 1.0485 19.0197C1.15761 22.5177 1.49703 29.7374 2.5 34C4.07125 40.6778 7.18553 44.8868 8.44856 46.3845C8.79051 46.79 9.29799 47 9.82843 47H20.0218C20.639 47 21.2193 46.7159 21.5659 46.2052C22.6765 44.5687 25.2312 40.4282 27.5 34C28.9757 29.8188 29.084 22.4043 29.0441 18.9156C29.0319 17.8436 28.1539 17 27.0819 17Z"
+          stroke="#1e88e5"
+          stroke-width="2"
+        ></path>
+        <path
+          d="M29 23.5C29 23.5 34.5 20.5 35.5 25.4999C36.0986 28.4926 34.2033 31.5383 32 32.8713C29.4555 34.4108 28 34 28 34"
+          stroke="#1e88e5"
+          stroke-width="2"
+        ></path>
+        <path
+          id="teabag"
+          fill="#1e88e5"
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M16 25V17H14V25H12C10.3431 25 9 26.3431 9 28V34C9 35.6569 10.3431 37 12 37H18C19.6569 37 21 35.6569 21 34V28C21 26.3431 19.6569 25 18 25H16ZM11 28C11 27.4477 11.4477 27 12 27H18C18.5523 27 19 27.4477 19 28V34C19 34.5523 18.5523 35 18 35H12C11.4477 35 11 34.5523 11 34V28Z"
+        ></path>
+        <path
+          id="steamL"
+          d="M17 1C17 1 17 4.5 14 6.5C11 8.5 11 12 11 12"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="#1e88e5"
+        ></path>
+        <path
+          id="steamR"
+          d="M21 6C21 6 21 8.22727 19 9.5C17 10.7727 17 13 17 13"
+          stroke="#1e88e5"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+      </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+      <!-- ============================================================== -->
+      <!-- Topbar header - style you can find in pages.scss -->
+      <!-- ============================================================== -->
+      <header class="topbar">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+          <div class="navbar-header">
+            <!-- This is for the sidebar toggle which is visible on mobile only -->
+            <a
+              class="nav-toggler waves-effect waves-light d-block d-md-none"
+              href="javascript:void(0)"
+              ><i class="ti-menu ti-close"></i
+            ></a>
+            <!-- ============================================================== -->
+            <!-- Logo -->
+            <!-- ============================================================== -->
+            <a class="navbar-brand" href="/">
+              <!-- Logo icon -->
+              <b class="logo-icon">
+                <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                <!-- Dark Logo icon -->
+                <img
+                  src="/static/assets/images/logo-icon.png"
+                  alt="homepage"
+                  class="dark-logo"
+                />
+                <!-- Light Logo icon -->
+                <img
+                  src="https://intranet.redtone.com/home/logotkt.png"
+                  alt="homepage"
+                  class="light-logo"
+                />
+              </b>
+              <!--End Logo icon -->
+              <!-- Logo text -->
+              <span class="logo-text">
+                <!-- dark Logo text -->
+                <img
+                  src="/static/assets/images/logo-text.png"
+                  alt="homepage"
+                  class="dark-logo"
+                />
+              </span>
+            </a>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Toggle which is visible on mobile only -->
+            <!-- ============================================================== -->
+            <a
+              class="topbartoggler d-block d-md-none waves-effect waves-light"
+              href="javascript:void(0)"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+              ><i class="ti-more"></i
+            ></a>
+          </div>
+          <!-- ============================================================== -->
+          <!-- End Logo -->
+          <!-- ============================================================== -->
+          <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <!-- ============================================================== -->
+            <!-- toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav me-auto">
+              <!-- This is  -->
+              <li class="nav-item">
+                <a
+                  class="
+                    nav-link
+                    sidebartoggler
+                    d-none d-md-block
+                    waves-effect waves-dark
+                  "
+                  href="javascript:void(0)"
+                  ><i class="ti-menu"></i
+                ></a>
+              </li>
+              <!-- ============================================================== -->
+              <!-- Search -->
+              <!-- ============================================================== -->
+              <li class="nav-item d-none d-md-block search-box">
+                <a
+                  class="nav-link d-none d-md-block waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  ><i class="ti-search"></i
+                ></a>
+                <form class="app-search">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search & enter"
+                  />
+                  <a class="srh-btn"><i class="ti-close"></i></a>
+                </form>
+              </li>
+
+            </ul>
+            <!-- ============================================================== -->
+            <!-- Right side toggle and nav items -->
+            <!-- ============================================================== -->
+            <ul class="navbar-nav">
+              <!-- ============================================================== -->
+              <!-- Profile -->
+              <!-- ============================================================== -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle waves-effect waves-dark"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <img
+                    src="/static/assets/images/users/1.jpg"
+                    alt="user"
+                    width="30"
+                    class="profile-pic rounded-circle"
+                  />
+                </a>
+                <div
+                  class="
+                    dropdown-menu dropdown-menu-end
+                    user-dd
+                    animated
+                    flipInY
+                  "
+                >
+                  <div
+                    class="
+                      d-flex
+                      no-block
+                      align-items-center
+                      p-3
+                      bg-info
+                      text-white
+                      mb-2
+                    "
+                  >
+                    <div class="">
+                      <img
+                        src="/static/assets/images/users/1.jpg"
+                        alt="user"
+                        class="rounded-circle"
+                        width="60"
+                      />
+                    </div>
+                    <div class="ms-2">
+                      <h4 class="mb-0 text-white">WOONG KOK KUEN</h4>
+                      <p class="mb-0">SENIOR MANAGER, RESEARCH </p>
+                    </div>
+                  </div>
+                  <a class="dropdown-item" href="https://intranet.redtone.com/home/profile.php" target="_blank"
+                    ><i
+                      data-feather="user"
+                      class="feather-sm text-info me-1 ms-1"
+                    ></i>
+                    My Profile</a
+                  >
+<!--
+                  <a class="dropdown-item" href="#"
+                    ><i
+                      data-feather="credit-card"
+                      class="feather-sm text-info me-1 ms-1"
+                    ></i>
+                    My Balance</a
+                  >
+                  <a class="dropdown-item" href="#"
+                    ><i
+                      data-feather="mail"
+                      class="feather-sm text-success me-1 ms-1"
+                    ></i>
+                    Inbox</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#"
+                    ><i
+                      data-feather="settings"
+                      class="feather-sm text-warning me-1 ms-1"
+                    ></i>
+                    Account Setting</a
+                  >
+-->
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/logout"
+                    ><i
+                      data-feather="log-out"
+                      class="feather-sm text-danger me-1 ms-1"
+                    ></i>
+                    Logout</a
+                  >
+                  <div class="dropdown-divider"></div>
+                  <div class="pl-4 p-2">
+                    <a href="https://intranet.redtone.com/home/profile.php" class="btn d-block w-100 btn-info rounded-pill"
+                      >View Profile</a
+                    >
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!-- ============================================================== -->
+      <!-- End Topbar header -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Left Sidebar - style you can find in sidebar.scss  -->
+      <!-- ============================================================== -->
+      <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+          <!-- User profile -->
+          <div
+            class="user-profile position-relative hide"
+            style="
+              background: url(/static/assets/images/background/user-info.jpg)
+                no-repeat;
+            "
+          >
+            <!-- User profile image -->
+            <div class="profile-img">
+              <img
+                src="/static/assets/images/users/profile.png"
+                alt="user"
+                class="w-100"
+              />
+            </div>
+            <!-- User profile text-->
+            <div class="profile-text pt-1 dropdown">
+              <a
+                href="#"
+                class="
+                  dropdown-toggle
+                  u-dropdown
+                  w-100
+                  text-white
+                  d-block
+                  position-relative
+                "
+                id="dropdownMenuLink"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >WOONG KOK KUEN</a
+              >
+              <div
+                class="dropdown-menu animated flipInY"
+                aria-labelledby="dropdownMenuLink"
+              >
+<!--
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="user"
+                    class="feather-sm text-info me-1 ms-1"
+                  ></i>
+                  My Profile</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="credit-card"
+                    class="feather-sm text-info me-1 ms-1"
+                  ></i>
+                  My Balance</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="mail"
+                    class="feather-sm text-success me-1 ms-1"
+                  ></i>
+                  Inbox</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="settings"
+                    class="feather-sm text-warning me-1 ms-1"
+                  ></i>
+                  Account Setting</a
+                >
+
+                <div class="dropdown-divider"></div>
+                -->
+                <a class="dropdown-item" href="https://intranet.redtone.com/rd-authentication/auth/logout"
+                  ><i
+                    data-feather="log-out"
+                    class="feather-sm text-danger me-1 ms-1"
+                  ></i>
+                  Logout</a
+                >
+                <div class="dropdown-divider"></div>
+                <div class="ps-4 p-2">
+                  <a href="https://intranet.redtone.com/home/profile.php" class="btn d-block w-100 btn-info rounded-pill"
+                    >View Profile</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End User profile text-->
+          <!-- Sidebar navigation-->
+          <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+ 
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-gauge"></i
+                  ><span class="hide-menu">Dashboard</span></span></a
+                >
+              </li>
+
+
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/app"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-table"></i
+                  ><span class="hide-menu">Applications</span></span></a
+                >
+              </li>
+
+
+
+
+<!-- -->
+
+
+
+<!-- user management -->
+
+<!-- create order -->
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link has-arrow waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-table-edit"></i
+                  ><span class="hide-menu">New process</span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+
+
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/2/166098135678" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Manpower Requisition Form </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/3/656893106789" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Name Card Requisition Form </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/4/786171157645" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Travel Approval Form </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/6/442369050758" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Training Request Form </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/8/329471822204" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Material Requisition Form </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/16/152679362477" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Invoice Processing </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/17/174494387519" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">IT Requisition Form (Software) </span></a
+                    >
+                  </li>
+
+
+                  <li class="sidebar-item">
+                    <a href="/process/new/18/159303505259" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">IT Requisition Form (Hardware) </span></a
+                    >
+                  </li>
+
+                  
+                  
+                </ul>
+              </li>
+
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link has-arrow waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-account-multiple"></i
+                  ><span class="hide-menu">User Admin</span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+
+                  <li class="sidebar-item">
+                    <a href="/user/userlist" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Listing </span></a
+                    >
+                  </li>
+                  <li class="sidebar-item">
+                    <a href="/user/group" class="sidebar-link"
+                      ><i class="mdi mdi-border-outside"></i
+                      ><span class="hide-menu">Group </span></a
+                    >
+                  </li>
+                  
+                  
+                </ul>
+              </li>
+
+<!-- -->
+
+<!-- process management -->
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link has-arrow waves-effect waves-dark"
+                  href="javascript:void(0)"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-widgets"></i
+                  ><span class="hide-menu">Flow Admin</span></a
+                >
+                <ul aria-expanded="false" class="collapse first-level">
+
+                  <li class="sidebar-item">
+                    <a href="/processadmin/list" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Listing </span></a
+                    >
+                  </li>
+ 
+ 
+                   <li class="sidebar-item">
+                    <a href="/processadmin/form-builder" class="sidebar-link"
+                      ><i class="mdi mdi-border-left"></i
+                      ><span class="hide-menu">Form Builder </span></a
+                    >
+                  </li>
+                  
+                  
+                </ul>
+              </li>
+
+<!-- -->
+
+
+
+
+
+            </ul>
+          </nav>
+          <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+        <!-- Bottom points-->
+<!--
+        <div class="sidebar-footer">
+          
+          <a
+            href=""
+            class="link"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Settings"
+            ><i class="ti-settings"></i
+          ></a>
+          
+          <a
+            href=""
+            class="link"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Email"
+            ><i class="mdi mdi-gmail"></i
+          ></a>
+          
+          <a
+            href=""
+            class="link"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Logout"
+            ><i class="mdi mdi-power"></i
+          ></a>
+        </div>
+        -->
+        <!-- End Bottom points-->
+      </aside>
+      <!-- ============================================================== -->
+      <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+      <!-- ============================================================== -->
+      <!-- ============================================================== -->
+      <!-- Page wrapper  -->
+      <!-- ============================================================== -->
+      <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+<!--
+        <div class="row page-titles">
+          <div class="col-md-5 col-12 align-self-center">
+            <h3 class="text-themecolor mb-0">Dashboard 5</h3>
+            <ol class="breadcrumb mb-0 p-0 bg-transparent">
+              <li class="breadcrumb-item">
+                <a href="javascript:void(0)">Home</a>
+              </li>
+              <li class="breadcrumb-item active">Dashboard 5</li>
+            </ol>
+          </div>
+          <div class="col-md-7 col-12 align-self-center d-none d-md-block">
+            <div class="d-flex mt-2 justify-content-end">
+              <div class="d-flex me-3 ms-2">
+                <div class="chart-text me-2">
+                  <h6 class="mb-0"><small>THIS MONTH</small></h6>
+                  <h4 class="mt-0 text-info">$58,356</h4>
+                </div>
+                <div class="spark-chart">
+                  <div id="monthchart"></div>
+                </div>
+              </div>
+              <div class="d-flex ms-2">
+                <div class="chart-text me-2">
+                  <h6 class="mb-0"><small>LAST MONTH</small></h6>
+                  <h4 class="mt-0 text-primary">$48,356</h4>
+                </div>
+                <div class="spark-chart">
+                  <div id="lastmonthchart"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+-->
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+         <div class="row page-titles title-header">
+
+                <div class="card-body pb-0">
+                  <h4 class="card-title">Invoice Processing  (114500103345)</h4>
+                  <h6 class="mb-0 font-weight-medium">
+                   <i class="fa fa-user me-2 mb-2"></i>WOONG KOK KUEN <span class="sl-date text-muted ms-1">2023-04-06 15:00:45</span>
+                  </h6>
+                </div>
+
+          <!-- End Select header Container-->
+        </div>    
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">   	
+
+
+
+
+  
+
+
+
+
+        	<div class="col-md-12">
+        		<div class="card">
+        			<div class="card-body">
+                <div class="pb-0 border-bottom">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h4 class="card-title">Progress</h4>
+                    </div>
+                  </div>							
+                </div>
+						    <ul class="cd-breadcrumb triangle nav nav-tabs" role="tablist">
+
+						
+						
+						<!--  start seq 1 -->
+
+						        <li role="presentation" class="">
+						        	<a id="v-1-home-tab" data-bs-toggle="pill" href="#v-1-home" role="tab" data-toggle="tab" aria-controls="v-1-home" aria-selected="true">
+
+
+								
+																				<i
+						                              data-feather="check"
+						                              class="feather-sm text-primary me-2"
+						                            ></i>  
+						    
+
+						                Invoice Details   -   WOONG KOK KUEN 
+						            </a>
+						        </li>
+						 
+						
+						
+						<!--  start seq 2 -->
+
+						        <li role="presentation" class="active">
+						        	<a id="v-2-home-tab" data-bs-toggle="pill" href="#v-2-home" role="tab" data-toggle="tab" aria-controls="v-2-home" aria-selected="true">
+
+
+								
+						    
+										    
+																				<i
+						                              data-feather="chevrons-right"
+						                              class="feather-sm text-primary me-2"
+						                            ></i> 
+						            				    
+						    
+						    
+
+						                Documents upload   -   WOONG KOK KUEN 
+						            </a>
+						        </li>
+						 
+						
+						
+						<!--  start seq 3 -->
+
+						        <li role="presentation" class="">
+						        	<a id="v-3-home-tab" data-bs-toggle="pill" href="#v-3-home" role="tab" data-toggle="tab" aria-controls="v-3-home" aria-selected="true">
+
+
+								
+						    
+										    
+																				<i
+						                              data-feather="loader"
+						                              class="feather-sm text-primary me-2"
+						                            ></i>             
+						            
+						            				    
+						    
+						    
+
+						                Documents upload   -   WOONG KOK KUEN 
+						            </a>
+						        </li>
+						 
+						
+						
+						<!--  start seq 4 -->
+
+						        <li role="presentation" class="">
+						        	<a id="v-4-home-tab" data-bs-toggle="pill" href="#v-4-home" role="tab" data-toggle="tab" aria-controls="v-4-home" aria-selected="true">
+
+
+								
+						    
+										    
+																				<i
+						                              data-feather="loader"
+						                              class="feather-sm text-primary me-2"
+						                            ></i>             
+						            
+						            				    
+						    
+						    
+
+						                HOD Approval   -   ONG CHEOK SEONG 
+						            </a>
+						        </li>
+						 
+						
+						
+						<!--  start seq 5 -->
+
+						        <li role="presentation" class="">
+						        	<a id="v-5-home-tab" data-bs-toggle="pill" href="#v-5-home" role="tab" data-toggle="tab" aria-controls="v-5-home" aria-selected="true">
+
+
+								
+						    
+										    
+																				<i
+						                              data-feather="loader"
+						                              class="feather-sm text-primary me-2"
+						                            ></i>             
+						            
+						            				    
+						    
+						    
+
+						                AP Processing   -   LEONG SU FERN 
+						            </a>
+						        </li>
+						 
+						 
+
+						    </ul>
+        			</div>
+        			</div>
+        			</div>
+
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body pb-0 border-bottom hide">
+                  <h4 class="card-title">Invoice Processing  - 114500103345</h4>
+                  <h6 class="card-subtitle mb-3 pb-1">
+                    WOONG KOK KUEN - 2023-04-06 15:00:45
+                  </h6>
+                </div>
+
+
+                <div class="card-body">
+                <div class="pb-0 border-bottom">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h4 class="card-title">Details</h4>
+                    </div>
+                  </div>							
+                </div>
+                  <div class="row mt-3">
+                    <div class="col-md-3 hide">
+                      <!-- Nav tabs -->
+                      <div
+                        class="nav flex-column nav-pills"
+                        id="v-pills-tab"
+                        role="tablist"
+                        aria-orientation="vertical"
+                      >
+
+
+                        <a
+                          class="nav-link
+                          
+                          "
+                          id="v-1-home-tab"
+                          data-bs-toggle="pill"
+                          href="#v-1-home"
+                          role="tab"
+                          aria-controls="v-1-home"
+                          aria-selected="true"
+                        >
+
+		
+														<i
+                              data-feather="check"
+                              class="feather-sm text-primary me-2"
+                            ></i>  
+    
+    								Invoice Details                  
+                        </a>
+
+
+                        <a
+                          class="nav-link
+                          
+                           active
+                          
+                          "
+                          id="v-2-home-tab"
+                          data-bs-toggle="pill"
+                          href="#v-2-home"
+                          role="tab"
+                          aria-controls="v-2-home"
+                          aria-selected="true"
+                        >
+
+		
+    
+				    
+														<i
+                              data-feather="chevrons-right"
+                              class="feather-sm text-primary me-2"
+                            ></i> 
+            				    
+    
+    
+    								Documents upload                  
+                        </a>
+
+
+                        <a
+                          class="nav-link
+                          
+                          "
+                          id="v-3-home-tab"
+                          data-bs-toggle="pill"
+                          href="#v-3-home"
+                          role="tab"
+                          aria-controls="v-3-home"
+                          aria-selected="true"
+                        >
+
+		
+    
+				    
+														<i
+                              data-feather="loader"
+                              class="feather-sm text-primary me-2"
+                            ></i>             
+            
+            				    
+    
+    
+    								Documents upload                  
+                        </a>
+
+
+                        <a
+                          class="nav-link
+                          
+                          "
+                          id="v-4-home-tab"
+                          data-bs-toggle="pill"
+                          href="#v-4-home"
+                          role="tab"
+                          aria-controls="v-4-home"
+                          aria-selected="true"
+                        >
+
+		
+    
+				    
+														<i
+                              data-feather="loader"
+                              class="feather-sm text-primary me-2"
+                            ></i>             
+            
+            				    
+    
+    
+    								HOD Approval                  
+                        </a>
+
+
+                        <a
+                          class="nav-link
+                          
+                          "
+                          id="v-5-home-tab"
+                          data-bs-toggle="pill"
+                          href="#v-5-home"
+                          role="tab"
+                          aria-controls="v-5-home"
+                          aria-selected="true"
+                        >
+
+		
+    
+				    
+														<i
+                              data-feather="loader"
+                              class="feather-sm text-primary me-2"
+                            ></i>             
+            
+            				    
+    
+    
+    								AP Processing                  
+                        </a>
+                        
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="tab-content" id="v-pills-tabContent">
+
+
+<!--  start seq 1 -->
+                        <div
+                          class="tab-pane fade 
+                          
+                                                    
+                          "
+                          id="v-1-home"
+                          role="tabpanel"
+                          aria-labelledby="v-1-home-tab"
+                        >
+
+
+<div class="alert customize-alert alert-dismissible text-primary text-primary alert-light-primary fade show"
+    role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="d-flex align-items-center font-weight-medium">
+        <i data-feather="info" class="text-primary feather-sm me-2 flex-shrink-0"></i>
+        Fill in the invoice detail here.  Upload the documents on next process.
+    </div>
+</div>
+
+                       <!-- start form -->
+                          <form method="post" action="/process/change/114500103345/1">
+                          <div id="fb-render1"></div>
+ 
+ 
+<!-- start action message -->                 
+
+
+
+<div class="alert alert-success" role="alert">
+                        <i
+                          data-feather="check"
+                          class="fill-white feather-sm me-2"
+                        ></i>
+                        2023-04-06 15:00:44 by WOONG KOK KUEN
+</div>
+
+
+
+
+
+
+
+
+
+                        
+                        </form>
+                          <!-- end form -->
+                        </div>
+
+<!--  start seq 2 -->
+                        <div
+                          class="tab-pane fade 
+                          
+                          
+                           show active
+                                                    
+                          "
+                          id="v-2-home"
+                          role="tabpanel"
+                          aria-labelledby="v-2-home-tab"
+                        >
+
+
+<div class="alert customize-alert alert-dismissible text-primary text-primary alert-light-primary fade show"
+    role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="d-flex align-items-center font-weight-medium">
+        <i data-feather="info" class="text-primary feather-sm me-2 flex-shrink-0"></i>
+        Please upload
+    </div>
+</div>
+
+                       <!-- start form -->
+                          <form method="post" action="/process/change/114500103345/2">
+                          <div id="fb-render2"></div>
+ 
+ 
+<!-- start action message -->                 
+
+
+
+
+
+
+
+
+
+
+
+
+					
+
+
+													<div class="alert alert-danger bg-danger text-white border-0" role="alert">
+													                        <i
+													                          data-feather="chevrons-right"
+													                          class="fill-white feather-sm me-2"
+													                        ></i>
+													                        Pending : WOONG KOK KUEN
+													</div>
+
+					
+
+
+													
+
+							                        <button
+							                        type="submit"
+							                        name="action"
+							                        value="1"
+							                        class="btn btn-info rounded-pill px-4 mt-3"
+							                      >
+							                        Save
+							                      </button>		
+							                      
+																
+							                        <button
+							                        type="submit"
+							                        name="action"
+							                        value="2"
+							                        class="btn btn-dark rounded-pill px-4 mt-3"
+							                      >
+							                        Reject
+							                      </button>		
+							                      
+							                  
+
+
+							                        <button
+							                        type="submit"
+							                        name="action"
+							                        value="3"
+							                        class="btn btn-danger rounded-pill px-4 mt-3"
+							                      >
+							                        Submit
+							                      </button>								               
+							               
+							            
+
+
+
+
+                        
+                        </form>
+                          <!-- end form -->
+                        </div>
+
+<!--  start seq 3 -->
+                        <div
+                          class="tab-pane fade 
+                          
+                                                    
+                          "
+                          id="v-3-home"
+                          role="tabpanel"
+                          aria-labelledby="v-3-home-tab"
+                        >
+
+
+<div class="alert customize-alert alert-dismissible text-primary text-primary alert-light-primary fade show"
+    role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="d-flex align-items-center font-weight-medium">
+        <i data-feather="info" class="text-primary feather-sm me-2 flex-shrink-0"></i>
+        Please upload
+    </div>
+</div>
+
+                       <!-- start form -->
+                          <form method="post" action="/process/change/114500103345/3">
+                          <div id="fb-render3"></div>
+ 
+ 
+<!-- start action message -->                 
+
+
+
+
+
+
+
+
+
+
+
+
+					
+
+
+													<div class="alert alert-warning bg-warning text-white border-0" role="alert">
+
+
+													                        <i
+													                          data-feather="loader"
+													                          class="fill-white feather-sm me-2"
+													                        ></i>
+													                        Next : WOONG KOK KUEN
+													</div>
+
+				
+					
+
+
+													
+
+
+
+
+                        
+                        </form>
+                          <!-- end form -->
+                        </div>
+
+<!--  start seq 4 -->
+                        <div
+                          class="tab-pane fade 
+                          
+                                                    
+                          "
+                          id="v-4-home"
+                          role="tabpanel"
+                          aria-labelledby="v-4-home-tab"
+                        >
+
+
+<div class="alert customize-alert alert-dismissible text-primary text-primary alert-light-primary fade show"
+    role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="d-flex align-items-center font-weight-medium">
+        <i data-feather="info" class="text-primary feather-sm me-2 flex-shrink-0"></i>
+        HOD Approval
+    </div>
+</div>
+
+                       <!-- start form -->
+                          <form method="post" action="/process/change/114500103345/4">
+                          <div id="fb-render4"></div>
+ 
+ 
+<!-- start action message -->                 
+
+
+
+
+
+
+
+
+
+
+
+
+					
+
+
+													<div class="alert alert-warning bg-warning text-white border-0" role="alert">
+
+
+													                        <i
+													                          data-feather="loader"
+													                          class="fill-white feather-sm me-2"
+													                        ></i>
+													                        Next : ONG CHEOK SEONG
+													</div>
+
+				
+					
+
+
+													
+
+
+
+
+                        
+                        </form>
+                          <!-- end form -->
+                        </div>
+
+<!--  start seq 5 -->
+                        <div
+                          class="tab-pane fade 
+                          
+                                                    
+                          "
+                          id="v-5-home"
+                          role="tabpanel"
+                          aria-labelledby="v-5-home-tab"
+                        >
+
+
+<div class="alert customize-alert alert-dismissible text-primary text-primary alert-light-primary fade show"
+    role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="d-flex align-items-center font-weight-medium">
+        <i data-feather="info" class="text-primary feather-sm me-2 flex-shrink-0"></i>
+        AP Processing
+    </div>
+</div>
+
+                       <!-- start form -->
+                          <form method="post" action="/process/change/114500103345/5">
+                          <div id="fb-render6"></div>
+ <div id="build-wrap"></div>
+ 
+<!-- start action message -->                 
+
+
+
+
+
+
+
+
+
+
+
+
+					
+
+
+													<div class="alert alert-warning bg-warning text-white border-0" role="alert">
+
+
+													                        <i
+													                          data-feather="loader"
+													                          class="fill-white feather-sm me-2"
+													                        ></i>
+													                        Next : LEONG SU FERN
+													</div>
+
+				
+					
+
+
+													
+
+
+
+
+                        
+                        </form>
+                          <!-- end form -->
+                        </div>
+                        
+                        
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="card w-100 ">
+                <div class="card-body pb-0 border-bottom">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h4 class="card-title">Comments</h4>
+                      <h6 class="card-subtitle mb-0 hide">
+                        Latest Comments on users
+                      </h6>
+                    </div>
+                    <button
+                      class="ms-auto btn btn-sm btn-rounded btn-success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModalcomment"
+                    >
+                      Add Comment
+                    </button>
+                  </div>							
+                </div>
+                <!-- ============================================================== -->
+                <!-- Comment widgets -->
+                <!-- ============================================================== -->
+                <div
+                  class="comment-widgets scrollable mb-2 common-widget"
+                  style="height: 450px"
+                >
+                  <!-- Comment Row -->
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="card w-100">
+
+
+                <div class="card-body pb-0 border-bottom">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h4 class="card-title">Documents</h4>
+                      <h6 class="card-subtitle mb-0 hide">
+                        List of documents
+                      </h6>
+                    </div>
+                    <button
+                      class="ms-auto btn btn-sm btn-rounded btn-success hide"
+                      data-bs-toggle="modal"
+                      data-bs-target="#myModal"
+                    >
+                      Add Others Document
+                    </button>
+                  </div>							
+                </div>
+                  
+                <div class="card-body">
+                  <!-- -------------------------------------------------------------- -->
+                  <!-- To do list widgets -->
+                  <!-- -------------------------------------------------------------- -->
+                  <div
+                    class="to-do-widget mt-3 common-widget scrollable"
+                    style="height: 443px"
+                  >
+                    <!-- .modal for add task -->
+                    <div
+                      class="modal fade"
+                      id="myModal"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <form method="post" action="/document/add/16/114500103345"  enctype="multipart/form-data">
+                          <div class="modal-header d-flex">
+                            <h4 class="modal-title">Add Documents</h4>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="mb-3">
+                                <label>Document Type</label>
+                                <select class="form-select" name="docType" required>
+                                  <option selected=""></option>
+                                  <option value="Proposal">Proposal</option>
+                                  <option value="DO">DO</option>
+                                  <option value="Invoice">Invoice</option>
+                                  <option value="Others">Others</option>
+                                </select>
+                              </div>
+                              <div class="mb-3">
+                                <label>File</label>
+                                <input
+                                  type="file"
+                                  name="file"
+                                  class="form-control"
+                                  placeholder="file"
+                                  required
+                                />
+                              </div>
+
+
+											<div class="
+                        alert alert-light-danger
+                        text-info
+                        alert-dismissible
+                        fade
+                        show
+                      " role="alert">
+                      <div class="
+                          d-flex
+                          align-items-center
+                          text-danger
+                          font-weight-medium
+                        ">
+                        PDF documents uploaded here won't be digital signed by system.<br>
+                        Allowed only 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'
+                      </div>
+                    </div>
+
+
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                            <button
+                              type="submit"
+                              class="btn btn-success"
+                            >
+                              Submit
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+                    <!-- .modal for add comment -->
+                    <div
+                      class="modal fade"
+                      id="myModalcomment"
+                      tabindex="-1"
+                      role="dialog"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form method="post" action="/comment/add/114500103345">
+                          <div class="modal-header d-flex">
+                            <h4 class="modal-title">Add Comment</h4>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Close"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+
+                              <div class="mb-3">
+                                <label>Message</label>
+                                <textarea
+                                  name="message"
+                                  class="form-control"/></textarea>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Close
+                            </button>
+                            <button
+                              type="submit"
+                              class="btn btn-success"
+                            >
+                              Submit
+                            </button>
+                          </div>
+</form>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+<ul class="list-group list-group-flush">
+
+
+    <li class="list-group-item">
+        <a href="/static/files/16/114500103345/protect/c048b150-1a3d-43c4-a584-2fb38317913d/process|1680735765|359|kk.jpg" target="_blank"><i data-feather="download" class="feather-sm me-2"></i>
+        kk.jpg</a> <span class="badge bg-light-danger text-danger font-weight-medium rounded-pill ms-auto">process</span><br>
+   <span class="fs-2 text-nowrap d-block subtext text-muted">WOONG KOK KUEN - 2023-04-06 15:02:45</span>
+
+   
+  
+    </li>
+
+    <li class="list-group-item">
+        <a href="/static/files/16/114500103345/protect/ba969028-c298-49d5-8b7e-c97c39b7630f/process|1680735777|359|kk.jpg" target="_blank"><i data-feather="download" class="feather-sm me-2"></i>
+        kk.jpg</a> <span class="badge bg-light-danger text-danger font-weight-medium rounded-pill ms-auto">process</span><br>
+   <span class="fs-2 text-nowrap d-block subtext text-muted">WOONG KOK KUEN - 2023-04-06 15:02:57</span>
+
+   
+  
+    </li>
+
+    <li class="list-group-item">
+        <a href="/static/files/16/114500103345/protect/2fc5b4d5-6e0c-4c90-82d4-b3190f15a490/process|1680735728|359|kk.jpg" target="_blank"><i data-feather="download" class="feather-sm me-2"></i>
+        kk.jpg</a> <span class="badge bg-light-danger text-danger font-weight-medium rounded-pill ms-auto">process</span><br>
+   <span class="fs-2 text-nowrap d-block subtext text-muted">WOONG KOK KUEN - 2023-04-06 15:02:08</span>
+
+   
+  
+    </li>
+
+    <li class="list-group-item">
+        <a href="/static/files/16/114500103345/protect/9cea35a7-107d-456a-8e04-8d66eee180df/process|1680735686|359|kk.jpg" target="_blank"><i data-feather="download" class="feather-sm me-2"></i>
+        kk.jpg</a> <span class="badge bg-light-danger text-danger font-weight-medium rounded-pill ms-auto">process</span><br>
+   <span class="fs-2 text-nowrap d-block subtext text-muted">WOONG KOK KUEN - 2023-04-06 15:01:26</span>
+
+   
+  
+    </li>
+  
+    
+  </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+
+        <footer class="footer">
+          All Rights Reserved by REDtone.
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
+      </div>
+      <!-- ============================================================== -->
+      <!-- End Page wrapper  -->
+      <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- customizer Panel -->
+    <!-- ============================================================== -->
+
+    <div class="chat-windows"></div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="/static/assets/libs/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- apps -->
+    <script src="/static/dist/js/app.min.js"></script>
+    <script src="/static/dist/js/app.init.js"></script>
+    <script src="/static/dist/js/app-style-switcher.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="/static/assets/extra-libs/sparkline/sparkline.js"></script>
+    <!--Wave Effects -->
+    <script src="/static/dist/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="/static/dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="/static/dist/js/feather.min.js"></script>
+    <script src="/static/dist/js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <!-- chartist chart -->
+    <script src="/static/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <!-- Chart JS -->
+    <script src="/static/dist/js/pages/dashboards/dashboard5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://bpa.redtone.com/static/form-builder/form-render.min.js"></script>
+  <script src="https://bpa.redtone.com/static/form-builder/form-builder.min.js"></script>  
+      <script id="rendered-js" >
+/*
+This has been updated to use the new userData method available in formRender
+*/
+
+
+
+
+
+
+<!--  start seq 1 -->
+const fbRender1 = document.getElementById("fb-render1");
+const originalFormData1 = [{"type":"select","required":true,"label":"Company","className":"select2 form-control","name":"company","multiple":false,"values":[{"label":"","value":"","selected":false},{"label":"REDTONE DIGITAL BERHAD","value":"REDTONE DIGITAL BERHAD","selected":true},{"label":"REDtone Telecommunications Sdn Bhd","value":"REDtone Telecommunications Sdn Bhd","selected":false},{"label":"REDtone Engineering & Services Sdn Bhd","value":"REDtone Engineering & Services Sdn Bhd","selected":false},{"label":"Sea Telco Engineering Services Sdn Bhd","value":"Sea Telco Engineering Services Sdn Bhd","selected":false},{"label":"REDtone Data Centre Sdn Bhd","value":"REDtone Data Centre Sdn Bhd","selected":false},{"label":"Ansar Mobile","value":"Ansar Mobile","selected":false},{"label":"REDtone Technology Sdn Bhd","value":"REDtone Technology Sdn Bhd","selected":false},{"label":"REDtone Mex Sdn Bhd","value":"REDtone Mex Sdn Bhd","selected":false},{"label":"REDtone Technology Pte Ltd","value":"REDtone Technology Pte Ltd","selected":false},{"label":"Meridianotch Sdn Bhd","value":"Meridianotch Sdn Bhd","selected":false},{"label":"REDtone IOT Sdn Bhd","value":"REDtone IOT Sdn Bhd","selected":false},{"label":"REDtone Network Sdn Bhd","value":"REDtone Network Sdn Bhd","selected":false},{"label":"365 Mshop Sdn Bhd","value":"365 Mshop Sdn Bhd","selected":false},{"label":"Jalurlebar Prima Sdn Bhd","value":"Jalurlebar Prima Sdn Bhd","selected":false},{"label":"Swift Bell Consolidated Sdn Bhd","value":"Swift Bell Consolidated Sdn Bhd","selected":false},{"label":"CCBS Consulting Sdn Bhd","value":"CCBS Consulting Sdn Bhd","selected":false},{"label":"ByteBuilder Sdn Bhd","value":"ByteBuilder Sdn Bhd","selected":false}]},{"type":"select","required":true,"label":"Department","className":"form-control","name":"department","multiple":false,"values":[{"label":"","value":"","selected":false},{"label":"CONSUMER BUSINESS \/ MULTIMEDIA","value":"CONSUMER BUSINESS \/ MULTIMEDIA","selected":true},{"label":"CORP. AFFAIRS & LEGAL","value":"CORP. AFFAIRS & LEGAL","selected":false},{"label":"PROCUREMENT\/WAREHOUSE","value":"PROCUREMENT\/WAREHOUSE","selected":false},{"label":"CORPORATE SALES - ENTERPRISE","value":"CORPORATE SALES - ENTERPRISE","selected":false},{"label":"CORPORATE SALES - GOVERNMENT","value":"CORPORATE SALES - GOVERNMENT","selected":false},{"label":"CREDIT CONTROL","value":"CREDIT CONTROL","selected":false},{"label":"CUSTOMER CARE","value":"CUSTOMER CARE","selected":false},{"label":"DATA CENTRE","value":"DATA CENTRE","selected":false},{"label":"DATA \/ VOICE NETWORK","value":"DATA \/ VOICE NETWORK","selected":false},{"label":"EXCO","value":"EXCO","selected":false},{"label":"FINANCE","value":"FINANCE","selected":false},{"label":"ORGANISATIONAL DEVELOPMENT","value":"ORGANISATIONAL DEVELOPMENT","selected":false},{"label":"INFRA","value":"INFRA","selected":false},{"label":"JB OPERATION","value":"JB OPERATION","selected":false},{"label":"Marketing","value":"Marketing","selected":false},{"label":"MIS","value":"MIS","selected":false},{"label":"MVNO","value":"MVNO","selected":false},{"label":"PENANG OPERATION","value":"PENANG OPERATION","selected":false},{"label":"EAST MALAYSIA OPERATION","value":"EAST MALAYSIA OPERATION","selected":false},{"label":"PRE-SALES","value":"PRE-SALES","selected":false},{"label":"PRODUCT DEVELOPMENT","value":"PRODUCT DEVELOPMENT","selected":false},{"label":"QUALITY ASSURANCE","value":"QUALITY ASSURANCE","selected":false},{"label":"R&D","value":"R&D","selected":false},{"label":"REGULATORY","value":"REGULATORY","selected":false},{"label":"RIB","value":"RIB","selected":false},{"label":"SALES - WIFI","value":"SALES - WIFI","selected":false},{"label":"SALES & SUPPORT","value":"SALES & SUPPORT","selected":false},{"label":"TELCO RELATIONS & WHOLESALE","value":"TELCO RELATIONS & WHOLESALE","selected":false},{"label":"IOT","value":"IOT","selected":false},{"label":"TECHNICAL","value":"TECHNICAL","selected":false},{"label":"REDtone Academy","value":"REDtone Academy","selected":false},{"label":"OTHERS","value":"OTHERS","selected":false},{"label":"OPERATIONS","value":"OPERATIONS","selected":false},{"label":"HUMAN RESOURCE","value":"HUMAN RESOURCE","selected":false},{"label":"ADMINISTRATION","value":"ADMINISTRATION","selected":false},{"label":"CIVIL MECHANICAL ENGINEERING (CME)","value":"CIVIL MECHANICAL ENGINEERING (CME)","selected":false},{"label":"TM FIBER ENGINEERING","value":"TM FIBER ENGINEERING","selected":false},{"label":"IT Support","value":"IT Support","selected":false},{"label":"IOT Technical","value":"IOT Technical","selected":false},{"label":"JENDELA P1","value":"JENDELA P1","selected":false}]},{"type":"textarea","required":true,"label":"Name","className":"form-control","name":"textarea-1679563814732-0","subtype":"textarea","value":"sdfsdfsdf"},{"type":"text","required":true,"label":"Project","className":"form-control","name":"text-1679642427810-0","subtype":"text","value":"sdsdfs"},{"type":"textarea","required":true,"label":"Description","className":"form-control","name":"textarea-1679563831328-0","subtype":"textarea","value":"dsdf"},{"type":"select","required":true,"label":"Method of payment","className":"form-control","name":"select-1679563837589-0","multiple":false,"values":[{"label":"Option 1","value":"option-1","selected":false},{"label":"Option 2","value":"option-2","selected":true},{"label":"Option 3","value":"option-3","selected":false}]},{"type":"text","required":true,"label":"Vendor","className":"form-control","name":"text-1679563846091-0","subtype":"text","value":"fsdfsdf"},{"type":"text","required":true,"label":"PO\/EPR Number","className":"form-control","name":"text-1679563851432-0","subtype":"text","value":"fdsfdsf"},{"type":"text","required":true,"label":"Invoice Number","className":"form-control","name":"text-1679563856534-0","subtype":"text","value":"sdfsdfsdf"}];
+
+
+jQuery(function ($) {
+  const formData = JSON.stringify(originalFormData1);
+
+  var formRenderOpts = {
+    formData : [{"type":"select","required":true,"label":"Company","className":"select2 form-control","name":"company","multiple":false,"values":[{"label":"","value":"","selected":false},{"label":"REDTONE DIGITAL BERHAD","value":"REDTONE DIGITAL BERHAD","selected":true},{"label":"REDtone Telecommunications Sdn Bhd","value":"REDtone Telecommunications Sdn Bhd","selected":false},{"label":"REDtone Engineering & Services Sdn Bhd","value":"REDtone Engineering & Services Sdn Bhd","selected":false},{"label":"Sea Telco Engineering Services Sdn Bhd","value":"Sea Telco Engineering Services Sdn Bhd","selected":false},{"label":"REDtone Data Centre Sdn Bhd","value":"REDtone Data Centre Sdn Bhd","selected":false},{"label":"Ansar Mobile","value":"Ansar Mobile","selected":false},{"label":"REDtone Technology Sdn Bhd","value":"REDtone Technology Sdn Bhd","selected":false},{"label":"REDtone Mex Sdn Bhd","value":"REDtone Mex Sdn Bhd","selected":false},{"label":"REDtone Technology Pte Ltd","value":"REDtone Technology Pte Ltd","selected":false},{"label":"Meridianotch Sdn Bhd","value":"Meridianotch Sdn Bhd","selected":false},{"label":"REDtone IOT Sdn Bhd","value":"REDtone IOT Sdn Bhd","selected":false},{"label":"REDtone Network Sdn Bhd","value":"REDtone Network Sdn Bhd","selected":false},{"label":"365 Mshop Sdn Bhd","value":"365 Mshop Sdn Bhd","selected":false},{"label":"Jalurlebar Prima Sdn Bhd","value":"Jalurlebar Prima Sdn Bhd","selected":false},{"label":"Swift Bell Consolidated Sdn Bhd","value":"Swift Bell Consolidated Sdn Bhd","selected":false},{"label":"CCBS Consulting Sdn Bhd","value":"CCBS Consulting Sdn Bhd","selected":false},{"label":"ByteBuilder Sdn Bhd","value":"ByteBuilder Sdn Bhd","selected":false}]},{"type":"select","required":true,"label":"Department","className":"form-control","name":"department","multiple":false,"values":[{"label":"","value":"","selected":false},{"label":"CONSUMER BUSINESS \/ MULTIMEDIA","value":"CONSUMER BUSINESS \/ MULTIMEDIA","selected":true},{"label":"CORP. AFFAIRS & LEGAL","value":"CORP. AFFAIRS & LEGAL","selected":false},{"label":"PROCUREMENT\/WAREHOUSE","value":"PROCUREMENT\/WAREHOUSE","selected":false},{"label":"CORPORATE SALES - ENTERPRISE","value":"CORPORATE SALES - ENTERPRISE","selected":false},{"label":"CORPORATE SALES - GOVERNMENT","value":"CORPORATE SALES - GOVERNMENT","selected":false},{"label":"CREDIT CONTROL","value":"CREDIT CONTROL","selected":false},{"label":"CUSTOMER CARE","value":"CUSTOMER CARE","selected":false},{"label":"DATA CENTRE","value":"DATA CENTRE","selected":false},{"label":"DATA \/ VOICE NETWORK","value":"DATA \/ VOICE NETWORK","selected":false},{"label":"EXCO","value":"EXCO","selected":false},{"label":"FINANCE","value":"FINANCE","selected":false},{"label":"ORGANISATIONAL DEVELOPMENT","value":"ORGANISATIONAL DEVELOPMENT","selected":false},{"label":"INFRA","value":"INFRA","selected":false},{"label":"JB OPERATION","value":"JB OPERATION","selected":false},{"label":"Marketing","value":"Marketing","selected":false},{"label":"MIS","value":"MIS","selected":false},{"label":"MVNO","value":"MVNO","selected":false},{"label":"PENANG OPERATION","value":"PENANG OPERATION","selected":false},{"label":"EAST MALAYSIA OPERATION","value":"EAST MALAYSIA OPERATION","selected":false},{"label":"PRE-SALES","value":"PRE-SALES","selected":false},{"label":"PRODUCT DEVELOPMENT","value":"PRODUCT DEVELOPMENT","selected":false},{"label":"QUALITY ASSURANCE","value":"QUALITY ASSURANCE","selected":false},{"label":"R&D","value":"R&D","selected":false},{"label":"REGULATORY","value":"REGULATORY","selected":false},{"label":"RIB","value":"RIB","selected":false},{"label":"SALES - WIFI","value":"SALES - WIFI","selected":false},{"label":"SALES & SUPPORT","value":"SALES & SUPPORT","selected":false},{"label":"TELCO RELATIONS & WHOLESALE","value":"TELCO RELATIONS & WHOLESALE","selected":false},{"label":"IOT","value":"IOT","selected":false},{"label":"TECHNICAL","value":"TECHNICAL","selected":false},{"label":"REDtone Academy","value":"REDtone Academy","selected":false},{"label":"OTHERS","value":"OTHERS","selected":false},{"label":"OPERATIONS","value":"OPERATIONS","selected":false},{"label":"HUMAN RESOURCE","value":"HUMAN RESOURCE","selected":false},{"label":"ADMINISTRATION","value":"ADMINISTRATION","selected":false},{"label":"CIVIL MECHANICAL ENGINEERING (CME)","value":"CIVIL MECHANICAL ENGINEERING (CME)","selected":false},{"label":"TM FIBER ENGINEERING","value":"TM FIBER ENGINEERING","selected":false},{"label":"IT Support","value":"IT Support","selected":false},{"label":"IOT Technical","value":"IOT Technical","selected":false},{"label":"JENDELA P1","value":"JENDELA P1","selected":false}]},{"type":"textarea","required":true,"label":"Name","className":"form-control","name":"textarea-1679563814732-0","subtype":"textarea","value":"sdfsdfsdf"},{"type":"text","required":true,"label":"Project","className":"form-control","name":"text-1679642427810-0","subtype":"text","value":"sdsdfs"},{"type":"textarea","required":true,"label":"Description","className":"form-control","name":"textarea-1679563831328-0","subtype":"textarea","value":"dsdf"},{"type":"select","required":true,"label":"Method of payment","className":"form-control","name":"select-1679563837589-0","multiple":false,"values":[{"label":"Option 1","value":"option-1","selected":false},{"label":"Option 2","value":"option-2","selected":true},{"label":"Option 3","value":"option-3","selected":false}]},{"type":"text","required":true,"label":"Vendor","className":"form-control","name":"text-1679563846091-0","subtype":"text","value":"fsdfsdf"},{"type":"text","required":true,"label":"PO\/EPR Number","className":"form-control","name":"text-1679563851432-0","subtype":"text","value":"fdsfdsf"},{"type":"text","required":true,"label":"Invoice Number","className":"form-control","name":"text-1679563856534-0","subtype":"text","value":"sdfsdfsdf"}],
+    dataType: 'json',
+    controlConfig: {
+      "file.fineuploader": {
+        autoUpload: true,
+        debug: true,
+        validation: {
+         itemLimit: 10,
+         sizeLimit:0,
+         acceptFiles: ['image/jpg','image/jpeg','image/png','application/pdf','application/msword','application/vnd.ms-excel','application/vnd.ms-powerpoint','text/plain'],
+         allowedExtensions: ['jpg','jpeg', 'gif', 'png','pdf','xlsx','xls','doc','docx','ppt','pptx']
+    			},
+    		chunking: {
+            enabled: false
+        },
+request: {
+             params: { bpaid: 114500103345,bpaflow: 16,uid:359 }
+        },
+        deleteFile: {
+        enabled: true,
+        forceConfirm: true,
+       endpoint: '/upload/16/114500103345'
+    },
+        handler: '/upload/114500103345',
+        handler: '/upload'
+          // other fine uploader configuration options here
+      }
+    }    
+  };
+
+  $(fbRender1).formRender(formRenderOpts);
+});
+
+<!--  start seq 2 -->
+const fbRender2 = document.getElementById("fb-render2");
+const originalFormData2 = [{"type":"file","subtype":"fineuploader","required":true,"label":"File Upload","description":"Allowed file extensions jpg,jpeg,gif,png,pdf,xlsx,xls,doc,docx,ppt,pptx. Only PDF be signed.","className":"form-control","name":"file-1679638501794-0","multiple":true,"value":"kk.jpg"}];
+
+
+jQuery(function ($) {
+  const formData = JSON.stringify(originalFormData2);
+
+  var formRenderOpts = {
+    formData : [{"type":"file","subtype":"fineuploader","required":true,"label":"File Upload","description":"Allowed file extensions jpg,jpeg,gif,png,pdf,xlsx,xls,doc,docx,ppt,pptx. Only PDF be signed.","className":"form-control","name":"file-1679638501794-0","multiple":true,"value":"kk.jpg"}],
+    dataType: 'json',
+    controlConfig: {
+      "file.fineuploader": {
+        autoUpload: true,
+        debug: true,
+        validation: {
+         itemLimit: 10,
+         sizeLimit:0,
+         acceptFiles: ['image/jpg','image/jpeg','image/png','application/pdf','application/msword','application/vnd.ms-excel','application/vnd.ms-powerpoint','text/plain'],
+         allowedExtensions: ['jpg','jpeg', 'gif', 'png','pdf','xlsx','xls','doc','docx','ppt','pptx']
+    			},
+    		chunking: {
+            enabled: false
+        },
+request: {
+             params: { bpaid: 114500103345,bpaflow: 16,uid:359 }
+        },
+        deleteFile: {
+        enabled: true,
+        forceConfirm: true,
+       endpoint: '/upload/16/114500103345'
+    },
+        handler: '/upload/114500103345',
+        handler: '/upload'
+          // other fine uploader configuration options here
+      }
+    }    
+  };
+
+  $(fbRender2).formRender(formRenderOpts);
+});
+
+<!--  start seq 3 -->
+const fbRender3 = document.getElementById("fb-render3");
+const originalFormData3 = [{"type":"file","subtype":"fineuploader","required":true,"label":"File Upload","description":"Allowed file extensions jpg,jpeg,gif,png,pdf,xlsx,xls,doc,docx,ppt,pptx. Only PDF be signed.","className":"form-control","name":"file-1679638501794-0","multiple":true,"value":""}];
+
+
+jQuery(function ($) {
+  const formData = JSON.stringify(originalFormData3);
+
+  var formRenderOpts = {
+    formData : [{"type":"file","subtype":"fineuploader","required":true,"label":"File Upload","description":"Allowed file extensions jpg,jpeg,gif,png,pdf,xlsx,xls,doc,docx,ppt,pptx. Only PDF be signed.","className":"form-control","name":"file-1679638501794-0","multiple":true,"value":""}],
+    dataType: 'json',
+    controlConfig: {
+      "file.fineuploader": {
+        autoUpload: true,
+        debug: true,
+        validation: {
+         itemLimit: 10,
+         sizeLimit:0,
+         acceptFiles: ['image/jpg','image/jpeg','image/png','application/pdf','application/msword','application/vnd.ms-excel','application/vnd.ms-powerpoint','text/plain'],
+         allowedExtensions: ['jpg','jpeg', 'gif', 'png','pdf','xlsx','xls','doc','docx','ppt','pptx']
+    			},
+    		chunking: {
+            enabled: false
+        },
+request: {
+             params: { bpaid: 114500103345,bpaflow: 16,uid:359 }
+        },
+        deleteFile: {
+        enabled: true,
+        forceConfirm: true,
+       endpoint: '/upload/16/114500103345'
+    },
+        handler: '/upload/114500103345',
+        handler: '/upload'
+          // other fine uploader configuration options here
+      }
+    }    
+  };
+
+  $(fbRender3).formRender(formRenderOpts);
+});
+
+<!--  start seq 4 -->
+const fbRender4 = document.getElementById("fb-render4");
+const originalFormData4 = [{"type":"text","required":false,"label":"Batch Number","className":"form-control","name":"text-1679563996978-0","subtype":"text"}];
+
+
+jQuery(function ($) {
+  const formData = JSON.stringify(originalFormData4);
+
+  var formRenderOpts = {
+    formData : [{"type":"text","required":false,"label":"Batch Number","className":"form-control","name":"text-1679563996978-0","subtype":"text"}],
+    dataType: 'json',
+    controlConfig: {
+      "file.fineuploader": {
+        autoUpload: true,
+        debug: true,
+        validation: {
+         itemLimit: 10,
+         sizeLimit:0,
+         acceptFiles: ['image/jpg','image/jpeg','image/png','application/pdf','application/msword','application/vnd.ms-excel','application/vnd.ms-powerpoint','text/plain'],
+         allowedExtensions: ['jpg','jpeg', 'gif', 'png','pdf','xlsx','xls','doc','docx','ppt','pptx']
+    			},
+    		chunking: {
+            enabled: false
+        },
+request: {
+             params: { bpaid: 114500103345,bpaflow: 16,uid:359 }
+        },
+        deleteFile: {
+        enabled: true,
+        forceConfirm: true,
+       endpoint: '/upload/16/114500103345'
+    },
+        handler: '/upload/114500103345',
+        handler: '/upload'
+          // other fine uploader configuration options here
+      }
+    }    
+  };
+
+  $(fbRender4).formRender(formRenderOpts);
+});
+
+<!--  start seq 5 -->
+const fbRender5 = document.getElementById("fb-render5");
+const originalFormData5 = [{"type":"text","required":false,"label":"Batch Number","className":"form-control","name":"text-1679563996978-0","subtype":"text"}];
+
+
+jQuery(function ($) {
+  const formData = JSON.stringify(originalFormData5);
+
+  var formRenderOpts = {
+    formData : [{"type":"text","required":false,"label":"Batch Number","className":"form-control","name":"text-1679563996978-0","subtype":"text"}],
+    dataType: 'json',
+    controlConfig: {
+      "file.fineuploader": {
+        autoUpload: true,
+        debug: true,
+        validation: {
+         itemLimit: 10,
+         sizeLimit:0,
+         acceptFiles: ['image/jpg','image/jpeg','image/png','application/pdf','application/msword','application/vnd.ms-excel','application/vnd.ms-powerpoint','text/plain'],
+         allowedExtensions: ['jpg','jpeg', 'gif', 'png','pdf','xlsx','xls','doc','docx','ppt','pptx']
+    			},
+    		chunking: {
+            enabled: false
+        },
+request: {
+             params: { bpaid: 114500103345,bpaflow: 16,uid:359 }
+        },
+        deleteFile: {
+        enabled: true,
+        forceConfirm: true,
+       endpoint: '/upload/16/114500103345'
+    },
+        handler: '/upload/114500103345',
+        handler: '/upload'
+          // other fine uploader configuration options here
+      }
+    }    
+  };
+
+  $(fbRender5).formRender(formRenderOpts);
+});
+
+
+jQuery(function($) {
+  var fbEditor = document.getElementById("fb-render6"),
+    options = {
+    	disableFields: ['autocomplete','file','button','checkbox-group','date','header','hidden','number','paragraph','radio-group','select','text','textarea'],
+      disabledActionButtons: ['data','save','clear'],
+      disabledAttrs: ["access"],
+      typeUserAttrs: {
+		  header: {
+		    title: {
+		      label: 'Title'
+		    }
+		  }
+      },
+  inputSets: [
+      {
+        label: 'Stationery Items',
+        name: 'stationery-items', // optional - one will be generated from the label if name not supplied
+        attrs: {type: 'stationery'},
+        showHeader: false, // optional - Use the label as the header for this set of inputs
+        fields: [
+            {
+              type: 'select',
+              required: true,
+              label: 'Items',
+              className: 'form-control select2',
+              disabledFieldButtons: ['remove', 'copy','edit'],
+              values: [
+                {
+                  label: '',
+                  value: '',
+                  selected: false
+                },
+                {
+                  label: '4B0001 - Book-Hard Cover (L) 200pages',
+                  value: '4B0001 - Book-Hard Cover (L) 200pages',
+                  selected: false
+                },
+                {
+                  label: 'Brain Surgeon',
+                  value: 'option-3',
+                  selected: false
+                }              
+              ]
+            },
+            {
+              type: 'number',
+              label: 'Quantity',
+              disabledFieldButtons: ['remove', 'copy','edit'],
+              className: 'form-control'
+            },
+					  {
+					    type: 'paragraph',
+					    disabledFieldButtons: ['remove', 'copy','edit'],
+					    subtype: 'p',
+					    label: '   '
+					  }  
+          ],
+          icon: "S",
+      }
+      ]           
+    };
+  $(fbEditor).formBuilder(options);
+});
+
+$(container).formBuilder(options);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,299 @@
+
+{% extends "layout.html" %}
+{% block title %}{{_('RecipesLocal')}}{% endblock %}
+{% block content %}
+<div class="row">
+
+                  <div class="col-lg-12 col-md-12">
+                    <div class="card-body">
+                      <h3>{{_('Recipe')}}</h3>
+                      <h6 class="card-subtitle mb-0">
+                        {{_('RecipesLocal_title')}}
+                      </h6>
+                    </div>
+                  </div>
+
+
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header bg-info">
+                  <h4 class="mb-0 text-white">{{_('Fertigation_Plan')}}</h4>
+                </div>
+                <form action="#">
+                  <div>
+                    <div class="card-body">
+                      <div class="row pt-3" id="plan">
+                      </div>
+                      <!--/row-->
+
+                    </div>
+                    
+									<table class="table customize-table mb-0 v-middle">
+									  <tbody>                 
+									{% for j in range(0,sitemap.homepage.widgets[9].widgets[0].widgets| length) %}
+
+											{% if sitemap.homepage.widgets[9].widgets[0].widgets[j].type=='Setpoint' %}
+										    <tr>
+										      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[0].widgets[j].label)}}</h6></td>
+										      <td><input class="form-control-sm bootstrap-input-spinner" type="number" value="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].item.state}}" min="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].minValue}}" max="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].maxValue}}" data-decimals="1" step="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].step}}" id="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].item.name}}"/></td>
+										    </tr>	    
+										  {% elif sitemap.homepage.widgets[9].widgets[0].widgets[j].type=='Switch' %}
+														{% if sitemap.homepage.widgets[9].widgets[0].widgets[j].item.state=='ON' %}
+														    <tr>
+														      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[0].widgets[j].label)}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+		      	
+														      	</td>
+														    </tr>
+														{% else %}
+														    <tr>
+														      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[0].widgets[j].label)}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+	      	
+														      	</td>
+														    </tr>
+										  			{% endif %} 
+										  	{% else %} 
+										    <tr>
+										      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[0].widgets[j].label)}}</h6></td>
+										      <td><input class="form-control" type="text" value="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].item.state}}" min="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].minValue}}" max="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].maxValue}}" step="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].step}}" id="{{sitemap.homepage.widgets[9].widgets[0].widgets[j].item.name}}"/></td>
+										    </tr>											  	
+											{% endif %} 
+									{% endfor %}
+									  </tbody>
+									</table>                    
+                    
+                    
+                  </div>
+                </form>
+              </div>
+            </div>
+</div>
+<div class="row">
+<div class="col-lg-12">
+<!-- Nav tabs -->
+<ul class="nav nav-pills" role="tablist">
+
+{%for i in range(0, tpl)%}
+    <li class="nav-item">
+        <a class="nav-link {% if i==0 %} active {% endif %}" data-bs-toggle="tab" href="#navpill-{{i}}" role="tab">
+            <span id='plottitle{{i}}'></span>
+        </a>
+    </li>
+{%endfor%}
+
+
+
+</ul>
+</div>
+<div class="col-lg-12">
+<!-- Tab panes -->
+<div class="tab-content">
+
+{%for i in range(0, tpl)%}
+    <div class="tab-pane {% if i==0 %} active {% endif %} p-2" id="navpill-{{i}}" role="tabpanel">
+
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header bg-info">
+                  <h4 class="mb-0 text-white">Setting</h4>
+                </div>
+                <form action="#">
+                  <div>
+                    <div class="card-body">
+
+
+                    </div>
+
+				
+									
+									<table class="table customize-table mb-0 v-middle">
+									  <tbody>                 
+									{% for j in range(0,sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets| length) %}
+
+											{% if sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].type=='Setpoint' %}
+										    <tr>
+										      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].label)}}</h6></td>
+										      <td><input class="form-control-sm bootstrap-input-spinner" type="number" value="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.state}}" min="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].minValue}}" max="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].maxValue}}" step="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].step}}" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.name}}"/></td>
+										    </tr>	    
+										  {% elif sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].type=='Switch' %}
+														{% if sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.state=='ON' %}
+														    <tr>
+														      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].label)}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+
+		      	
+														      	</td>
+														    </tr>
+														{% else %}
+														    <tr>
+														      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].label)}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+
+		      	
+														      	</td>
+														    </tr>
+										  			{% endif %} 
+										  	{% else %} 
+										    <tr>
+										      <td><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].label)}}</h6></td>
+										      <td><input class="form-control" type="text" value="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.state}}" min="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].minValue}}" max="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].maxValue}}" step="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].step}}" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[0].widgets[j].item.name}}"/></td>
+										    </tr>											  	
+											{% endif %} 
+									{% endfor %}
+									  </tbody>
+									</table>  							
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header bg-info">
+                  <h4 class="mb-0 text-white">Fertigation</h4>
+                </div>
+                <form action="#">
+                  <div>
+                    <div class="card-body">
+
+
+<div class="row pt-3">
+
+		{% for j in range(0,sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets| length) %}
+
+					{% if sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets[j].item.state=='ON' %}
+						<div class="col-md-6">
+						<table class="table mb-0">
+						  <tr>
+						    <td style="width: 150px;"><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets[j].label)}}</h6></td>
+						    <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+				      	
+						    	</td>
+						  </tr>
+						</table>
+							</div>
+						{% else %}
+						<div class="col-md-6">
+						<table class="table mb-0">
+						  <tr>
+						    <td style="width: 150px;"><h6>{{_(_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets[j].label))}}</h6></td>
+						    <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+
+				      	
+						    	</td>
+						  </tr>
+						</table>
+							</div>
+						{% endif %} 
+		{% endfor %}		
+	
+</div>
+                      <!--/row-->
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header bg-info">
+                  <h4 class="mb-0 text-white">Irrigation</h4>
+                </div>
+                <form action="#">
+                  <div>
+                    <div class="card-body">
+                      <div class="row pt-3">
+		{% for j in range(0,sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[1].widgets| length) %}
+
+					{% if sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[2].widgets[j].item.state=='ON' %}
+						<div class="col-md-6">
+						<table class="table mb-0">
+						  <tr>
+						    <td style="width: 150px;"><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[2].widgets[j].label)}}</h6></td>
+						    <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[2].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+			      	
+						    	</td>
+						  </tr>
+						</table>
+							</div>
+						{% else %}
+						<div class="col-md-6">
+						<table class="table mb-0">
+						  <tr>
+						    <td style="width: 150px;"><h6>{{_(sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[2].widgets[j].label)}}</h6></td>
+						    <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap.homepage.widgets[9].widgets[1].widgets[i].widgets[2].widgets[j].item.name}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+
+				      	
+						    	</td>
+						  </tr>
+						</table>
+							</div>
+						{% endif %} 
+		{% endfor %}	
+                      </div>
+                      <!--/row-->
+
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+
+    </div>
+{%endfor%}
+
+</div>
+</div>
+
+
+
+</div>
+
+{% endblock %}

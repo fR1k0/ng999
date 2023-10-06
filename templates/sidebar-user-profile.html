@@ -1,0 +1,65 @@
+<div class="user-profile position-relative hide" style="
+              background: url(/static/assets/images/background/user-info.jpg)
+                no-repeat;
+            ">
+  <!-- User profile image -->
+  <div class="profile-img">
+    <img src="/static/assets/images/users/profile.png" alt="user" class="w-100" />
+  </div>
+  <!-- User profile text-->
+  <div class="profile-text pt-1 dropdown">
+    <a href="#" class="
+                  dropdown-toggle
+                  u-dropdown
+                  w-100
+                  text-white
+                  d-block
+                  position-relative
+                " id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">{{session.name}}</a>
+
+                
+    <div class="dropdown-menu animated flipInY" aria-labelledby="dropdownMenuLink">
+      <!--
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="user"
+                    class="feather-sm text-info me-1 ms-1"
+                  ></i>
+                  My Profile</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="credit-card"
+                    class="feather-sm text-info me-1 ms-1"
+                  ></i>
+                  My Balance</a
+                >
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="mail"
+                    class="feather-sm text-success me-1 ms-1"
+                  ></i>
+                  Inbox</a
+                >
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"
+                  ><i
+                    data-feather="settings"
+                    class="feather-sm text-warning me-1 ms-1"
+                  ></i>
+                  Account Setting</a
+                >
+
+                <div class="dropdown-divider"></div>
+                -->
+      <a class="dropdown-item" href="https://intranet.redtone.com/rd-authentication/auth/logout"><i
+          data-feather="log-out" class="feather-sm text-danger me-1 ms-1"></i>
+        Logout</a>
+      <div class="dropdown-divider"></div>
+      <div class="ps-4 p-2">
+        <a href="https://intranet.redtone.com/home/profile.php" class="btn d-block w-100 btn-info rounded-pill">View
+          Profile</a>
+      </div>
+    </div>
+  </div>
+</div>

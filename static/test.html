@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>jQuery Ajax Example</title>
+
+    <link href="https://raw.githubusercontent.com/apexcharts/apexcharts.js/main/samples/assets/styles.css" rel="stylesheet" />
+
+    <style>
+      
+        #chart {
+      max-width: 650px;
+      margin: 35px auto;
+    }
+      
+    </style>
+
+
+
+    
+  
+
+    <script>
+      // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+      // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+      var _seed = 42;
+      Math.random = function() {
+        _seed = _seed * 16807 % 2147483647;
+        return (_seed - 1) / 2147483646;
+      };
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+<script src='https://cdn.jsdelivr.net/npm/apexcharts'></script>
+  <body>
+     <div id="mainchart"></div>
+
+    <script>
+      
+        var options = {
+          series: [],
+          chart: {
+					toolbar: {
+				    show: false,
+				    tools: {
+				      download: false
+				    }
+				  },
+          height: 350,
+          type: 'area',
+          stacked: false
+        },
+        colors: ["rgba(38, 198, 218, 0.7)", "rgba(0, 176, 255, 0.5)", "rgba(1, 87, 155, 0.1)"],
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: [1, 1, 1]
+        },
+		    fill: {
+		      type: "solid",
+		      colors: ["rgba(38, 198, 218, 0.7)", "rgba(0, 176, 255, 0.4)", "rgba(1, 87, 155, 0.5)"],
+		      opacity: 1,
+		    },
+        noData: {
+          text: 'Loading...'
+        },
+        xaxis: {
+				  show: false,
+				  labels: {
+				    show: false
+				  },
+				  axisBorder: {
+				    show: false
+				  },
+				  axisTicks: {
+				    show: false
+				  }
+				},
+        yaxis: [
+          {
+            axisTicks: {
+              show: false,
+            },
+            axisBorder: {
+              show: false,
+              color: '#008FFB'
+            },
+            labels: {
+              style: {
+                colors: '#a1aab2',
+              },
+	            formatter: function (val) {
+	                return val.toFixed(2)
+	            }
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          {
+            seriesName: 'Income',
+            opposite: true,
+            axisTicks: {
+              show: false,
+            },
+            axisBorder: {
+              show: true,
+              color: '#00E396'
+            },
+            labels: {
+              style: {
+                colors: '#00E396',
+              },
+	            formatter: function (val) {
+	                return val.toFixed(1)
+	            }
+            }
+          },
+          {
+            seriesName: 'Revenue',
+            opposite: true,
+            axisTicks: {
+              show: false,
+            },
+            axisBorder: {
+              show: true,
+              color: '#FEB019'
+            },
+            labels: {
+              style: {
+                colors: '#FEB019',
+              },
+	            formatter: function (val) {
+	                return val.toFixed(1)
+	            }
+            }
+          },
+        ],
+        legend: {
+          horizontalAlign: 'left',
+          offsetX: 40
+        }				
+        };
+
+        var chart = new ApexCharts(document.querySelector("#mainchart"), options);
+        chart.render();
+      
+      
+        $.getJSON('4.json', function(response) {
+        chart.updateSeries(response)
+        chart.addYaxisAnnotation(response)
+      }); 
+               
+    </script>
+
+    
+  </body>
+</html>

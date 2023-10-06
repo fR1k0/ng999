@@ -1,0 +1,486 @@
+// just for some idea 
+//var language ="en_EN";
+//var language ="bm_BM";
+var language ="cn_CN";
+
+var CNLOCALE = (function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': '/static/cn.json',
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+})(); 
+
+var ENLOCALE = {
+		"9999999" : "Error",
+  "watercondition": "Water Condition ",
+  "waterlevel": "water level",
+  "insights": "insights la",
+  "ambient": "ambient lo"
+};
+
+var BMLOCALE = {
+		"9999999" : "Error",
+  "watercondition": "Keadaan Air",
+  "waterlevel": "Paras Air",
+  "insights": "zzzzinsights la",
+  "ambient": "bbbbbambient lo"
+};
+
+var CNLOCALE111111 = {
+	"9999999" : "Error",
+	"watercondition": "Water Condition testing",
+  "waterlevel": "water level",
+  "insights": "Insights",
+  "ambient": "Ambient"
+};
+
+
+
+function translated(language, string){
+    if (language.indexOf("bm") > -1) {
+        return BMLOCALE[string] ? BMLOCALE[string] : string;
+    } 
+
+    if (language.indexOf("en") > -1) {
+      return ENLOCALE[string] ? ENLOCALE[string] : string;
+    }
+
+    if (language.indexOf("cn") > -1) {
+      return CNLOCALE[string] ? CNLOCALE[string] : string;
+    }
+
+    return string; 
+}
+
+
+
+
+$(document).ready(function(){
+
+
+	  const socket = new WebSocket('wss://' + location.host + '/echo');
+	  socket.addEventListener('message', ev => {
+	     const obj = JSON.parse(ev.data)[0];
+
+        console.log("Received number" + JSON.parse(ev.data)[1]);
+        //const obj = ev.data;
+        const obj1 = JSON.parse(ev.data)[1];
+        //obj = obj.replace(/9999999/g, "Error");
+        lenwc = obj.homepage.widgets[0].widgets.length;
+        
+        $('#sitename').html(obj.label);
+        $('#wc').html('');
+        $('#wl').html('');
+        $('#ambient').html('');
+        $('#insights').html('');
+        $('#control').html('');
+        $('#controlon').html('');
+        $('#controloff').html('');
+//        $('#others').html('');
+        $('#task').html('');
+        $('#userconfig').html('');
+        $('#adminconfig').html('');
+        $('#plan').html('');
+        $('#plotsetting').html('');
+        $('#plotfertigation').html('');
+        $('#plotirrigation').html('');
+        
+         $('#wc_title').html(translated(language,obj.homepage.widgets[0].label));
+         $('#wl_title').html(translated(language,obj.homepage.widgets[1].label));
+ 
+         
+         $('#insights_title').html(translated(language,obj.homepage.widgets[4].label));
+         $('#ambient_title').html(translated(language,obj.homepage.widgets[2].label));
+         
+
+        for (let i = 0; i < obj.homepage.widgets[0].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+				  
+//				  $('#wc').append('<hr>');
+//				  $('#wc').append(obj.homepage.widgets[0].widgets[i].item.name);
+//				  $('#wc').append(obj.homepage.widgets[0].widgets[i].item.state);
+//				  $('#wc').append(obj.homepage.widgets[0].widgets[i].label);
+
+							 		var str = obj.homepage.widgets[0].widgets[i].label;//'EC[0 uS/cm]';
+							 		var words = str.split('[');
+									itemname=words[0];
+									var regExp = /\[([^)]+)\]/;
+									var matches = regExp.exec(str);
+									itemstate=matches[1];
+
+//<span class="sl-date text-muted ms-1">(mS/cm)</span>
+					$('#wc').append('<div class="col-lg-4 col-md-6 border-end align-self-center"><div class="card-body"><div class="d-flex flex-row"><div class="col-8 p-0 align-self-center">'+
+					'<h4 class="mb-0">'+itemstate+'</h4><h5 class="text-muted mb-0">'+itemname+'</h5></div>'+
+					'<div class="col-4 text-end">'+
+					'<div class="round text-white d-inline-block text-center rounded-circle bg-success"><i class="mdi mdi-'+obj.homepage.widgets[0].widgets[i].icon+'" display-6></i></div>'+
+					'</div></div></div></div>');
+
+
+				}
+
+        for (let i = 0; i < obj.homepage.widgets[1].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+
+				  
+				  //$('#wl').append('<hr>');
+				  //$('#wl').append(obj.homepage.widgets[1].widgets[i].item.name);
+				  //$('#wl').append(obj.homepage.widgets[1].widgets[i].item.state);
+				  //$('#wl').append(obj.homepage.widgets[1].widgets[i].label);
+
+
+                var waterstate=(obj.homepage.widgets[1].widgets[i].item.state/obj1)*100;
+							
+							
+								if(waterstate>999999.9) {
+									waterstate=0;
+								}                
+                
+                if(waterstate>60) {
+                	var badge='success';
+                	var badgeTxt='Good';
+                } else if (waterstate>30 && waterstate<60) {
+                	var badge='warning';
+                	var badgeTxt='Normal';
+                } else {
+                	var badge='danger';
+                	var badgeTxt='Critical';
+                }
+
+							 		var str = obj.homepage.widgets[1].widgets[i].label;//'EC[0 uS/cm]';
+							 		var words = str.split('[');
+									itemname=translated(language,words[0]);
+									var regExp = /\[([^)]+)\]/;
+									var matches = regExp.exec(str);
+									itemstate=matches[1];
+
+
+
+
+					$('#wl').append('<div class="d-flex"><i class="mdi mdi-'+obj.homepage.widgets[1].widgets[i].icon+' display-7"></i><div class="ms-2 align-self-center" style="width:100%">'+
+						'<h6 class="text-muted mb-0"><div class="d-flex border-bottom"><div>'+itemname+'<span class="sl-date text-muted ms-1">-  '+itemstate+'</span> <span class="badge ms-auto bg-'+badge+'">'+badgeTxt+'</span></div>'+
+						'<div class="ms-auto flex-shrink-0"><i data-feather="info" class="feather-sm me-2"></i></div></div></h6>'+
+						'<h6 class="text-muted mb-3"><div class="progress" style="100%;height:15px"><div class="progress-bar bg-'+badge+'" style="width: '+waterstate.toFixed(0)+'%;" role="progressbar">'+waterstate.toFixed(0)+'%</div></div></h6>'+
+						'</div></div>');
+
+
+
+				}
+				
+        for (let i = 0; i < obj.homepage.widgets[2].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+				  
+				  // $('#ambient').append('<hr>');
+				  //$('#ambient').append(obj.homepage.widgets[2].widgets[i].item.name);
+				  //$('#ambient').append(obj.homepage.widgets[2].widgets[i].item.state);
+				  //$('#ambient').append(obj.homepage.widgets[2].widgets[i].label);
+
+
+					$('#ambient').append('<div class="col-4"><div>'+
+						'<div class="d-flex align-items-center">'+
+						'<i class="mdi mdi-'+obj.homepage.widgets[2].widgets[i].icon+' display-8"></i>'+
+						'<div class="ms-1">'+
+						'<h6 class="mb-0">'+obj.homepage.widgets[2].widgets[i].item.state+'</h6>'+
+						'<h6 class="card-subtitle mb-0 fs-2 fw-normal">'+obj.homepage.widgets[2].widgets[i].item.name+'</h6>'+
+						'</div></div></div></div>');
+
+
+
+
+				}				
+
+
+        for (let i = 0; i < obj.homepage.widgets[4].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+				 // homepage.widgets[4].widgets[0].label
+				   $('#insights').append('<li><i class="fa fa-circle me-1 text-danger"></i>'+obj.homepage.widgets[4].widgets[i].label+'</li>');
+				 // $('#insights').append(obj.homepage.widgets[4].widgets[i].item.name);
+				  //$('#insights').append(obj.homepage.widgets[4].widgets[i].item.state);
+				 // $('#insights').append(obj.homepage.widgets[4].widgets[i].label);
+            
+				}			
+
+
+        for (let i = 0; i < obj.homepage.widgets[5].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+				  
+				  // $('#control').append('<hr>');
+				 // $('#control').append(obj.homepage.widgets[5].widgets[i].item.name);
+				 // $('#control').append(obj.homepage.widgets[5].widgets[i].item.state);
+				 // $('#control').append(obj.homepage.widgets[5].widgets[i].label);
+	
+                if(obj.homepage.widgets[5].widgets[i].item.state=='ON') {
+                	
+                	$('#controlon').append('<li>'+obj.homepage.widgets[5].widgets[i].item.name+'</li>');
+                	
+                	
+                	$('#control').append('<tr><td>'+obj.homepage.widgets[5].widgets[i].label+'</td><td><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[5].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[5].widgets[i].item.name+'" value="OFF">OFF</button></td></tr>');
+                	
+                } else {
+                	$('#controloff').append('<li>'+obj.homepage.widgets[5].widgets[i].item.name+'</li>');
+                	
+                	$('#control').append('<tr><td>'+obj.homepage.widgets[5].widgets[i].label+'</td><td><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[5].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[5].widgets[i].item.name+'" value="OFF">OFF</button></td></tr>');
+                }					
+
+				}		
+
+
+
+        for (let i = 0; i < obj.homepage.widgets[6].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+				  
+				  // $('#control').append('<hr>');
+				 // $('#control').append(obj.homepage.widgets[5].widgets[i].item.name);
+				 // $('#control').append(obj.homepage.widgets[5].widgets[i].item.state);
+				 // $('#control').append(obj.homepage.widgets[5].widgets[i].label);
+	
+                if(obj.homepage.widgets[6].widgets[i].item.state=='ON') {
+                	
+              	
+                	$('#task').append('<tr><td>'+obj.homepage.widgets[6].widgets[i].label+'</td><td><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[6].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[6].widgets[i].item.name+'" value="OFF">OFF</button></td></tr>');
+                	
+                } else {
+                	
+                	$('#task').append('<tr><td>'+obj.homepage.widgets[6].widgets[i].label+'</td><td><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[6].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[6].widgets[i].item.name+'" value="OFF">OFF</button></td></tr>');
+
+                }					
+
+				}	
+
+
+
+// create the others div first
+        for (let i = 0; i < obj.homepage.widgets[3].widgets.length; i++) {
+                                 		                  								
+						$('#othertitle'+i+'').html(obj.homepage.widgets[3].widgets[i].label);				  
+				}		
+
+
+
+// feed the others data
+        for (let i = 0; i < obj.homepage.widgets[3].widgets.length; i++) {
+				 // text += cars[i] + "<br>";
+				  			  
+  					$('#otheritem'+i+'').html('');
+
+						for (let j = 0; j < obj.homepage.widgets[3].widgets[i].widgets.length; j++) {				  	
+										  
+							 		var str = obj.homepage.widgets[3].widgets[i].widgets[j].label;//'EC[0 uS/cm]';
+							 		var words = str.split('[');
+									itemname=words[0];
+									var regExp = /\[([^)]+)\]/;
+									var matches = regExp.exec(str);
+									itemstate=matches[1];
+									itemstate=itemstate.replace("9999999", "Error");
+					 
+							 
+							 $('#otheritem'+i+'').append('<div class="col-6">'+
+									'<div>'+
+									'<div class="d-flex align-items-center">'+
+									'<i class="mdi mdi-'+obj.homepage.widgets[3].widgets[i].widgets[j].icon+' display-8"></i>'+
+									'<div class="ms-2">'+
+									'<h6 class="mb-0">'+itemstate+'</h4>'+
+									'<h6 class="card-subtitle mb-0 fs-2 fw-normal">'+itemname+'</h6>'+
+									'</div>'+
+									'</div>'+
+									'</div>'+
+									'</div>');
+
+
+
+
+						}
+
+				  
+				}	
+
+
+
+        for (let i = 0; i < obj.homepage.widgets[7].widgets.length; i++) {
+
+
+                if(obj.homepage.widgets[7].widgets[i].type=='Setpoint') {
+                	
+                	$('#userconfig').append('<div class="mb-3 row"><label class="col-md-2 col-form-label">'+obj.homepage.widgets[7].widgets[i].label+'</label><div class="col-md-10"><input class="form-control" type="number" value="'+obj.homepage.widgets[7].widgets[i].item.state+'" min="'+obj.homepage.widgets[7].widgets[i].minValue+'" max="'+obj.homepage.widgets[7].widgets[i].maxValue+'" step="'+obj.homepage.widgets[7].widgets[i].step+'" id="'+obj.homepage.widgets[7].widgets[i].item.name+'"/></div></div>');
+                	
+                	
+                } else {
+                	
+                	if(obj.homepage.widgets[7].widgets[i].item.state=='ON') {
+                		$('#userconfig').append('<div class="mb-3 row"><label class="col-md-2 col-form-label">'+obj.homepage.widgets[7].widgets[i].label+'</label><div class="col-md-10"><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[7].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[7].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');              		
+                	} else {
+                		$('#userconfig').append('<div class="mb-3 row"><label class="col-md-2 col-form-label">'+obj.homepage.widgets[7].widgets[i].label+'</label><div class="col-md-10"><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[7].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[7].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+                		
+                	}
+                	
+                	
+                }					
+
+				}	
+
+
+        for (let i = 0; i < obj.homepage.widgets[8].widgets.length; i++) {
+
+
+                if(obj.homepage.widgets[8].widgets[i].type=='Setpoint') {
+                	
+                	$('#adminconfig').append('<div class="mb-3 row"><label class="col-md-2 col-form-label">'+obj.homepage.widgets[8].widgets[i].label+'</label><div class="col-md-10"><input class="form-control" type="number" value="'+obj.homepage.widgets[8].widgets[i].item.state+'" min="'+obj.homepage.widgets[8].widgets[i].minValue+'" max="'+obj.homepage.widgets[8].widgets[i].maxValue+'" step="'+obj.homepage.widgets[8].widgets[i].step+'" id="'+obj.homepage.widgets[8].widgets[i].item.name+'"/><span class="help-block text-muted"><small>help text</small></span></div></div>');
+                	
+                	
+                } else {
+                	
+                	if(obj.homepage.widgets[8].widgets[i].item.state=='ON') {
+                		$('#adminconfig').append('<div class="mb-3 row"><label class="col-md-2 col-form-label">'+obj.homepage.widgets[8].widgets[i].label+'</label><div class="col-md-10"><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[8].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[8].widgets[i].item.name+'" value="OFF">OFF</button></br><span class="help-block text-muted"><small>help text</small></span></div></div>');              		
+                	} else {
+                		$('#adminconfig').append('<div class="mb-3 row"><label class="col-md-2 col-form-label">'+obj.homepage.widgets[8].widgets[i].label+'</label><div class="col-md-10"><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[8].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[8].widgets[i].item.name+'" value="OFF">OFF</button></br><span class="help-block text-muted"><small>help text</small></span></div></div>');
+                		
+                	}
+                	
+                	
+                }					
+
+				}	
+//fertigation plan
+        for (let i = 0; i < obj.homepage.widgets[9].widgets[0].widgets.length; i++) {
+
+
+                if(obj.homepage.widgets[9].widgets[0].widgets[i].type=='Setpoint') {
+                	
+                	$('#plan').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[0].widgets[i].label+'</label><input class="form-control" type="number" value="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.state+'" min="'+obj.homepage.widgets[9].widgets[0].widgets[i].minValue+'" max="'+obj.homepage.widgets[9].widgets[0].widgets[i].maxValue+'" step="'+obj.homepage.widgets[9].widgets[0].widgets[i].step+'" id="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.name+'"/><small class="form-control-feedback">This is inline help</small></div></div>');
+
+
+                	
+                	
+                } else if(obj.homepage.widgets[9].widgets[0].widgets[i].type=='Switch') {
+                	
+	                	if(obj.homepage.widgets[9].widgets[0].widgets[i].item.state=='ON') {
+	                		$('#plan').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[0].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+	                	} else {
+	                		$('#plan').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[0].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+	                	}                	
+                } else {
+                	               	
+                	$('#plan').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[0].widgets[i].label+'</label><input class="form-control" type="text" value="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.state+'"  id="'+obj.homepage.widgets[9].widgets[0].widgets[i].item.name+'"/ disabled><small class="form-control-feedback">This is inline help</small></div></div>');
+                	
+                }					
+
+				}	
+
+
+				//check how many plot
+				for (let p = 0; p < obj.homepage.widgets[9].widgets[1].widgets.length; p++) {
+
+			         
+			         $('#plottitle'+p+'').html(obj.homepage.widgets[9].widgets[1].widgets[p].label);
+			         
+			         
+			         $('#plotsetting'+p+'').html('');
+			         $('#plotfertigation'+p+'').html('');
+			         $('#plotirrigation'+p+'').html('');
+			         
+			        // plot settings
+			        for (let i = 0; i < obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets.length; i++) {
+
+			               
+			                //alert(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].label);
+			                if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].type=='Setpoint') {
+			                	
+			                	$('#plotsetting'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].label+'</label><input class="form-control" type="number" value="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.state+'" min="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].minValue+'" max="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].maxValue+'" step="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].step+'" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.name+'"/><small class="form-control-feedback">This is inline help</small></div></div>');
+
+
+			                	
+			                	
+			                } else if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].type=='Switch') {
+			                	
+				                	if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.state=='ON') {
+				                		$('#plotsetting'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+				                	} else {
+				                		$('#plotsetting'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+				                	}                	
+			                } else {
+ 	
+			                	$('#plotsetting'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].label+'</label><input class="form-control" type="text" value="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.state+'"  id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[0].widgets[i].item.name+'"/ disabled><small class="form-control-feedback">This is inline help</small></div></div>');
+			                	
+			                }					
+
+							}
+
+
+							// plot fertigation
+			        for (let i = 0; i < obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets.length; i++) {
+
+			                if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].type=='Setpoint') {
+			                	
+			                	$('#plotfertigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].label+'</label><input class="form-control" type="number" value="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.state+'" min="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].minValue+'" max="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].maxValue+'" step="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].step+'" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.name+'"/><small class="form-control-feedback">This is inline help</small></div></div>');
+
+
+			                	
+			                	
+			                } else if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].type=='Switch') {
+			                	
+				                	if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.state=='ON') {
+				                		$('#plotfertigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+				                	} else {
+				                		$('#plotfertigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+				                	}                	
+			                } else {
+			                	               	
+			                	$('#plotfertigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].label+'</label><input class="form-control" type="text" value="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.state+'"  id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[1].widgets[i].item.name+'"/ disabled><small class="form-control-feedback">This is inline help</small></div></div>');
+			                	
+			                }					
+
+							}	
+							
+							
+							// plot irrigation
+			        for (let i = 0; i < obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets.length; i++) {
+
+
+			                if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].type=='Setpoint') {
+			                	
+			                	$('#plotirrigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].label+'</label><input class="form-control" type="number" value="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.state+'" min="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].minValue+'" max="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].maxValue+'" step="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].step+'" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.name+'"/><small class="form-control-feedback">This is inline help</small></div></div>');
+
+
+			                	
+			                	
+			                } else if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].type=='Switch') {
+			                	
+				                	if(obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.state=='ON') {
+				                		$('#plotirrigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+				                	} else {
+				                		$('#plotirrigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].label+'</label><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-light" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.name+'" value="ON">ON</button><button type="button" class="btn btn-sm  waves-effect waves-light px-4 ms-2 btn-danger" id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.name+'" value="OFF">OFF</button></div></div>');
+
+				                	}                	
+			                } else {
+			                	               	
+			                	$('#plotirrigation'+p+'').append('<div class="col-md-6"><div class="mb-3"><label class="control-label">'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].label+'</label><input class="form-control" type="text" value="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.state+'"  id="'+obj.homepage.widgets[9].widgets[1].widgets[p].widgets[2].widgets[i].item.name+'"/ disabled><small class="form-control-feedback">This is inline help</small></div></div>');
+			                	
+			                }					
+
+							}	
+
+
+					
+				}
+
+
+
+	  });
+
+
+});
+
+
