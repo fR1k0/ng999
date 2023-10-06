@@ -137,7 +137,7 @@
                 <!-- End User profile text-->
 
 
-                {% include 'sidebarWholeseller.html' %}
+                {% include 'sidebar.html' %}
             </div>
             <!-- End Sidebar scroll-->
             <!-- Bottom points-->
@@ -166,37 +166,49 @@
 
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="card-title" style="margin-bottom: 20px;">Customer List (With Declaration)</h2>
+                        <h2 class="card-title" style="margin-bottom: 20px;">Wholesaler Account List</h2>
 
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Customer List</h4>
+                                <h4 class="card-title">Account List</h4>
                                 <hr>
                                 <div class="table-responsive">
                                     <table id="customerList" class="table mt-3" style="width: 100%">
                                         <thead>
                                             <tr>
-                                                <th class="col-3">Phone Number</th>
                                                 <th class="col-3">Name</th>
-                                                <th class="col-3">Address</th>
-                                                <th class="col-2">Additional Info</th>
-                                                <th class="col-1">Migration Date</th>
-                                                <th class="col-2">Declaration</th>
-                                                <th class="col-1">Action</th>
+                                                <th class="col-3">Email</th>
+                                                <th class="col-3">Company</th>
+                                                <th class="col-2">Phone No.</th>
+                                                <th class="col-1">Status</th>
+                                                <th class="col-2">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                            {% for cust in customerList %}
+                                            {% for Wholeseller in WholesellerList %}
                                             <tr>
-                                                <td>{{cust['Customer_Phone_Number']}}</td>
-                                                <td>{{cust['Customer_Name']}}</td>
-                                                <td>{{cust['Customer_Address']}}</td>
-                                                <td>{{cust['Customer_Additional_Info']}}</td>
-                                                <td>{{cust['Customer_Migration_Date']}}</td>
-                                                <td>{{cust['Customer_Declaration_Date']}}</td>
+                                                <td>{{Wholeseller['Account_Name']}}</td>
+                                                <td>{{Wholeseller['Account_Email']}}</td>
+                                                <td>{{Wholeseller['Company_Name']}}</td>
+                                                <td></td>
+                                                <td>{{Wholeseller['Customer_Declaration_Date']}}</td>
                                                 <td>
-                                                    
+                                                    <div class="dropdown">
+                                                        <a href="#" class="text-muted dropdown-toggle"
+                                                            id="dropdownMenuButton-{{ loop.index }}"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" href="#"
+                                                                onclick="update({{cust}})">Update</a>
+
+                                                                <a class="dropdown-item" href="#"
+                                                                onclick="reset({{cust}})">Reset Password</a>
+                                                        </div>
+                                                      
+                                                    </div>
                                                 </td>
                                             </tr>
                                             {% endfor %}

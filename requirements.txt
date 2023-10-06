@@ -1,18 +1,7 @@
-click==8.0.4
-dataclasses
-Flask==2.0.3
-Flask-SQLAlchemy==2.5.1
-Flask-Bootstrap==3.3.7.1
-greenlet==1.1.2
-gunicorn==21.2.0
-importlib-metadata==4.8.3
-itsdangerous==2.0.1
-Jinja2==3.0.3
-MarkupSafe==2.0.1
-# pkg_resources
-PyMySQL==1.0.2
-SQLAlchemy==1.4.35
-typing_extensions==4.1.1
-Werkzeug==2.0.3
-zipp==3.6.0
-eventlet==0.30.2
+Flask==3.0.0
+passlib==1.7.4
+flask-login==0.6.2
+requests==2.31.0
+pandas==2.1.1
+waitress==2.1.0
+mysqlclient==2.2.0

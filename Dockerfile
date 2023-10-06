@@ -21,14 +21,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --upgrade pip
 RUN pip install gunicorn
-#RUN pip install eventlet 
+RUN pip install eventlet
+RUN pip install werkzeug==0.16.0
 
-
-WORKDIR .
+WORKDIR /var/www/html
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 
 COPY . .
-CMD /usr/local/bin/gunicorn -w 16 -b :5000 --worker-class eventlet --reload --threads=100 main:app
+CMD /usr/local/bin/gunicorn -w 16 -b :5000 --worker-class eventlet --reload --threads=16 main:app

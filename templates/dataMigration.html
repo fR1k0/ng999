@@ -212,6 +212,8 @@
                                                 <td>{{cust['Customer_Additional_Info']}}</td>
                                                 <td>{{cust['Customer_Migration_Date']}}</td>
                                                 <td>{{cust['Customer_Declaration_Date']}}</td>
+
+                                                {% if cust['Customer_Declaration_Date'] == 'None' %}
                                                 <td>
                                                     <div class="dropdown">
                                                         <a href="#" class="text-muted dropdown-toggle"
@@ -225,6 +227,10 @@
                                                         </div>
                                                     </div>
                                                 </td>
+
+                                                {% else %}
+                                                <td> </td>
+                                                {% endif %}
                                             </tr>
                                             {% endfor %}
                                         </tbody>

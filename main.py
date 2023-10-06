@@ -114,14 +114,14 @@ async def index():
     except Exception as e:
         print(e)
         return redirect(url_for('logout'))
-
-async def hello():
-    return "x"
   
 @app.route("/createAccount")
 @login_required
 def accountCreate():
     try:
+        if session['role_id'] != '1':
+            return redirect(url_for('logout'))
+        
         url = "http://localhost:8888/ng999/company/list"
         response = requests.get(url)
         
@@ -133,8 +133,12 @@ def accountCreate():
         print(e)
         
 @app.route("/addAccount", methods=["POST"])
+@login_required
 def addAccount():
     try:
+        if session['role_id'] != '1':
+            return redirect(url_for('logout'))
+        
         url= "http://localhost:8888/ng999/account/add"
     
         name = request.form['name']
@@ -215,10 +219,12 @@ def withoutDeclaration():
         print(e)
         flash(str(e))
         return redirect(url_for('index'))
-    
+
+@login_required
 def allowed_file(filename, allowed_extensions):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
 
+@login_required
 def convert_to_string(value):
             if pd.notna(value):
                 if isinstance(value, int):
@@ -268,6 +274,30 @@ def uploadMigration():
         print(e)
         flash(str(e))
         return redirect(url_for('dataMigration'))
+    
+@app.route("/accountList", methods=['GET'])
+@login_required
+def accountList():
+    try:
+        if session['role_id'] != '1':
+            return redirect(url_for("logout"))
+        
+        url = "http://localhost:8888/ng999/account/list"
+        response = requests.get(url)
+        
+        body = []
+    
+        if response.status_code == 200:
+            body = response.json()
+            
+        print(body)
+        
+        return render_template('accountList.html', WholesellerList=body)
+        
+    except Exception as e:
+        flash(str(e))
+        return redirect(url_for('index'))
+    
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9032, threaded=True, use_reloader=True,debug=False)
