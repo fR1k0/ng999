@@ -46,18 +46,6 @@
             word-break: break-word;
             overflow-wrap: break-word;
         }
-
-        .form-item {
-            margin-bottom: 20px;
-            /* Add vertical spacing between label-input pairs */
-        }
-
-        .form-item label {
-            display: block;
-            /* Display labels as block elements to stack them above inputs */
-            margin-bottom: 5px;
-            /* Add spacing between label and input */
-        }
     </style>
 </head>
 
@@ -149,7 +137,7 @@
                 <!-- End User profile text-->
 
 
-                {% include 'sidebarWholeseller.html' %}
+                {% include 'sidebar.html' %}
             </div>
             <!-- End Sidebar scroll-->
             <!-- Bottom points-->
@@ -176,120 +164,59 @@
             <div class="container-fluid">
                 {% include 'debug.html' %}
 
-                <div class="modal fade" id="updateDeclarationModal" tabindex="-1"
-                    aria-labelledby="updateDeclarationModal" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Update Declaration</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-
-
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustName">Name</label>
-                                            <input type="text" class="custom-input" name="modalCustName"
-                                                id="modalCustName"  required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustPhone">Phone No.</label>
-                                            <input type="text" class="custom-input" name="modalCustPhone"
-                                                id="modalCustPhone" 
-                                                required />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustAddr">Address</label>
-                                            <input type="text" class="custom-input" name="modalCustAddr"
-                                                id="modalCustAddr"  required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustInfo">Additional Info</label>
-                                            <input type="text" class="custom-input" name="modalCustInfo"
-                                                id="modalCustInfo" 
-                                                required />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer" style="justify-content: flex-start;">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="card-title" style="margin-bottom: 20px;">Customer List (Without Declaration)</h2>
+                        <h2 class="card-title" style="margin-bottom: 20px;">Wholesaler Company List</h2>
+
 
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Customer List</h4>
+                                <h4 class="card-title">Add Company</h4>
+                                <hr>
+
+                                <div class="custom-file mb-3">
+                                    <input type="text" class="custom-input" id="compName" name="compName">
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-primary" id="uploadButton"
+                                        onclick="insertCompany()">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Company List</h4>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="wtdList" class="table mt-3" style="width: 100%">
+                                    <table id="comList" class="table mt-3" style="width: 100%">
                                         <thead>
                                             <tr>
-                                                <th class="col-3">Phone Number</th>
-                                                <th class="col-3">Name</th>
-                                                <th class="col-3">Address</th>
-                                                <th class="col-2">Additional Info</th>
-                                                <th class="col-1">Migration Date</th>
-                                                <th class="col-2">Declaration</th>
-                                                <th class="col-1">Action</th>
+                                                <th class="col-6">Name</th>
+                                                <th class="col-6">Date Created</th>
+                                                <th class="col-3">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            {% for cust in customerList %}
+                                            {% for compL in companyList %}
                                             <tr>
-                                                <td>{{cust['Customer_Phone_Number']}}</td>
-                                                <td>{{cust['Customer_Name']}}</td>
-                                                <td>{{cust['Customer_Address']}}</td>
-                                                <td>{{cust['Customer_Additional_Info']}}</td>
-                                                <td>{{cust['Customer_Migration_Date']}}</td>
-                                                <td>{{cust['Customer_Declaration_Date']}}</td>
+                                                <td>{{compL['Company_Name']}}</td>
+                                                <td>{{compL['Company_Date_Created']}}</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <a href="#" class="text-muted dropdown-toggle"
                                                             id="dropdownMenuButton-{{ loop.index }}"
                                                             data-bs-toggle="dropdown" aria-expanded="false">
-
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                                href="#updateDeclarationModal" id="updateLink"
-                                                                data-cust-name="{{cust['Customer_Name']}}" data-cust-phone="{{cust['Customer_Phone_Number']}}"
-                                                                data-cust-address="{{cust['Customer_Address']}}"
-                                                                data-cust-info="{{cust['Customer_Additional_Info']}}">
-                                                                Update
-                                                            </a>
-
+                                                            <a class="dropdown-item" href="#"
+                                                                onclick="deleteCompany({{compL['Company_ID']}})">Delete</a>
                                                         </div>
                                                     </div>
                                                 </td>
                                             </tr>
-
-
-
-
                                             {% endfor %}
                                         </tbody>
                                     </table>
@@ -350,26 +277,68 @@
         <script src="/static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="/static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
         <script>
-            $("#wtdList").DataTable({
-                order: [[4, 'desc']],
+            function deleteCompany(id) {
+                console.log(id);
+                payload = { 'ID': id, 'mode': 1 };
+
+                let url = '/companyOperations';
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Company deleted successfully.');
+                            window.location.reload();
+                        } else {
+                            console.error('Failed to delete company.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+            function insertCompany() {
+                let name = document.getElementById('compName').value;
+
+                if (name.replace(/\s+/g, '') === '') {
+                    alert('Please enter a company name');
+                    return;
+                }
+                payload = { 'Name': name, 'mode': 2 };
+
+                let url = '/companyOperations';
+
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Company inserted successfully.');
+                            window.location.reload();
+                        } else {
+                            console.error('Failed to insert company.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        </script>
+
+
+        <script>
+            $("#comList").DataTable({
+                order: [[2, 'desc']],
             });
-
-
-            $('#updateDeclarationModal').on('show.bs.modal', function (event) {
-                let triggerLink = $(event.relatedTarget); 
-                let custName = triggerLink.data('cust-name');
-                let custPhone = triggerLink.data('cust-phone');
-                let custAddress = triggerLink.data('cust-address');
-                let custInfo = triggerLink.data('cust-info');
-
-
-
-                $('#modalCustName').val(custName);
-                $('#modalCustPhone').val(custPhone);
-                $('#modalCustAddr').val(custAddress);
-                $('#modalCustInfo').val(custInfo);
-                });
-
 
         </script>
 </body>

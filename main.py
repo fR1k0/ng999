@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request, json, session, flash
+from flask import Flask, render_template, redirect, url_for, request, json, session, flash, jsonify
 from passlib.context import CryptContext
 from flask_login import LoginManager, login_required, login_user, UserMixin, logout_user, current_user
 import requests
@@ -7,6 +7,7 @@ import io
 import asyncio
 import waitress
 import MySQLdb
+import bcrypt
   
 app = Flask(__name__) 
 login_manager = LoginManager(app)
@@ -51,9 +52,9 @@ def login():
         if request.method == 'POST':
             username = request.form.get('username')
             password = request.form.get('password')
-
-            url = "http://172.26.80.1:8888/ng999/logon"
-            data = { "username": username, "password": password}
+            
+            url = "http://172.20.0.1:8888/ng999/logon"
+            data = { "username": username, "password": password }
             
             response = requests.post(url, json=data)
             
@@ -97,7 +98,7 @@ def index():
         if session['role_id'] == '1':
             return render_template("index.html", session=session) 
         
-        url = 'http://172.26.80.1:8888/ng999/customer/getList'
+        url = 'http://172.20.0.1:8888/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "4"}
         
         response = requests.post(url, json=payload)
@@ -121,7 +122,7 @@ def accountCreate():
         if session['role_id'] != '1':
             return redirect(url_for('logout'))
         
-        url = "http://172.26.80.1:8888/ng999/company/list"
+        url = "http://172.20.0.1:8888/ng999/company/list"
         response = requests.get(url)
         
         if response.status_code == 200:
@@ -138,7 +139,7 @@ def addAccount():
         if session['role_id'] != '1':
             return redirect(url_for('logout'))
         
-        url= "http://172.26.80.1:8888/ng999/account/add"
+        url= "http://172.20.0.1:8888/ng999/account/add"
     
         name = request.form['name']
         role = request.form['role']
@@ -150,8 +151,11 @@ def addAccount():
         response = requests.post(url, json=body)
         
         if response.status_code == 200:
-            return redirect(url_for('index'))
-    
+            flash(f"Successfully created account for {name}")
+            return redirect(url_for('accountCreate'))
+        
+        flash(f"Failed to create account for {name}")
+        return redirect(url_for('accountCreate'))
     except Exception as e:
         print(e)
         
@@ -162,7 +166,7 @@ def dataMigration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
-        url = 'http://172.26.80.1:8888/ng999/customer/getList'
+        url = 'http://172.20.0.1:8888/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "3"}
         
         response = requests.post(url, json=payload)
@@ -183,7 +187,7 @@ def withDeclaration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
-        url = 'http://172.26.80.1:8888/ng999/customer/getList'
+        url = 'http://172.20.0.1:8888/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "1"}
         
         response = requests.post(url, json=payload)
@@ -205,7 +209,7 @@ def withoutDeclaration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
-        url = 'http://172.26.80.1:8888/ng999/customer/getList'
+        url = 'http://172.20.0.1:8888/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "2"}
         
         response = requests.post(url, json=payload)
@@ -264,9 +268,14 @@ def uploadMigration():
 
         payload = {'data': rows_list, 'wholesellerID': session['user_id']}
 
-        url = "http://172.26.80.1:8888/ng999/customer/add"
+        url = "http://172.20.0.1:8888/ng999/customer/add"
         response = requests.post(url, json=payload)
         
+        if response.status_code == 200:
+            flash("Uploaded migration list")
+            return redirect(url_for('dataMigration'))
+        
+        flash("Fail to upload migration list")
         return redirect(url_for('dataMigration'))
         
     except Exception as e:
@@ -281,7 +290,7 @@ def accountList():
         if session['role_id'] != '1':
             return redirect(url_for("logout"))
         
-        url = "http://172.26.80.1:8888/ng999/account/list"
+        url = "http://172.20.0.1:8888/ng999/account/list"
         response = requests.get(url)
         
         body = []
@@ -297,6 +306,54 @@ def accountList():
         flash(str(e))
         return redirect(url_for('index'))
     
+
+@app.route("/companyList", methods=['GET'])
+@login_required
+def companyList():
+    try:
+        url = "http://172.20.0.1:8888/ng999/company/list"
+        response = requests.get(url)
+        
+        cList = []
+        
+        if response.status_code == 200:
+            cList = response.json()
+        
+        
+        print(cList, flush=True)
+        return render_template('createCompany.html', companyList=cList)
+    
+    except Exception as e:
+        print(e)
+        flash(str(e))
+        return redirect(url_for('index'))
+    
+@app.route("/companyOperations", methods=["POST"])
+@login_required
+def companyOperations():
+    try:
+        body = request.get_json()
+        
+        if body['mode'] == 1:
+            url = "http://172.20.0.1:8888/ng999/company/deleteCompany"
+            payload = {"ID": body['ID']}
+        
+        else:
+            url = "http://172.20.0.1:8888/ng999/company/insertCompany"
+            payload = {"Name": body['Name']}
+                    
+        response = requests.post(url, json=payload)
+
+        if response.status_code == 200:
+            return jsonify({}), 200
+        else:
+            return jsonify({}), 404
+            
+        
+    except Exception as e:
+        print(e, flush=True)
+        return jsonify({}), 404
+        
 
 if __name__ == '__main__':
 	app.run(port=5000, threaded=True, use_reloader=True, debug=False)
