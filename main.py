@@ -369,9 +369,7 @@ def decalare():
             'WholeSellerID': session['user_id'],
             'bundle': "0"
         }
-        
-        print(body)
-                
+                        
         checkData = {key: str(value).replace(" ", "") for key, value in body.items()}
         
         if any(value == "" for value in checkData.values()):
@@ -386,7 +384,6 @@ def decalare():
         if response.status_code == 200:
             flash(f"Success declaration for {body['Name']}")
             return redirect(request.referrer)
-            #return redirect(url_for("withoutDeclaration"))
         
         flash(f"Fail declaration {response.json()['Message']}")
         return redirect(request.referrer)

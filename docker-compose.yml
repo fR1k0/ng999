@@ -1,13 +1,40 @@
 version: "3"
 services:
+  ng999nginx:
+    container_name: ng999_nginx
+    image: ng999:nginx
+    build: 
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - 9032:80
+
+    networks:
+      - internal
+
+    depends_on:
+      - rt999web
+      - rt999api
+
   rt999web:
     container_name: rt999web
     image: "ng999:web"
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "9032:5000"
+    expose:
+      - 5000
+    networks:
+      - internal
+
+  rt999api:
+    container_name: rt999_api
+    image: "rt999:api"
+    build:
+      context: .
+      dockerfile: ng999API/Dockerfile
+    expose:
+      - 8888
     networks:
       - internal
 
