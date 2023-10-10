@@ -548,8 +548,8 @@ async def declareCompany(request:Request):
         if cursor:cursor.close()
         return JSONResponse(content={'Message': str(e)}, status_code=404)
     
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8888)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8888)
     
 
         

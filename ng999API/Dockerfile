@@ -23,13 +23,14 @@ RUN pip install --upgrade pip
 RUN pip install gunicorn
 RUN pip install eventlet
 
+RUN mkdir /rtapi
+WORKDIR /rtapi
+
 COPY . .
 RUN pip install -r requirements.txt
 RUN pip install uvicorn
 
+RUN ls -l
 
 
-EXPOSE 8888
-
-CMD ["python", "app.py"]
-# CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8888", "--reload"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8888", "--reload"]
