@@ -197,6 +197,9 @@
 
                                 <div class="modal-header">
                                     <h5 class="modal-title">Update Declaration</h5>
+                                    <div class="form-item">
+                                    <input type="text" id="modalcustID" name="modalcustID" class="custom-input" readonly hidden>
+                                    </div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -279,7 +282,7 @@
                                                 <td>{{cust['Customer_Address']}}</td>
                                                 <td>{{cust['Customer_Additional_Info']}}</td>
                                                 <td>{{cust['Customer_Migration_Date']}}</td>
-                                                <td>{{cust['Customer_Declaration_Date']}}</td>
+                                                <td>&#x2717;</td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <a href="#" class="text-muted dropdown-toggle"
@@ -293,8 +296,10 @@
                                                                 data-cust-name="{{cust['Customer_Name']}}"
                                                                 data-cust-phone="{{cust['Customer_Phone_Number']}}"
                                                                 data-cust-address="{{cust['Customer_Address']}}"
-                                                                data-cust-info="{{cust['Customer_Additional_Info']}}">
-                                                                Update
+                                                                data-cust-info="{{cust['Customer_Additional_Info']}}"
+                                                                data-cust-id="{{cust['Customer_ID']}}"
+                                                                >
+                                                                Update and Declare
                                                             </a>
 
                                                         </div>
@@ -376,11 +381,13 @@
                 let custPhone = triggerLink.data('cust-phone');
                 let custAddress = triggerLink.data('cust-address');
                 let custInfo = triggerLink.data('cust-info');
+                let custID = triggerLink.data('cust-id');
 
                 $('#modalCustName').val(custName);
                 $('#modalCustPhone').val(custPhone);
                 $('#modalCustAddr').val(custAddress);
                 $('#modalCustInfo').val(custInfo);
+                $('#modalcustID').val(custID);
             });
 
 

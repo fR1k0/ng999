@@ -214,6 +214,8 @@ def withoutDeclaration():
         
         response = requests.post(url, json=payload)
         
+        
+        
         if response.status_code == 200:
             custList = response.json()
             return render_template('withoutDeclaration.html', session=session, customerList=custList)
@@ -359,13 +361,17 @@ def companyOperations():
 def decalare():
     try:
         body = {
+            'CustID': str(request.form.get('modalcustID')),
             'Name': str(request.form.get('modalCustName')),
             'PhoneNo': str(request.form.get('modalCustPhone')),
             'Address': str(request.form.get('modalCustAddr')),
             'AdditionalInfo': str(request.form.get('modalCustInfo')),
-            'WholeSellerID': session['user_id']
+            'WholeSellerID': session['user_id'],
+            'bundle': "0"
         }
         
+        print(body)
+                
         checkData = {key: str(value).replace(" ", "") for key, value in body.items()}
         
         if any(value == "" for value in checkData.values()):
@@ -379,14 +385,15 @@ def decalare():
         
         if response.status_code == 200:
             flash(f"Success declaration for {body['Name']}")
-            return redirect(url_for("withoutDeclaration"))
+            return redirect(request.referrer)
+            #return redirect(url_for("withoutDeclaration"))
         
-        flash(f"Fail declaration")
-        return redirect(url_for("withoutDeclaration"))
+        flash(f"Fail declaration {response.json()['Message']}")
+        return redirect(request.referrer)
     
     except Exception as e:
         flash(str(e))
-        return redirect(url_for("withoutDeclaration"))
+        return redirect(request.referrer)
     
 if __name__ == '__main__':
 	app.run(port=5000, threaded=True, use_reloader=True, debug=False)
