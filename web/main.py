@@ -13,6 +13,7 @@ app = Flask(__name__)
 login_manager = LoginManager(app)
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 app.secret_key = 'vfdjbfdkjvjdkfnvjkdfnvjkfdn'
+app.config['API_URL'] = "http://ng999nginx/ng999Restapi"
 
 class User:
     def __init__(self, email):
@@ -53,7 +54,7 @@ def login():
             username = request.form.get('username')
             password = request.form.get('password')
             
-            url = "http://172.20.0.1:8888/ng999/logon"
+            url = app.config['API_URL'] + "/ng999/logon"
             data = { "username": username, "password": password }
             
             response = requests.post(url, json=data)
@@ -98,7 +99,7 @@ def index():
         if session['role_id'] == '1':
             return render_template("index.html", session=session) 
         
-        url = 'http://172.20.0.1:8888/ng999/customer/getList'
+        url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "4"}
         
         response = requests.post(url, json=payload)
@@ -122,7 +123,7 @@ def accountCreate():
         if session['role_id'] != '1':
             return redirect(url_for('logout'))
         
-        url = "http://172.20.0.1:8888/ng999/company/list"
+        url = app.config['API_URL'] + "/ng999/company/list"
         response = requests.get(url)
         
         if response.status_code == 200:
@@ -139,7 +140,7 @@ def addAccount():
         if session['role_id'] != '1':
             return redirect(url_for('logout'))
         
-        url= "http://172.20.0.1:8888/ng999/account/add"
+        url= app.config['API_URL'] + "/ng999/account/add"
     
         name = request.form['name']
         role = request.form['role']
@@ -166,7 +167,7 @@ def dataMigration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
-        url = 'http://172.20.0.1:8888/ng999/customer/getList'
+        url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "3"}
         
         response = requests.post(url, json=payload)
@@ -187,7 +188,7 @@ def withDeclaration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
-        url = 'http://172.20.0.1:8888/ng999/customer/getList'
+        url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "1"}
         
         response = requests.post(url, json=payload)
@@ -209,7 +210,7 @@ def withoutDeclaration():
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
-        url = 'http://172.20.0.1:8888/ng999/customer/getList'
+        url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "2"}
         
         response = requests.post(url, json=payload)
@@ -270,7 +271,7 @@ def uploadMigration():
 
         payload = {'data': rows_list, 'wholesellerID': session['user_id']}
 
-        url = "http://172.20.0.1:8888/ng999/customer/add"
+        url = app.config['API_URL'] + "/ng999/customer/add"
         response = requests.post(url, json=payload)
         
         if response.status_code == 200:
@@ -292,7 +293,7 @@ def accountList():
         if session['role_id'] != '1':
             return redirect(url_for("logout"))
         
-        url = "http://172.20.0.1:8888/ng999/account/list"
+        url = app.config['API_URL'] + "/ng999/account/list"
         response = requests.get(url)
         
         body = []
@@ -313,7 +314,7 @@ def accountList():
 @login_required
 def companyList():
     try:
-        url = "http://172.20.0.1:8888/ng999/company/list"
+        url = app.config['API_URL'] + "/ng999/company/list"
         response = requests.get(url)
         
         cList = []
@@ -337,11 +338,11 @@ def companyOperations():
         body = request.get_json()
         
         if body['mode'] == 1:
-            url = "http://172.20.0.1:8888/ng999/company/deleteCompany"
+            url = app.config['API_URL'] + "/ng999/company/deleteCompany"
             payload = {"ID": body['ID']}
         
         else:
-            url = "http://172.20.0.1:8888/ng999/company/insertCompany"
+            url = app.config['API_URL'] + "/ng999/company/insertCompany"
             payload = {"Name": body['Name']}
                     
         response = requests.post(url, json=payload)
@@ -377,7 +378,7 @@ def decalare():
             return redirect(url_for("withoutDeclaration"))
             
         
-        url = "http://172.20.0.1:8888/ng999/company/declare"
+        url = app.config['API_URL'] + "/ng999/company/declare"
         
         response = requests.post(url, json=body)
         

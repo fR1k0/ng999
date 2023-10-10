@@ -13,28 +13,24 @@ services:
       - internal
 
     depends_on:
-      - rt999web
-      - rt999api
+      - ng999web
+      - ng999Restapi
 
-  rt999web:
-    container_name: rt999web
-    image: "ng999:web"
-    build:
-      context: .
-      dockerfile: Dockerfile
+  ng999Restapi:
+    container_name: ng999_restapi
+    image: "ng999:restapi"
+    build: ./ngapi
     expose:
-      - 5000
+      - 8888
     networks:
       - internal
 
-  rt999api:
-    container_name: rt999_api
-    image: "rt999:api"
-    build:
-      context: .
-      dockerfile: ng999API/Dockerfile
+  ng999web:
+    container_name: ng999_web
+    image: "ng999:web"
+    build: ./web
     expose:
-      - 8888
+      - 5000
     networks:
       - internal
 
