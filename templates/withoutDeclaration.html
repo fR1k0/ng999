@@ -58,6 +58,19 @@
             margin-bottom: 5px;
             /* Add spacing between label and input */
         }
+
+
+        .custom-input {
+            width: 300px;
+            /* Set your desired width here */
+            border: 1px solid #ccc;
+            overflow: auto;
+            /* Add a scrollbar if content exceeds the height */
+            padding: 10px;
+            /* Optional padding for better appearance */
+            white-space: pre-wrap;
+            /* Allow text to wrap within the div */
+        }
     </style>
 </head>
 
@@ -180,53 +193,54 @@
                     aria-labelledby="updateDeclarationModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Update Declaration</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
+                            <form method="POST" action="/declare">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Update Declaration</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
 
 
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustName">Name</label>
-                                            <input type="text" class="custom-input" name="modalCustName"
-                                                id="modalCustName"  required />
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustName">Name</label>
+                                                <input type="text" class="custom-input" name="modalCustName"
+                                                    id="modalCustName" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustPhone">Phone No.</label>
+                                                <input type="text" class="custom-input" name="modalCustPhone"
+                                                    id="modalCustPhone" required />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustPhone">Phone No.</label>
-                                            <input type="text" class="custom-input" name="modalCustPhone"
-                                                id="modalCustPhone" 
-                                                required />
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustAddr">Address</label>
+                                                <input type="text" class="custom-input" name="modalCustAddr"
+                                                    id="modalCustAddr" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustInfo">Additional Info</label>
+                                                <input type="text" class="custom-input" name="modalCustInfo"
+                                                    id="modalCustInfo" required />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustAddr">Address</label>
-                                            <input type="text" class="custom-input" name="modalCustAddr"
-                                                id="modalCustAddr"  required />
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-item">
-                                            <label for="modalCustInfo">Additional Info</label>
-                                            <input type="text" class="custom-input" name="modalCustInfo"
-                                                id="modalCustInfo" 
-                                                required />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="modal-footer" style="justify-content: flex-start;">
-                                <button type="submit" class="btn btn-primary">Update</button>
-                            </div>
+                                <div class="modal-footer" style="justify-content: flex-start;">
+                                    <button type="submit" class="btn btn-primary">Update and Declare</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -276,7 +290,8 @@
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                                 href="#updateDeclarationModal" id="updateLink"
-                                                                data-cust-name="{{cust['Customer_Name']}}" data-cust-phone="{{cust['Customer_Phone_Number']}}"
+                                                                data-cust-name="{{cust['Customer_Name']}}"
+                                                                data-cust-phone="{{cust['Customer_Phone_Number']}}"
                                                                 data-cust-address="{{cust['Customer_Address']}}"
                                                                 data-cust-info="{{cust['Customer_Additional_Info']}}">
                                                                 Update
@@ -356,19 +371,17 @@
 
 
             $('#updateDeclarationModal').on('show.bs.modal', function (event) {
-                let triggerLink = $(event.relatedTarget); 
+                let triggerLink = $(event.relatedTarget);
                 let custName = triggerLink.data('cust-name');
                 let custPhone = triggerLink.data('cust-phone');
                 let custAddress = triggerLink.data('cust-address');
                 let custInfo = triggerLink.data('cust-info');
 
-
-
                 $('#modalCustName').val(custName);
                 $('#modalCustPhone').val(custPhone);
                 $('#modalCustAddr').val(custAddress);
                 $('#modalCustInfo').val(custInfo);
-                });
+            });
 
 
         </script>

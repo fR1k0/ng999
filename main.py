@@ -353,7 +353,40 @@ def companyOperations():
     except Exception as e:
         print(e, flush=True)
         return jsonify({}), 404
+    
+@app.route("/declare", methods=["POST"])
+@login_required
+def decalare():
+    try:
+        body = {
+            'Name': str(request.form.get('modalCustName')),
+            'PhoneNo': str(request.form.get('modalCustPhone')),
+            'Address': str(request.form.get('modalCustAddr')),
+            'AdditionalInfo': str(request.form.get('modalCustInfo')),
+            'WholeSellerID': session['user_id']
+        }
         
-
+        checkData = {key: str(value).replace(" ", "") for key, value in body.items()}
+        
+        if any(value == "" for value in checkData.values()):
+            flash(f"Failed declaration at least one field is blank")
+            return redirect(url_for("withoutDeclaration"))
+            
+        
+        url = "http://172.20.0.1:8888/ng999/company/declare"
+        
+        response = requests.post(url, json=body)
+        
+        if response.status_code == 200:
+            flash(f"Success declaration for {body['Name']}")
+            return redirect(url_for("withoutDeclaration"))
+        
+        flash(f"Fail declaration")
+        return redirect(url_for("withoutDeclaration"))
+    
+    except Exception as e:
+        flash(str(e))
+        return redirect(url_for("withoutDeclaration"))
+    
 if __name__ == '__main__':
 	app.run(port=5000, threaded=True, use_reloader=True, debug=False)
