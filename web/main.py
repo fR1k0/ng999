@@ -94,7 +94,7 @@ def logout():
     return redirect(url_for('login'))
         
 
-@app.route("/") 
+@app.route(f"{PREFIX}/") 
 @login_required
 def index(): 
     try:
@@ -127,7 +127,7 @@ def index():
         flash(str(e))
         return redirect(url_for('logout'))
   
-@app.route("/createAccount")
+@app.route(f"{PREFIX}/createAccount")
 @login_required
 def accountCreate():
     try:
@@ -144,7 +144,7 @@ def accountCreate():
     except Exception as e:
         print(e)
         
-@app.route("/addAccount", methods=["POST"])
+@app.route(f"{PREFIX}/addAccount", methods=["POST"])
 @login_required
 def addAccount():
     try:
@@ -171,7 +171,7 @@ def addAccount():
     except Exception as e:
         print(e)
         
-@app.route("/dataMigration", methods=["GET"])
+@app.route(f"{PREFIX}/dataMigration", methods=["GET"])
 @login_required
 def dataMigration():
     try:
@@ -195,7 +195,7 @@ def dataMigration():
         flash(str(e))
         return redirect(url_for('index'))
     
-@app.route("/withDeclaration", methods=["GET"])
+@app.route(f"{PREFIX}/withDeclaration", methods=["GET"])
 @login_required
 def withDeclaration():
     try:
@@ -220,7 +220,7 @@ def withDeclaration():
         return redirect(url_for('index'))
     
     
-@app.route("/withoutDeclaration", methods=["GET"])
+@app.route(f"{PREFIX}/withoutDeclaration", methods=["GET"])
 @login_required
 def withoutDeclaration():
     try:
@@ -258,7 +258,7 @@ def convert_to_string(value):
             else:
                 return ""
     
-@app.route("/uploadMigration", methods=['POST'])
+@app.route(f"{PREFIX}/uploadMigration", methods=['POST'])
 @login_required
 def uploadMigration():
     validExtension = ['xls', 'xlsx']
@@ -306,7 +306,7 @@ def uploadMigration():
         flash(str(e))
         return redirect(url_for('dataMigration'))
     
-@app.route("/accountList", methods=['GET'])
+@app.route(f"{PREFIX}/accountList", methods=['GET'])
 @login_required
 def accountList():
     try:
@@ -328,7 +328,7 @@ def accountList():
         return redirect(url_for('index'))
     
 
-@app.route("/companyList", methods=['GET'])
+@app.route(f"{PREFIX}/companyList", methods=['GET'])
 @login_required
 def companyList():
     try:
@@ -347,7 +347,7 @@ def companyList():
         flash(str(e))
         return redirect(url_for('index'))
     
-@app.route("/companyOperations", methods=["POST"])
+@app.route(f"{PREFIX}/companyOperations", methods=["POST"])
 @login_required
 def companyOperations():
     try:
@@ -373,7 +373,7 @@ def companyOperations():
         print(e, flush=True)
         return jsonify({}), 404
     
-@app.route("/declare", methods=["POST"])
+@app.route(f"{PREFIX}/declare", methods=["POST"])
 @login_required
 def decalare():
     try:
@@ -409,7 +409,7 @@ def decalare():
         flash(str(e))
         return redirect(request.referrer)
     
-@app.route("/bundleDeclare", methods=["GET"])
+@app.route(f"{PREFIX}/bundleDeclare", methods=["GET"])
 @login_required
 def bundleDecalare():
     try:
@@ -432,7 +432,7 @@ def bundleDecalare():
         flash(str(e))
         return render_template("bundleDeclare.html", session=session)
     
-@app.route("/bundleDeclarePost", methods=["POST"])
+@app.route(f"{PREFIX}/bundleDeclarePost", methods=["POST"])
 @login_required
 def bundleDecalarePost():
     try:

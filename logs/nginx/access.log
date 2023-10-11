@@ -2823,3 +2823,5 @@
 192.168.65.1 - - [11/Oct/2023:17:09:32 +0800] "POST /NG999/login HTTP/1.1" 200 2327 "https://localhost.redtone.com/NG999/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" "192.168.65.1"
 192.168.65.1 - - [11/Oct/2023:17:09:32 +0800] "GET /favicon.ico HTTP/1.1" 302 211 "https://localhost.redtone.com/NG999/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" "192.168.65.1"
 192.168.65.1 - - [11/Oct/2023:17:09:32 +0800] "GET /NG999/login HTTP/1.1" 200 2244 "https://localhost.redtone.com/NG999/login" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" "192.168.65.1"
+192.168.65.1 - - [11/Oct/2023:17:11:16 +0800] "GET / HTTP/1.1" 302 211 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" "-"
+192.168.65.1 - - [11/Oct/2023:17:11:16 +0800] "GET /NG999/login HTTP/1.1" 200 2244 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" "-"
