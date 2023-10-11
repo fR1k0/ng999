@@ -10,7 +10,7 @@ services:
     volumes:
       - ./logs/nginx:/var/log/nginx/
     ports:
-      - 9042:80
+      - 9032:80
 
     networks:
       - internal
