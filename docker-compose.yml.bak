@@ -10,7 +10,7 @@ services:
     volumes:
       - ./logs/nginx:/var/log/nginx/
     ports:
-      - 9032:80
+      - 9042:80
 
     networks:
       - internal
@@ -32,8 +32,12 @@ services:
     container_name: ng999_web
     image: "ng999:web"
     build: ./web
+    ports:
+      - 5000:5000
     expose:
       - 5000
+    volumes:
+      - ./web:/app
     networks:
       - internal
 
