@@ -1,0 +1,42 @@
+version: "3"
+services:
+  ng999nginx:
+    container_name: ng999_nginx
+    image: ng999:nginx
+    build: 
+      context: .
+      dockerfile: nginx/Dockerfile
+
+    volumes:
+      - ./logs/nginx:/var/log/nginx/
+    ports:
+      - 9032:80
+
+    networks:
+      - internal
+
+    depends_on:
+      - ng999web
+      - ng999Restapi
+
+  ng999Restapi:
+    container_name: ng999_restapi
+    image: "ng999:restapi"
+    build: ./ngapi
+    expose:
+      - 8888
+    networks:
+      - internal
+
+  ng999web:
+    container_name: ng999_web
+    image: "ng999:web"
+    build: ./web
+    expose:
+      - 5000
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge

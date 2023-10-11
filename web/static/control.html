@@ -1,0 +1,124 @@
+
+{% extends "layout.html" %}
+{% block title %}{{_('Control')}}{% endblock %}
+{% block content %}
+<div class="row">
+	
+                  <div class="col-lg-12 col-md-12">
+ 
+                    <div class="card-body">
+                      <h3>{{_('Control')}}</h3>
+                      <h6 class="card-subtitle mb-0">
+                        {{_('Control_title')}}
+                      </h6>
+                    </div>
+                  </div>
+
+
+	
+
+		
+	            <div class="col-lg-6 col-md-12">
+		              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">{{_('Control')}}</h4>
+                  <h5 class="card-subtitle mb-3 border-bottom pb-3">
+                    {{_('Task_helpline')}}
+                  </h5>                  
+                  </div>
+
+
+									<table class="table customize-table mb-0 v-middle">
+									  <tbody>                 
+									{%for i in range(0, sitemap['control']['total'])%}
+
+														{% if sitemap['control'][i|string]['state']=='ON' %}
+														    <tr>
+														      <td><h6>{{sitemap['control'][i|string]['label']}}</h6></td>
+														      <td>
+
+																		<label class="switch">
+																		  <input type="checkbox" id="{{sitemap['control'][i|string]['name']}}" checked onchange='handleChange(this);'>
+																		  <span class="slider"></span>
+																		</label>
+	      	
+														      	</td>
+														    </tr>
+														{% else %}
+														    <tr>
+														      <td><h6>{{sitemap['control'][i|string]['label']}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap['control'][i|string]['name']}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>
+
+		      	
+														      	</td>
+														    </tr>
+										  			{% endif %}  
+
+									{% endfor %}
+									  </tbody>
+									</table>
+
+                  
+		              </div>
+	
+						</div>
+
+
+
+	<div class="col-lg-6 col-md-12">
+
+		              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">{{_('Task')}}</h4>
+                  <h5 class="card-subtitle mb-3 border-bottom pb-3">
+                    {{_('Controls_helpline')}}
+                  </h5>                  
+                  </div>
+
+
+									<table class="table customize-table mb-0 v-middle">
+									  <tbody>                 
+									{%for i in range(0, sitemap['task']['total'])%}
+
+														{% if sitemap['task'][i|string]['state']=='ON' %}
+														    <tr>
+														      <td><h6>{{sitemap['task'][i|string]['label']}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap['task'][i|string]['name']}}" checked onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>				      	
+														      	</td>
+														    </tr>
+														{% else %}
+														    <tr>
+														      <td><h6>{{sitemap['task'][i|string]['label']}}</h6></td>
+														      <td>
+
+																<label class="switch">
+																  <input type="checkbox" id="{{sitemap['task'][i|string]['name']}}" onchange='handleChange(this);'>
+																  <span class="slider"></span>
+																</label>	
+
+		      	
+														      	</td>
+														    </tr>
+										  			{% endif %}  
+
+									{% endfor %}
+									  </tbody>
+									</table>
+
+                  
+		              </div>
+		</div>
+
+</div>
+
+{% endblock %}

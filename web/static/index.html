@@ -1,0 +1,423 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="row">
+	<!-- start left -->
+	<div class="col-lg-8 col-md-12">
+		<div class="row">
+            <div class="col-lg-12  align-items-stretch">
+              <div class="card1">
+                <div class="card-body">
+                  <div class="d-md-flex no-block">
+                    <h4 class="card-title">Dashboard</h4>
+                    <div class="ms-auto">
+                  <select
+                    class="form-select"
+                    onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"
+                  >
+                    <option selected>Default Zone</option>
+{% if zone > 1 %}
+											{%for i in range(0, zone)%}
+                      <option value="/switch/{{siteid}}/{{i+1}}   ">{{currentzone}}Zone {{i+1}}</option>
+											{%endfor%}
+{% endif %}
+                  </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+		<!-- Water conditions -->
+						            <div class="col-lg-12">
+							              <div class="card">
+							                <div class="d-flex border-bottom title-part-padding align-items-center">
+							                  <div>
+							                    <h4 class="card-title mb-0">{{sitemap['wc']['label']}}</h4>
+							                  </div>
+							                  <div class="ms-auto flex-shrink-0">
+							                    <a href="/report/{{sitemap['wc']['label']}}/{{sitemap['wc']['chart']}}"><i data-feather="info" class="feather-sm me-2"></i></a>
+							                  </div>
+							                </div>
+
+		              <div class="row">
+{% for j in range(0,sitemap['wc']['total']) %}		              	
+									<div class="col-lg-4 col-md-6 border-end align-self-center"><div class="card-body"><div class="d-flex flex-row"><div class="col-8 p-0 align-self-center">
+														<h4 class="mb-0" id="{{sitemap['wc'][j|string]['name']}}">{{sitemap['wc'][j|string]['state']}} {{sitemap['wc'][j|string]['suffix']}}</h4><h5 class="text-muted mb-0">{{sitemap['wc'][j|string]['label']}}</h5></div>
+														<div class="col-4 text-end">
+														<div class="round text-white d-inline-block text-center rounded-circle bg-success"><i class="{{sitemap['wc'][j|string]['icon']}}" display-6></i></div>
+														</div></div></div></div>		               		               
+
+{% endfor %}
+		              </div>
+
+		              <div class="border-top">
+		                <div id="mainchart" style="height: 350px"></div>
+		              </div>
+							              </div>
+							              
+						            </div>
+		</div>
+		<div class="row">
+		<!-- water level -->
+
+						            <div class="col-lg-6 col-md-12">
+							              <div class="card">
+							                <div class="d-flex border-bottom title-part-padding align-items-center">
+							                  <div>
+							                    <h4 class="card-title mb-0">{{sitemap['waterlevel']['label']}}</h4>
+							                  </div>
+							                  <div class="ms-auto flex-shrink-0">
+							                     <a href="/report/{{sitemap['waterlevel']['label']}}/{{sitemap['waterlevel']['chart']}}"><i data-feather="info" class="feather-sm me-2"></i></a>
+							                  </div>
+							                </div>
+
+
+
+									            <div class="col-lg-12 col-md-12">
+
+
+									                <div class="card-body">			
+
+{% for j in range(0,sitemap['waterlevel']['total']) %}		
+
+
+<div class="d-flex"><i class="mdi mdi-{{sitemap['waterlevel'][j|string]['icon']}} display-7"></i><div class="ms-2 align-self-center" style="width:100%">
+						<h6 class="text-muted mb-0"><div class="d-flex border-bottom"><div>{{sitemap['waterlevel'][j|string]['label']}} <span class="sl-date text-muted ms-1" id="{{sitemap['waterlevel'][j|string]['name']}}">{{sitemap['waterlevel'][j|string]['state']}}</span> </div>
+						<div class="ms-auto flex-shrink-0"><span class="badge ms-auto bg-{{sitemap['waterlevel'][j|string]['badge']}}">{{sitemap['waterlevel'][j|string]['badgeDescription']}}</span></div></div></h6>
+						<h6 class="text-muted mb-3"><div class="progress" style="100%;height:15px"><div class="progress-bar bg-{{sitemap['waterlevel'][j|string]['badge']}}" style="width: {{sitemap['waterlevel'][j|string]['percent']}}%;" role="progressbar" id="{{sitemap['waterlevel'][j|string]['name']}}">{{sitemap['waterlevel'][j|string]['percent']}}%</div></div></h6>
+						</div></div>
+
+{%endfor%}
+						                				               
+									                </div>
+
+									            </div>
+
+
+							              </div>
+						            </div>
+
+
+
+
+
+
+
+{%for i in range(0, sitemap['others']['total'])%}
+
+
+		<div class="col-lg-6">
+								<div class="card">
+								<div class="d-flex border-bottom title-part-padding align-items-center">
+								<div>
+								<h4 class="card-title mb-0">{{sitemap['others'][i|string]['label']}}</h4>
+								</div>
+								<div class="ms-auto flex-shrink-0">
+								<a href="/report/{{sitemap['others'][i|string]['label']}}/{{sitemap['others'][i|string]['chart']}}"><i data-feather="info" class="feather-sm me-2"></a></i>
+								</div>
+								</div>
+								<div class="card-body">
+								<div class="row">
+		{%for j in range(0, sitemap['others'][i|string]['total'])%}
+
+			<div class="col-6">
+			<div>
+			<div class="d-flex align-items-center">
+			<i class="mdi mdi-{{sitemap['others'][i|string][j|string]['icon']}} display-8"></i>
+			<div class="ms-2">
+			<h6 class="mb-0" id="{{sitemap['others'][i|string][j|string]['name']}}">{{sitemap['others'][i|string][j|string]['state']}}</h4>
+			<h6 class="card-subtitle mb-0 fs-2 fw-normal">{{sitemap['others'][i|string][j|string]['label']}}</h6>
+			</div>
+			</div>
+			</div>
+			</div>
+		{% endfor %}				
+						
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+{%endfor%}
+
+
+
+
+
+
+
+
+
+		</div>				            
+
+
+
+
+		
+	</div> 
+
+<!-- start right -->
+	 <div class="col-lg-4 col-md-12">
+						<!-- insight -->
+						            <div class="col-lg-12">
+							              <div class="card" style="background-color: #033026;">
+							                <div class="d-flex title-part-padding align-items-center">
+							                  <div>
+							                    <h4 class="card-title mb-0" style="color:#ffffff">{{sitemap['insight']['label']}}</h4>
+							                  </div>
+							                  <div class="ms-auto flex-shrink-0">
+							                    <i data-feather="info" class="feather-sm me-2 display-7"></i>
+							                  </div>
+							                </div>
+							                <div class="card-body">
+							                  <ul class="list-inline" style="color:#ffffff">
+{% for j in range(0,sitemap['insight']['total']) %}	
+<li><i class="fa fa-circle me-1 text-danger"></i>{{sitemap['insight'][j|string]['label']}}</li>
+{% endfor %}
+
+							                  </ul>
+							                </div>
+							              </div>
+						            </div>
+
+						<!-- recipe-->
+						<!--
+					            <div class="col-lg-12">
+							              <div class="card">
+							              	<img src="recipe.png" class="card-img-top" alt="...">
+              
+							              </div>
+							            </div>
+							            -->
+
+						<!-- weather -->
+						            <div class="col-lg-12 col-md-12">
+						                  <div class="card">
+<a class="weatherwidget-io" href="https://forecast7.com/en/3d03101d62/puchong/" data-label_1="LOJING" data-label_2="WEATHER" data-icons="Climacons Animated" data-days="5" data-theme="pure" >PUCHONG WEATHER</a>
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>   
+<p> </p>
+<div id="weatherapi-weather-widget-4"></div><script type='text/javascript' src='https://www.weatherapi.com/weather/widget.ashx?loc=1680835&wid=4&tu=1&div=weatherapi-weather-widget-4' async></script><noscript><a href="https://www.weatherapi.com/weather/q/sungai-besar-1680835" alt="Hour by hour Sungai Besar weather">10 day hour by hour Sungai Besar weather</a></noscript>          	
+						                  </div>
+						            </div>	
+
+		<!-- Ambient -->
+
+						            <div class="col-lg-12 col-md-12">
+							              <div class="card">
+							                <div class="d-flex border-bottom title-part-padding align-items-center">
+							                  <div>
+							                    <h4 class="card-title mb-0">{{sitemap['ambient']['label']}}</h4>
+							                  </div>
+							                  <div class="ms-auto flex-shrink-0">
+							                    <a href="/report/{{sitemap['ambient']['label']}}/{{sitemap['waterlevel']['chart']}}"><i data-feather="info" class="feather-sm me-2"></a></i>
+							                  </div>
+							                </div>
+		                <div class="card-body">
+		                <div class="row">
+{% for j in range(0,sitemap['ambient']['total']) %}	
+<div class="col-4"><div>
+						<div class="d-flex align-items-center">
+						<i class="mdi mdi-{{sitemap['ambient'][j|string]['icon']}} display-8"></i>
+						<div class="ms-1">
+						<h6 class="mb-0" id="{{sitemap['ambient'][j|string]['name']}}">{{sitemap['ambient'][j|string]['state']}}</h6>
+						<h6 class="card-subtitle mb-0 fs-2 fw-normal">{{sitemap['ambient'][j|string]['label']}}</h6>
+						</div></div></div></div>
+{% endfor %}			                                  		                  	
+		                </div>
+		                </div>
+							              </div>
+						            </div>
+
+
+
+
+						<!-- Control -->
+						      <div class="col-lg-12">
+						          <div class="card">
+						            <div class="d-flex border-bottom title-part-padding align-items-center">
+						              <div>
+						                <h4 class="card-title mb-0">{{sitemap['control']['label']}}</h4>
+						              </div>
+						              <div class="ms-auto flex-shrink-0">
+						                <i data-feather="info" class="feather-sm me-2"></i>
+						              </div>
+						            </div>
+						            <div class="card-body">
+														<div class="row">
+														            <div class="col-6">
+														              <div>
+														<button type="button" class="btn waves-effect waves-light btn-danger">
+														                      ON
+														                    </button>
+														                  <div class="d-flex align-items-center">
+																								<ul class="list-inline">
+
+{%for i in range(0, sitemap['control']['total'])%}
+{% if sitemap['control'][i|string]['state'] == 'ON' %}
+<li id="on_{{sitemap['control'][i|string]['name']}}">{{sitemap['control'][i|string]['label']}}</li>
+{% else %}
+<li class="hide" id="on_{{sitemap['control'][i|string]['name']}}">{{sitemap['control'][i|string]['label']}}</li>
+{%endif%}
+{%endfor%}
+
+																								</ul>
+														                  </div>
+														                </div>
+														            </div>
+
+														            <div class="col-6">
+														              <div>
+														<button type="button" class="btn waves-effect waves-light btn-secondary">
+														                      OFF
+														                    </button>
+														                  <div class="d-flex align-items-center">
+																								<ul class="list-inline">
+{%for i in range(0, sitemap['control']['total'])%}
+{% if sitemap['control'][i|string]['state'] == 'OFF' %}
+<li id="off_{{sitemap['control'][i|string]['name']}}">{{sitemap['control'][i|string]['label']}}</li>
+{% else %}
+<li class="hide"  id="off_{{sitemap['control'][i|string]['name']}}">{{sitemap['control'][i|string]['label']}}</li>
+{%endif%}
+{%endfor%}
+																						
+																								
+																								</ul>
+														                  </div>
+														                </div>
+														            </div>	
+														</div>
+						            </div>
+						          </div>
+						      </div>
+
+
+
+	</div>	
+	<!-- end right -->
+	
+</div>
+    <script src="/static/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script>
+      
+        var options = {
+          series: [],
+          chart: {
+					toolbar: {
+				    show: false,
+				    tools: {
+				      download: false
+				    }
+				  },
+          height: 350,
+          type: 'area',
+          stacked: false
+        },
+        colors: ["rgba(38, 198, 218, 0.7)", "rgba(0, 176, 255, 0.5)", "rgba(1, 87, 155, 0.1)"],
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: [1, 1, 1]
+        },
+		    fill: {
+		      type: "solid",
+		      colors: ["rgba(38, 198, 218, 0.7)", "rgba(0, 176, 255, 0.4)", "rgba(1, 87, 155, 0.5)"],
+		      opacity: 1,
+		    },
+        noData: {
+          text: 'Loading...'
+        },
+        xaxis: {
+				  show: false,
+				  labels: {
+				    show: false
+				  },
+				  axisBorder: {
+				    show: false
+				  },
+				  axisTicks: {
+				    show: false
+				  }
+				},
+        yaxis: [
+          {
+            axisTicks: {
+              show: false,
+            },
+            axisBorder: {
+              show: false,
+              color: '#008FFB'
+            },
+            labels: {
+              style: {
+                colors: '#a1aab2',
+              },
+	            formatter: function (val) {
+	                return val.toFixed(2)
+	            }
+            },
+            tooltip: {
+              enabled: false
+            }
+          },
+          {
+            seriesName: 'Income',
+            opposite: true,
+            axisTicks: {
+              show: false,
+            },
+            axisBorder: {
+              show: true,
+              color: '#00E396'
+            },
+            labels: {
+              style: {
+                colors: '#00E396',
+              },
+	            formatter: function (val) {
+	                return val.toFixed(1)
+	            }
+            }
+          },
+          {
+            seriesName: 'Revenue',
+            opposite: true,
+            axisTicks: {
+              show: false,
+            },
+            axisBorder: {
+              show: true,
+              color: '#FEB019'
+            },
+            labels: {
+              style: {
+                colors: '#FEB019',
+              },
+	            formatter: function (val) {
+	                return val.toFixed(1)
+	            }
+            }
+          },
+        ],
+        legend: {
+          horizontalAlign: 'left',
+          offsetX: 40
+        }				
+        };
+
+        var chart = new ApexCharts(document.querySelector("#mainchart"), options);
+        chart.render();
+      
+      
+        $.getJSON('/chart/{{siteid}}/{{sitemap['wc']['chart']}}', function(response) {
+        chart.updateSeries(response)
+        chart.addYaxisAnnotation(response)
+      }); 
+               
+    </script>
+{% endblock %}
+

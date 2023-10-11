@@ -1,0 +1,13 @@
+<script>
+	
+	function del() {
+		document.cookie="name=REDtoneBPA;max-age=0"; 
+		document.cookie="name=redtone_token;max-age=0";  
+	}
+	del();		
+	var url = location.href;
+	goto = 'https://intranet.redtone.com/rd-authentication/?url='+url;
+	console.log('url : '+goto);
+	//window.location.href = goto;
+</script>
+Error 502

@@ -1,0 +1,69 @@
+          <!-- Sidebar navigation-->
+          <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+ 
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-gauge"></i
+                  ><span class="hide-menu">Dashboard</span></span></a
+                >
+              </li>
+
+
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/kpi"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-table"></i
+                  ><span class="hide-menu">KPI</span></span></a
+                >
+              </li>
+
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/migyear"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-table-edit"></i
+                  ><span class="hide-menu">Mid year review</span></span></a
+                >
+              </li>
+
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/others"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-widgets"></i
+                  ><span class="hide-menu">Others Contribution</span></span></a
+                >
+              </li>
+
+
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link waves-effect waves-dark sidebar-link"
+                  href="/self"
+                  aria-expanded="false"
+                  ><i class="mdi mdi-table-edit"></i
+                  ><span class="hide-menu">Self Assessment</span></span></a
+                >
+              </li>
+
+
+
+
+
+
+
+            </ul>
+          </nav>
+          <!-- End Sidebar navigation -->

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>jQuery Ajax Example</title>
+
+    <style>
+      
+        #chart {
+      max-width: 650px;
+      margin: 35px auto;
+    }
+      
+    </style>
+
+    <script>
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+        )
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+        )
+      window.Promise ||
+        document.write(
+          '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+        )
+    </script>
+
+    
+    <script src="https://iot.redtone.com/static/apexcharts.js"></script>
+    
+
+    <script>
+      // Replace Math.random() with a pseudo-random number generator to get reproducible results in e2e tests
+      // Based on https://gist.github.com/blixt/f17b47c62508be59987b
+      var _seed = 42;
+      Math.random = function() {
+        _seed = _seed * 16807 % 2147483647;
+        return (_seed - 1) / 2147483646;
+      };
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+
+  <body>
+     <div id="chart"></div>
+
+    <script>
+      
+        var options = {
+          series: [],
+          chart: {
+					toolbar: {
+				    show: false,
+				    tools: {
+				      download: false
+				    }
+				  },
+          height: 350,
+          type: 'area',
+          stacked: false
+        },
+         colors: ["#0BC196", "#C1840B", "#6F43C4","#1C77FF","#ED589D","#8A00BA"],
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+        curve: "straight",
+        width: [2,2,2]
+      },
+		    fill: {
+		      type: "solid",
+		      opacity: 0.5,
+		    },
+        title: {
+          text: 'Ajax Example',
+        },
+        noData: {
+          text: 'Loading...'
+        },
+tooltip: {
+  x: {
+    format: 'dd MMM HH:mm'
+  }
+},
+        xaxis: {
+          type: 'datetime',
+//          tickAmount: 6,
+  labels: {
+    datetimeUTC: false
+  }
+        },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+      
+      
+        $.getJSON('https://iot.redtone.com/static/apex.json', function(response) {
+        chart.updateSeries([{
+          name: 'Sales',
+          data: response
+        }])
+      });
+      
+    </script>
+
+    
+  </body>
+</html>
