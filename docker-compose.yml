@@ -6,6 +6,9 @@ services:
     build: 
       context: .
       dockerfile: nginx/Dockerfile
+
+    volumes:
+      - ./logs/nginx:/var/log/nginx/
     ports:
       - 9032:80
 

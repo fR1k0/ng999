@@ -4,6 +4,7 @@ from flask_login import LoginManager, login_required, login_user, UserMixin, log
 import requests
 import pandas as pd
 import io
+import traceback
 import asyncio
 import waitress
 import MySQLdb
@@ -97,7 +98,16 @@ def logout():
 def index(): 
     try:
         if session['role_id'] == '1':
-            return render_template("index.html", session=session) 
+            
+            finalList = {'wholeSaler': 0, 'active': 0, 'inactive': 0, 'totalCust': 0}
+            
+            url = app.config['API_URL'] + '/ng999/admin/dashboard'
+            response = requests.get(url)
+            
+            if response.status_code == 200:
+                finalList = response.json()
+            
+            return render_template("index.html", session=session, dashList=finalList) 
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "4"}
@@ -113,7 +123,7 @@ def index():
         return render_template("dashboardWholeseller.html", session=session, listCount=body)
     
     except Exception as e:
-        print(e)
+        flash(str(e))
         return redirect(url_for('logout'))
   
 @app.route("/createAccount")
@@ -128,7 +138,7 @@ def accountCreate():
         
         if response.status_code == 200:
             wholeSellerList = response.json()
-            return render_template("account-create.html", wholesellerList=wholeSellerList)
+            return render_template("account-create.html", wholesellerList=wholeSellerList, session=session)
             
     except Exception as e:
         print(e)
@@ -164,6 +174,7 @@ def addAccount():
 @login_required
 def dataMigration():
     try:
+        custList = []
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
@@ -174,7 +185,9 @@ def dataMigration():
         
         if response.status_code == 200:
             custList = response.json()
-            return render_template('dataMigration.html', session=session, customerList=custList)
+        
+        
+        return render_template('dataMigration.html', session=session, customerList=custList)
         
     except Exception as e:
         print(e)
@@ -185,6 +198,7 @@ def dataMigration():
 @login_required
 def withDeclaration():
     try:
+        custList = []
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
@@ -193,9 +207,11 @@ def withDeclaration():
         
         response = requests.post(url, json=payload)
         
+        
         if response.status_code == 200:
             custList = response.json()
-            return render_template('withDeclaration.html', session=session, customerList=custList)
+        
+        return render_template('withDeclaration.html', session=session, customerList=custList)
         
     except Exception as e:
         print(e)
@@ -207,6 +223,8 @@ def withDeclaration():
 @login_required
 def withoutDeclaration():
     try:
+        
+        custList = []
         if session['role_id'] != '2':
             return redirect(url_for('logout'))
         
@@ -215,11 +233,10 @@ def withoutDeclaration():
         
         response = requests.post(url, json=payload)
         
-        
-        
         if response.status_code == 200:
             custList = response.json()
-            return render_template('withoutDeclaration.html', session=session, customerList=custList)
+        
+        return render_template('withoutDeclaration.html', session=session, customerList=custList)
         
     except Exception as e:
         print(e)
@@ -265,7 +282,6 @@ def uploadMigration():
         rows_list = []
         for index, row in df.iterrows():
             cleaned_row = {column: str(value) if pd.notna(value) else "" for column, value in row.items()}
-            print(cleaned_row)
             rows_list.append(cleaned_row)
         
 
@@ -282,7 +298,10 @@ def uploadMigration():
         return redirect(url_for('dataMigration'))
         
     except Exception as e:
-        print(e)
+        print("Type:", type(e).__name__, flush=True)
+        print("Message:", str(e), flush=True)
+        print("Traceback:")
+        traceback.print_exc()
         flash(str(e))
         return redirect(url_for('dataMigration'))
     
@@ -300,10 +319,8 @@ def accountList():
     
         if response.status_code == 200:
             body = response.json()
-            
-        print(body)
         
-        return render_template('accountList.html', WholesellerList=body)
+        return render_template('accountList.html', WholesellerList=body, session=session)
         
     except Exception as e:
         flash(str(e))
@@ -322,8 +339,6 @@ def companyList():
         if response.status_code == 200:
             cList = response.json()
         
-        
-        print(cList, flush=True)
         return render_template('createCompany.html', companyList=cList)
     
     except Exception as e:
@@ -392,6 +407,50 @@ def decalare():
     except Exception as e:
         flash(str(e))
         return redirect(request.referrer)
+    
+@app.route("/bundleDeclare", methods=["GET"])
+@login_required
+def bundleDecalare():
+    try:
+        custList = []
+        if session['role_id'] != '2':
+            return redirect(url_for('logout'))
+        
+        url = app.config['API_URL'] + '/ng999/customer/getList'
+        payload = {"wholesellerID": session['user_id'], "mode": "2"}
+        
+        response = requests.post(url, json=payload)
+        
+        if response.status_code == 200:
+            custList = response.json()
+            
+        return render_template("bundleDeclare.html", session=session, customerList=custList)
+     
+    except Exception as e:
+        print(e)
+        flash(str(e))
+        return render_template("bundleDeclare.html", session=session)
+    
+@app.route("/bundleDeclarePost", methods=["POST"])
+@login_required
+def bundleDecalarePost():
+    try:
+        body = request.get_json()
+        
+        url =  app.config['API_URL'] + '/ng999/customer/bundleDeclare'
+        
+        response = requests.post(url, json=body)
+        
+        if response.status_code == 200:
+            return jsonify({}), 200
+            
+        return jsonify({}), 404
+
+        
+    except Exception as e:
+        print(e)
+        flash(str(e))
+        return jsonify({}), 404
     
 if __name__ == '__main__':
 	app.run(port=5000, threaded=True, use_reloader=True, debug=False)

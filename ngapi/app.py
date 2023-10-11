@@ -11,6 +11,7 @@ from passlib.context import CryptContext
 import secrets
 import string
 import MySQLdb
+import traceback
 
 
 
@@ -340,13 +341,13 @@ async def get_ng999_company_datas(request:Request):
         
         for i in body['data']:
             # No duplicated phone number can be inserted to the db
-            if i['CarllerNo'].replace(" ", "") == "":
+            address = i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3']
+            if i['CarllerNo'].replace(" ", "") == "" or i['Name'].replace(" ", "") == "" or address.replace(" ", "") == "":
                 continue
             
             if await checkCustDB(body['wholesellerID'], i['CarllerNo']):
                 continue
             
-            print(i['CarllerNo'], flush=True)
             query = """
             
             Insert into Customer (Customer_Name, Customer_Migration_Date,
@@ -364,10 +365,13 @@ async def get_ng999_company_datas(request:Request):
         
         
     except Exception as e:
-        print(e)
+        print("Type:", type(e).__name__, flush=True)
+        print("Message:", str(e), flush=True)
+        print("Traceback:")
+        traceback.print_exc()
         conn_ng999.rollback()
         if cursor: cursor.close()
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={"message": str(e)}, status_code=404)
     
 async def getCount(wholesellerID):
     try:
@@ -447,7 +451,10 @@ async def get_ng999_company_datas(request:Request):
                 rowDict = {}
                 
                 for i, col_name in enumerate(columnnName):
-                    rowDict[col_name] = str(row[i])
+                    if str(row[i]).replace(" ", "") == "":
+                        rowDict[col_name] = ""
+                    else:
+                        rowDict[col_name] = str(row[i])
 
                 resultDict.append(rowDict)
         
@@ -547,6 +554,70 @@ async def declareCompany(request:Request):
         print(e, flush=True)
         if cursor:cursor.close()
         return JSONResponse(content={'Message': str(e)}, status_code=404)
+    
+    
+@app.get("/ng999/admin/dashboard")
+def adminDashboard():
+    try:
+        finalList = {}
+        
+        with conn_ng999.cursor() as cursor:
+            query = """
+            select count(*) from Company
+            """
+        
+            cursor.execute(query)
+            result = cursor.fetchall()
+            
+            if result is not None and len(list(result)) > 0:
+                finalList['wholeSaler'] = list(list(result)[0])[0]
+                
+            query = """
+            select count(*) from Customer
+            """
+        
+            cursor.execute(query)
+            result = cursor.fetchall()
+            
+            if result is not None and len(list(result)) > 0:
+                finalList['totalCust'] = list(list(result)[0])[0]
+                
+        print(finalList, flush= True)
+        return JSONResponse(content=finalList, status_code=200)
+        
+    except Exception as e:
+        print(str(e), flush=True)
+        return JSONResponse(content={'Message': str(str(e))}, status_code=404)
+    
+
+@app.post("/ng999/customer/bundleDeclare")
+async def bundleDeclare(request:Request):
+    try:
+        body = await request.json()
+        conn_ng999.begin()
+    
+        with conn_ng999.cursor() as cursor:
+            
+            for cust in body['custID']:
+                query = """
+                
+                update Customer set Customer_Declaration_Date = %s where Customer_ID = %s
+                
+                """
+                values = (datetime.now(), cust)
+                
+                cursor.execute(query, values)
+            
+            if cursor.rowcount > 0:
+                conn_ng999.commit()
+                    
+        return JSONResponse(content={}, status_code=200)
+                
+    except Exception as e:
+        print(e)
+        conn_ng999.rollback()
+        return JSONResponse(content={}, status_code=404)
+        
     
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8888)
