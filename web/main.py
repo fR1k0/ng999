@@ -71,7 +71,19 @@ def login():
                 session['username'] = body['username']
                 session['role_id'] = body['role']
                 session['name'] = body['accountName']
-                                
+                session['isFirst'] = body['isfirst']
+                
+                # Here to reset password
+                
+                if session['role_id'] == '2' and session['isFirst'] == True:
+                    resetPassword()
+                
+                else:
+                    flash('Login successful!', 'success')
+                    return redirect(url_for('index'))
+                    
+                
+      
                 flash('Login successful!', 'success')
                 return redirect(url_for('index'))
             
@@ -84,6 +96,10 @@ def login():
     except Exception as e:
         print(str(e), flush=True)
         return render_template("logon.html")
+
+@login_required
+def resetPassword():
+    pass
     
     
 @app.route(f'{PREFIX}/logout')
