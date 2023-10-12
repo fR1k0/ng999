@@ -11,7 +11,7 @@ import MySQLdb
 import bcrypt
 from werkzeug.middleware.proxy_fix import ProxyFix
   
-app = Flask(__name__) 
+app = Flask(__name__, static_url_path='/NG999/static') 
 login_manager = LoginManager(app)
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 app.secret_key = 'vfdjbfdkjvjdkfnvjkdfnvjkfdn'

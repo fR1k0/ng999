@@ -2818,3 +2818,431 @@
 2023/10/11 17:17:33 [notice] 1#1: OS: Linux 6.3.13-linuxkit
 2023/10/11 17:17:33 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
 2023/10/11 17:17:33 [notice] 1#1: start worker processes
+2023/10/12 08:49:48 [notice] 1#1: using the "epoll" event method
+2023/10/12 08:49:48 [notice] 1#1: nginx/1.25.2
+2023/10/12 08:49:48 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 08:49:48 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 08:49:48 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 08:49:48 [notice] 1#1: start worker processes
+2023/10/12 08:49:48 [notice] 1#1: start worker process 29
+2023/10/12 08:49:48 [notice] 1#1: start worker process 30
+2023/10/12 08:49:48 [notice] 1#1: start worker process 31
+2023/10/12 08:49:48 [notice] 1#1: start worker process 32
+2023/10/12 08:52:09 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 08:52:09 [notice] 31#31: gracefully shutting down
+2023/10/12 08:52:09 [notice] 30#30: gracefully shutting down
+2023/10/12 08:52:09 [notice] 30#30: exiting
+2023/10/12 08:52:09 [notice] 29#29: gracefully shutting down
+2023/10/12 08:52:09 [notice] 32#32: gracefully shutting down
+2023/10/12 08:52:09 [notice] 31#31: exiting
+2023/10/12 08:52:09 [notice] 30#30: exit
+2023/10/12 08:52:09 [notice] 29#29: exiting
+2023/10/12 08:52:09 [notice] 32#32: exiting
+2023/10/12 08:52:09 [notice] 31#31: exit
+2023/10/12 08:52:09 [notice] 29#29: exit
+2023/10/12 08:52:09 [notice] 32#32: exit
+2023/10/12 08:52:09 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 08:52:09 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 08:52:09 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 08:52:09 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 08:52:09 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 08:52:09 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 08:52:09 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/12 08:52:09 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 08:52:09 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 08:52:09 [notice] 1#1: exit
+2023/10/12 08:55:22 [notice] 1#1: using the "epoll" event method
+2023/10/12 08:55:22 [notice] 1#1: nginx/1.25.2
+2023/10/12 08:55:22 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 08:55:22 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 08:55:22 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 08:55:22 [notice] 1#1: start worker processes
+2023/10/12 08:55:22 [notice] 1#1: start worker process 30
+2023/10/12 08:55:22 [notice] 1#1: start worker process 31
+2023/10/12 08:55:22 [notice] 1#1: start worker process 32
+2023/10/12 08:55:22 [notice] 1#1: start worker process 33
+2023/10/12 08:56:07 [error] 31#31: *1 "/etc/nginx/html/index.html" is not found (2: No such file or directory), client: 192.168.65.1, server: , request: "GET / HTTP/1.1", host: "localhost:9042"
+2023/10/12 08:56:09 [error] 31#31: *1 open() "/etc/nginx/html/favicon.ico" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/"
+2023/10/12 08:56:24 [error] 31#31: *1 open() "/etc/nginx/html/static/assets/libs/apexcharts/dist/apexcharts.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/apexcharts/dist/apexcharts.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:56:24 [error] 31#31: *11 open() "/etc/nginx/html/static/dist/css/style.min.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/css/style.min.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:56:25 [error] 31#31: *11 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:56:25 [error] 30#30: *13 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:56:25 [error] 31#31: *12 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:56:25 [error] 31#31: *12 open() "/etc/nginx/html/static/assets/images/favicon.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/favicon.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:56:48 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 08:56:48 [notice] 31#31: gracefully shutting down
+2023/10/12 08:56:48 [notice] 32#32: gracefully shutting down
+2023/10/12 08:56:48 [notice] 33#33: gracefully shutting down
+2023/10/12 08:56:48 [notice] 33#33: exiting
+2023/10/12 08:56:48 [notice] 30#30: gracefully shutting down
+2023/10/12 08:56:48 [notice] 31#31: exiting
+2023/10/12 08:56:48 [notice] 31#31: exit
+2023/10/12 08:56:48 [notice] 32#32: exiting
+2023/10/12 08:56:48 [notice] 33#33: exit
+2023/10/12 08:56:48 [notice] 30#30: exiting
+2023/10/12 08:56:48 [notice] 32#32: exit
+2023/10/12 08:56:48 [notice] 30#30: exit
+2023/10/12 08:56:48 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2023/10/12 08:56:48 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 08:56:48 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 08:56:48 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 08:56:48 [notice] 1#1: worker process 33 exited with code 0
+2023/10/12 08:56:48 [notice] 1#1: exit
+2023/10/12 08:58:13 [notice] 1#1: using the "epoll" event method
+2023/10/12 08:58:13 [notice] 1#1: nginx/1.25.2
+2023/10/12 08:58:13 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 08:58:13 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 08:58:13 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 08:58:13 [notice] 1#1: start worker processes
+2023/10/12 08:58:13 [notice] 1#1: start worker process 29
+2023/10/12 08:58:13 [notice] 1#1: start worker process 30
+2023/10/12 08:58:13 [notice] 1#1: start worker process 31
+2023/10/12 08:58:13 [notice] 1#1: start worker process 32
+2023/10/12 08:58:19 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/libs/apexcharts/dist/apexcharts.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/apexcharts/dist/apexcharts.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 31#31: *6 open() "/etc/nginx/html/static/assets/libs/jquery/dist/jquery.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/jquery/dist/jquery.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 29#29: *7 open() "/etc/nginx/html/static/assets/extra-libs/taskboard/js/jquery-ui.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/taskboard/js/jquery-ui.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 32#32: *8 open() "/etc/nginx/html/static/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 30#30: *1 open() "/etc/nginx/html/static/dist/css/style.min.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/css/style.min.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 31#31: *6 open() "/etc/nginx/html/static/dist/js/app.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 32#32: *8 open() "/etc/nginx/html/static/dist/js/app.init.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app.init.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 29#29: *7 open() "/etc/nginx/html/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 30#30: *2 open() "/etc/nginx/html/static/dist/js/app-style-switcher.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app-style-switcher.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 32#32: *8 open() "/etc/nginx/html/static/assets/extra-libs/sparkline/sparkline.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/sparkline/sparkline.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 29#29: *7 open() "/etc/nginx/html/static/dist/js/sidebarmenu.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/sidebarmenu.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 30#30: *2 open() "/etc/nginx/html/static/dist/js/feather.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/feather.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 31#31: *6 open() "/etc/nginx/html/static/dist/js/waves.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/waves.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/images/Redtone.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/Redtone.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 30#30: *1 open() "/etc/nginx/html/static/assets/images/logo-text.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/logo-text.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 29#29: *7 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 31#31: *6 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:19 [error] 32#32: *8 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:20 [error] 30#30: *1 open() "/etc/nginx/html/static/dist/js/custom.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/custom.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:20 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:20 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:23 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/libs/apexcharts/dist/apexcharts.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/apexcharts/dist/apexcharts.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:23 [error] 30#30: *2 open() "/etc/nginx/html/static/dist/css/style.min.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/css/style.min.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/libs/apexcharts/dist/apexcharts.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/apexcharts/dist/apexcharts.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 32#32: *8 open() "/etc/nginx/html/static/dist/css/style.min.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/css/style.min.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *7 open() "/etc/nginx/html/static/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 31#31: *6 open() "/etc/nginx/html/static/assets/libs/jquery/dist/jquery.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/jquery/dist/jquery.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *1 open() "/etc/nginx/html/static/assets/extra-libs/taskboard/js/jquery-ui.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/taskboard/js/jquery-ui.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *2 open() "/etc/nginx/html/static/dist/js/app.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *1 open() "/etc/nginx/html/static/dist/js/app.init.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app.init.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 31#31: *6 open() "/etc/nginx/html/static/dist/js/app-style-switcher.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app-style-switcher.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *7 open() "/etc/nginx/html/static/assets/extra-libs/sparkline/sparkline.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/sparkline/sparkline.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 32#32: *8 open() "/etc/nginx/html/static/dist/js/waves.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/waves.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 31#31: *6 open() "/etc/nginx/html/static/assets/images/Redtone.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/Redtone.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *9 open() "/etc/nginx/html/static/dist/js/sidebarmenu.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/sidebarmenu.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *1 open() "/etc/nginx/html/static/dist/js/feather.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/feather.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *7 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 32#32: *8 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 31#31: *6 open() "/etc/nginx/html/static/assets/images/logo-text.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/logo-text.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *7 open() "/etc/nginx/html/static/dist/js/custom.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/custom.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 30#30: *1 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 08:58:33 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:01:15 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:01:15 [notice] 29#29: gracefully shutting down
+2023/10/12 09:01:15 [notice] 30#30: gracefully shutting down
+2023/10/12 09:01:15 [notice] 32#32: gracefully shutting down
+2023/10/12 09:01:15 [notice] 31#31: gracefully shutting down
+2023/10/12 09:01:15 [notice] 29#29: exiting
+2023/10/12 09:01:15 [notice] 30#30: exiting
+2023/10/12 09:01:15 [notice] 32#32: exiting
+2023/10/12 09:01:15 [notice] 31#31: exiting
+2023/10/12 09:01:15 [notice] 29#29: exit
+2023/10/12 09:01:15 [notice] 30#30: exit
+2023/10/12 09:01:15 [notice] 32#32: exit
+2023/10/12 09:01:15 [notice] 31#31: exit
+2023/10/12 09:01:15 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:01:15 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:01:15 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:01:15 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 09:01:15 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:01:15 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:01:15 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:01:15 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:01:15 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:01:15 [notice] 1#1: exit
+2023/10/12 09:02:22 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:02:22 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:02:22 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:02:22 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:02:22 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:02:22 [notice] 1#1: start worker processes
+2023/10/12 09:02:22 [notice] 1#1: start worker process 29
+2023/10/12 09:02:22 [notice] 1#1: start worker process 30
+2023/10/12 09:02:22 [notice] 1#1: start worker process 31
+2023/10/12 09:02:22 [notice] 1#1: start worker process 32
+2023/10/12 09:02:31 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:02:31 [error] 29#29: *8 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:02:31 [error] 29#29: *10 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:02:38 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:02:38 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:02:38 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:03:08 [error] 29#29: *8 open() "/etc/nginx/html/accountList" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /accountList HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:03:18 [error] 29#29: *10 open() "/etc/nginx/html/accountList" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /accountList HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:03:28 [error] 29#29: *10 open() "/etc/nginx/html/static/assets/libs/apexcharts/dist/apexcharts.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/apexcharts/dist/apexcharts.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 31#31: *15 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *8 open() "/etc/nginx/html/static/dist/css/custom.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/css/custom.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *8 open() "/etc/nginx/html/static/dist/css/style.min.css" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/css/style.min.css HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 31#31: *15 open() "/etc/nginx/html/static/assets/libs/jquery/dist/jquery.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/jquery/dist/jquery.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *10 open() "/etc/nginx/html/static/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/taskboard/js/jquery.ui.touch-punch-improved.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/extra-libs/taskboard/js/jquery-ui.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/taskboard/js/jquery-ui.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/images/logo-text.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/logo-text.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *1 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *8 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 31#31: *15 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *10 open() "/etc/nginx/html/static/assets/images/Redtone.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/Redtone.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *10 open() "/etc/nginx/html/static/dist/js/app.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 31#31: *15 open() "/etc/nginx/html/static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *1 open() "/etc/nginx/html/static/dist/js/app-style-switcher.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app-style-switcher.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *8 open() "/etc/nginx/html/static/dist/js/app.init.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/app.init.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 30#30: *2 open() "/etc/nginx/html/static/dist/js/waves.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/waves.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 31#31: *15 open() "/etc/nginx/html/static/dist/js/feather.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/feather.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *9 open() "/etc/nginx/html/static/assets/extra-libs/sparkline/sparkline.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/sparkline/sparkline.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *1 open() "/etc/nginx/html/static/dist/js/sidebarmenu.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/sidebarmenu.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *8 open() "/etc/nginx/html/static/dist/js/custom.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/dist/js/custom.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 30#30: *2 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:03:28 [error] 29#29: *1 open() "/etc/nginx/html/static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/accountList"
+2023/10/12 09:06:05 [error] 29#29: *102 open() "/etc/nginx/html/static" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static HTTP/1.1", host: "localhost:9042"
+2023/10/12 09:06:29 [error] 29#29: *102 open() "/etc/nginx/html/static" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static HTTP/1.1", host: "localhost:9042"
+2023/10/12 09:06:51 [error] 30#30: *101 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:06:51 [error] 29#29: *112 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:06:51 [error] 30#30: *110 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:06:58 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:06:58 [notice] 29#29: gracefully shutting down
+2023/10/12 09:06:58 [notice] 30#30: gracefully shutting down
+2023/10/12 09:06:58 [notice] 32#32: gracefully shutting down
+2023/10/12 09:06:58 [notice] 32#32: exiting
+2023/10/12 09:06:58 [notice] 31#31: gracefully shutting down
+2023/10/12 09:06:58 [notice] 29#29: exiting
+2023/10/12 09:06:58 [notice] 30#30: exiting
+2023/10/12 09:06:58 [notice] 32#32: exit
+2023/10/12 09:06:58 [notice] 31#31: exiting
+2023/10/12 09:06:58 [notice] 29#29: exit
+2023/10/12 09:06:58 [notice] 30#30: exit
+2023/10/12 09:06:58 [notice] 31#31: exit
+2023/10/12 09:06:58 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:06:58 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:06:58 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:06:58 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:06:58 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:06:58 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:06:58 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:06:58 [notice] 1#1: exit
+2023/10/12 09:07:23 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:07:23 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:07:23 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:07:23 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:07:23 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:07:23 [notice] 1#1: start worker processes
+2023/10/12 09:07:23 [notice] 1#1: start worker process 29
+2023/10/12 09:07:23 [notice] 1#1: start worker process 30
+2023/10/12 09:07:23 [notice] 1#1: start worker process 31
+2023/10/12 09:07:23 [notice] 1#1: start worker process 32
+2023/10/12 09:07:35 [error] 29#29: *1 open() "/etc/nginx/html/static/assets/images/background/user-info.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/background/user-info.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:07:35 [error] 29#29: *2 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:07:35 [error] 29#29: *10 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:15:25 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:15:25 [notice] 31#31: gracefully shutting down
+2023/10/12 09:15:25 [notice] 31#31: exiting
+2023/10/12 09:15:25 [notice] 30#30: gracefully shutting down
+2023/10/12 09:15:25 [notice] 30#30: exiting
+2023/10/12 09:15:25 [notice] 29#29: gracefully shutting down
+2023/10/12 09:15:25 [notice] 32#32: gracefully shutting down
+2023/10/12 09:15:25 [notice] 31#31: exit
+2023/10/12 09:15:25 [notice] 30#30: exit
+2023/10/12 09:15:25 [notice] 29#29: exiting
+2023/10/12 09:15:25 [notice] 32#32: exiting
+2023/10/12 09:15:25 [notice] 29#29: exit
+2023/10/12 09:15:25 [notice] 32#32: exit
+2023/10/12 09:15:25 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 09:15:25 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:15:25 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:15:25 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:15:25 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:15:25 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:15:25 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/12 09:15:25 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:15:25 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:15:25 [notice] 1#1: exit
+2023/10/12 09:16:23 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:16:23 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:16:23 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:16:23 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:16:23 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:16:23 [notice] 1#1: start worker processes
+2023/10/12 09:16:23 [notice] 1#1: start worker process 29
+2023/10/12 09:16:23 [notice] 1#1: start worker process 30
+2023/10/12 09:16:23 [notice] 1#1: start worker process 31
+2023/10/12 09:16:23 [notice] 1#1: start worker process 32
+2023/10/12 09:16:28 [warn] 29#29: *8 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/static/assets/libs/jquery/dist/jquery.min.js HTTP/1.1", upstream: "http://172.20.0.3:5000/NG999/static/assets/libs/jquery/dist/jquery.min.js", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:16:28 [error] 29#29: *2 open() "/etc/nginx/html/static/assets/images/users/1.jpg" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/1.jpg HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:16:29 [error] 29#29: *1 open() "/etc/nginx/html/static/assets/images/users/profile.png" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /static/assets/images/users/profile.png HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:16:32 [error] 29#29: *2 open() "/etc/nginx/html/accountList" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /accountList HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:16:34 [error] 29#29: *13 "/etc/nginx/html/index.html" is not found (2: No such file or directory), client: 192.168.65.1, server: , request: "GET / HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:19:29 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:19:29 [notice] 29#29: gracefully shutting down
+2023/10/12 09:19:29 [notice] 29#29: exiting
+2023/10/12 09:19:29 [notice] 31#31: gracefully shutting down
+2023/10/12 09:19:29 [notice] 30#30: gracefully shutting down
+2023/10/12 09:19:29 [notice] 32#32: gracefully shutting down
+2023/10/12 09:19:29 [notice] 29#29: exit
+2023/10/12 09:19:29 [notice] 31#31: exiting
+2023/10/12 09:19:29 [notice] 30#30: exiting
+2023/10/12 09:19:29 [notice] 32#32: exiting
+2023/10/12 09:19:29 [notice] 31#31: exit
+2023/10/12 09:19:29 [notice] 30#30: exit
+2023/10/12 09:19:29 [notice] 32#32: exit
+2023/10/12 09:19:29 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:19:29 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:19:29 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:19:29 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/12 09:19:29 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:19:29 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:19:29 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:19:29 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:19:29 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:19:29 [notice] 1#1: exit
+2023/10/12 09:20:32 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:20:32 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:20:32 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:20:32 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:20:32 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:20:32 [notice] 1#1: start worker processes
+2023/10/12 09:20:32 [notice] 1#1: start worker process 29
+2023/10/12 09:20:32 [notice] 1#1: start worker process 30
+2023/10/12 09:20:32 [notice] 1#1: start worker process 31
+2023/10/12 09:20:32 [notice] 1#1: start worker process 32
+2023/10/12 09:20:45 [error] 29#29: *1 open() "/etc/nginx/html/logout" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "GET /logout HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/12 09:22:27 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:22:27 [notice] 29#29: gracefully shutting down
+2023/10/12 09:22:27 [notice] 29#29: exiting
+2023/10/12 09:22:27 [notice] 31#31: gracefully shutting down
+2023/10/12 09:22:27 [notice] 30#30: gracefully shutting down
+2023/10/12 09:22:27 [notice] 32#32: gracefully shutting down
+2023/10/12 09:22:27 [notice] 29#29: exit
+2023/10/12 09:22:27 [notice] 31#31: exiting
+2023/10/12 09:22:27 [notice] 30#30: exiting
+2023/10/12 09:22:27 [notice] 32#32: exiting
+2023/10/12 09:22:27 [notice] 31#31: exit
+2023/10/12 09:22:27 [notice] 30#30: exit
+2023/10/12 09:22:27 [notice] 32#32: exit
+2023/10/12 09:22:27 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 09:22:27 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:22:27 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:22:27 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:22:27 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:22:27 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:22:27 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:22:27 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:22:27 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:22:27 [notice] 1#1: exit
+2023/10/12 09:23:20 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:23:20 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:23:20 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:23:20 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:23:20 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:23:20 [notice] 1#1: start worker processes
+2023/10/12 09:23:20 [notice] 1#1: start worker process 28
+2023/10/12 09:23:20 [notice] 1#1: start worker process 29
+2023/10/12 09:23:20 [notice] 1#1: start worker process 30
+2023/10/12 09:23:20 [notice] 1#1: start worker process 31
+2023/10/12 09:24:21 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:24:21 [notice] 31#31: gracefully shutting down
+2023/10/12 09:24:21 [notice] 29#29: gracefully shutting down
+2023/10/12 09:24:21 [notice] 30#30: gracefully shutting down
+2023/10/12 09:24:21 [notice] 28#28: gracefully shutting down
+2023/10/12 09:24:21 [notice] 28#28: exiting
+2023/10/12 09:24:21 [notice] 31#31: exiting
+2023/10/12 09:24:21 [notice] 31#31: exit
+2023/10/12 09:24:21 [notice] 29#29: exiting
+2023/10/12 09:24:21 [notice] 30#30: exiting
+2023/10/12 09:24:21 [notice] 28#28: exit
+2023/10/12 09:24:21 [notice] 29#29: exit
+2023/10/12 09:24:21 [notice] 30#30: exit
+2023/10/12 09:24:21 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 09:24:21 [notice] 1#1: worker process 28 exited with code 0
+2023/10/12 09:24:21 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:24:21 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:24:21 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:24:21 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:24:21 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:24:21 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:24:21 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:24:21 [notice] 1#1: exit
+2023/10/12 09:25:19 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:25:19 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:25:19 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:25:19 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:25:19 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:25:19 [notice] 1#1: start worker processes
+2023/10/12 09:25:19 [notice] 1#1: start worker process 29
+2023/10/12 09:25:19 [notice] 1#1: start worker process 30
+2023/10/12 09:25:19 [notice] 1#1: start worker process 31
+2023/10/12 09:25:19 [notice] 1#1: start worker process 32
+2023/10/12 09:25:47 [error] 32#32: *8 open() "/etc/nginx/html/companyOperations" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "POST /companyOperations HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/companyList"
+2023/10/12 09:25:55 [error] 29#29: *1 open() "/etc/nginx/html/companyOperations" failed (2: No such file or directory), client: 192.168.65.1, server: , request: "POST /companyOperations HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/companyList"
+2023/10/12 09:26:08 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:26:08 [notice] 29#29: gracefully shutting down
+2023/10/12 09:26:08 [notice] 30#30: gracefully shutting down
+2023/10/12 09:26:08 [notice] 31#31: gracefully shutting down
+2023/10/12 09:26:08 [notice] 32#32: gracefully shutting down
+2023/10/12 09:26:08 [notice] 29#29: exiting
+2023/10/12 09:26:08 [notice] 30#30: exiting
+2023/10/12 09:26:08 [notice] 31#31: exiting
+2023/10/12 09:26:08 [notice] 32#32: exiting
+2023/10/12 09:26:08 [notice] 32#32: exit
+2023/10/12 09:26:08 [notice] 29#29: exit
+2023/10/12 09:26:08 [notice] 30#30: exit
+2023/10/12 09:26:08 [notice] 31#31: exit
+2023/10/12 09:26:08 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 09:26:08 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:26:08 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:26:08 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:26:08 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:26:08 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:26:08 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:26:08 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:26:08 [notice] 1#1: exit
+2023/10/12 09:27:50 [notice] 1#1: using the "epoll" event method
+2023/10/12 09:27:50 [notice] 1#1: nginx/1.25.2
+2023/10/12 09:27:50 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/12 09:27:50 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/12 09:27:50 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/12 09:27:50 [notice] 1#1: start worker processes
+2023/10/12 09:27:50 [notice] 1#1: start worker process 29
+2023/10/12 09:27:50 [notice] 1#1: start worker process 30
+2023/10/12 09:27:50 [notice] 1#1: start worker process 31
+2023/10/12 09:27:50 [notice] 1#1: start worker process 32
+2023/10/12 09:29:44 [warn] 29#29: *11 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.21.0.3:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withDeclaration"
+2023/10/12 09:31:03 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/12 09:31:03 [notice] 31#31: gracefully shutting down
+2023/10/12 09:31:03 [notice] 30#30: gracefully shutting down
+2023/10/12 09:31:03 [notice] 32#32: gracefully shutting down
+2023/10/12 09:31:03 [notice] 29#29: gracefully shutting down
+2023/10/12 09:31:03 [notice] 31#31: exiting
+2023/10/12 09:31:03 [notice] 31#31: exit
+2023/10/12 09:31:03 [notice] 30#30: exiting
+2023/10/12 09:31:03 [notice] 32#32: exiting
+2023/10/12 09:31:03 [notice] 29#29: exiting
+2023/10/12 09:31:03 [notice] 29#29: exit
+2023/10/12 09:31:03 [notice] 30#30: exit
+2023/10/12 09:31:03 [notice] 32#32: exit
+2023/10/12 09:31:03 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/12 09:31:03 [notice] 1#1: worker process 30 exited with code 0
+2023/10/12 09:31:03 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:31:03 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/12 09:31:03 [notice] 1#1: worker process 31 exited with code 0
+2023/10/12 09:31:03 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:31:03 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/12 09:31:03 [notice] 1#1: worker process 29 exited with code 0
+2023/10/12 09:31:03 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/12 09:31:03 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/12 09:31:03 [notice] 1#1: worker process 32 exited with code 0
+2023/10/12 09:31:03 [notice] 1#1: exit
