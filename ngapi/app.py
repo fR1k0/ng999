@@ -18,7 +18,6 @@ import traceback
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 data = []
-conn_ng999 = MySQLdb.connect('192.168.138.213', 'NG999', 'l]tb8/Eog2q[X5rC', 'NG999') 
 
 
 class Company(BaseModel):
@@ -45,7 +44,7 @@ class Company(BaseModel):
 #         return company
     
 #     except Exception as e:
-#         print(e)
+#         print(e, flush=True)
 #         conn_ng999.rollback()
 #         if cursor: cursor.close()
         
@@ -58,7 +57,9 @@ def generate_password(length=12):
     return password
 
 async def checkEmail(email):
+    conn_ng999 = getSqlCONN()
     cursor = conn_ng999.cursor()
+    
     query = """
 
     select * from Account where Account_Email = %s
@@ -71,10 +72,10 @@ async def checkEmail(email):
     result = cursor.fetchone()
     
     if result is not None and len(list(result)) > 0:
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         return True
     
-    cursor.close()
+    await closeConn(cursor, conn_ng999)
     return False
     
 @app.post("/ng999/account/add")
@@ -87,6 +88,7 @@ async def add_ng999_company_data(request: Request):
         if await checkEmail(body['email']):
             return JSONResponse(content={}, status_code=404)
         
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -124,6 +126,8 @@ async def ng999_logon(request:Request):
         password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         
         body = await request.json()
+        
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = "select account_password, account_role, account_email, account_id, account_name from Account where account_email = %s"
@@ -135,72 +139,75 @@ async def ng999_logon(request:Request):
         if result:
             if list(result)[0] is not None:                
                 if password_context.verify(body['password'], list(result)[0]):
-                    if cursor: cursor.close()
+                    await closeConn(cursor, conn_ng999)
                     return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4]}, status_code=200)
-                
+        
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'Message': "Incorrect Password"}, status_code=404)
                 
     except Exception as e:
-        print(e)
-        if cursor: cursor.close()
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
 
 
-# Route to read an item   
-@app.get("/ng999/company/get/{id}")
-def get_ng999_company_data(Company_ID: int):
-    try:
-        cursor = conn_ng999.cursor()
+# # Route to read an item   
+# @app.get("/ng999/company/get/{id}")
+# def get_ng999_company_data(Company_ID: int):
+#     try:
+#         cursor = conn_ng999.cursor()
         
-        query = "SELECT Company_ID , Company_Name, Company_Date_Created FROM Company WHERE Company_ID=%s"
-        cursor.execute(query, (Company_ID,))
+#         query = "SELECT Company_ID , Company_Name, Company_Date_Created FROM Company WHERE Company_ID=%s"
+#         cursor.execute(query, (Company_ID,))
         
-        item = cursor.fetchone()
-        if cursor: cursor.close()
+#         item = cursor.fetchone()
+#         if cursor: cursor.close()
         
         
-        if item is None:
-            raise HTTPException(status_code=404, detail="Data not found")
+#         if item is None:
+#             raise HTTPException(status_code=404, detail="Data not found")
         
-        return {"Company_ID": item[0], "Company_Name": item[1], "Company_Date_Created": item[2]}
+#         return {"Company_ID": item[0], "Company_Name": item[1], "Company_Date_Created": item[2]}
     
-    except Exception as e:
-        print(e)
-        if cursor: cursor.close()
+#     except Exception as e:
+#         print(e, flush=True)
+#         if cursor: cursor.close()
         
-        return JSONResponse(content={}, status_code=404)
+#         return JSONResponse(content={}, status_code=404)
 
 
-# Route to update an item
-@app.put("/ng999/company/update/{Company_ID}", response_model=Company)
-def update_ng999_company_data(Company_ID: int, company: Company):
-    try:
-        cursor = conn_ng999.cursor()
-        conn_ng999.begin()
+# # Route to update an item
+# @app.put("/ng999/company/update/{Company_ID}", response_model=Company)
+# def update_ng999_company_data(Company_ID: int, company: Company):
+#     try:
+#         conn_ng999 = getSqlCONN()
+#         cursor = conn_ng999.cursor()
+#         conn_ng999.begin()
         
-        query = "UPDATE Company SET Company_Name=%s, Company_Date_Created=%s WHERE Company_ID=%s"
+#         query = "UPDATE Company SET Company_Name=%s, Company_Date_Created=%s WHERE Company_ID=%s"
         
-        cursor.execute(query, (company.Company_Name, company.Company_Date_Created, Company_ID))
-        conn_ng999.commit()
+#         cursor.execute(query, (company.Company_Name, company.Company_Date_Created, Company_ID))
+#         conn_ng999.commit()
         
-        company.Company_ID = Company_ID
+#         company.Company_ID = Company_ID
         
-        if cursor: cursor.close()
+#         await closeConn(cursor, conn_ng999)
     
-        return company
+#         return company
 
-    except Exception as e:
-        print(e)
+#     except Exception as e:
+#         print(e, flush=True)
         
-        conn_ng999.rollback()
-        if cursor: cursor.close()
+#         conn_ng999.rollback()
+#         if cursor: cursor.close()
         
-        return JSONResponse(content={}, status_code=404)
+#         return JSONResponse(content={}, status_code=404)
 
 # Route to delete an item
 @app.delete("/ng999/company/delete/{id}")
-def delete_ng999_company_data(Company_ID: int):
+async def delete_ng999_company_data(Company_ID: int):
     try:
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -208,21 +215,20 @@ def delete_ng999_company_data(Company_ID: int):
         cursor.execute(query, (Company_ID,))
         
         conn_ng999.commit()
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         
         return {"Company_ID": Company_ID}
     
     except Exception as e:
-        print(e)
-        conn_ng999.rollback()
-        if cursor: cursor.close()
-        
+        print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
    
 
 @app.get("/ng999/company/list")
-def get_ng999_company_datas():
+async def get_ng999_company_datas():
     try:
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = "SELECT * FROM Company where Company_ID"
@@ -241,18 +247,19 @@ def get_ng999_company_datas():
                 rowDict[col_name] = str(row[i])
             
             resultDict.append(rowDict)
-        
+            
+        await closeConn(cursor, conn_ng999)
         return resultDict
     
     except Exception as e:
-        print(e)
-        if cursor: cursor.close()
-        
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
 @app.get("/ng999/account/list")
-def getAccountList():
+async def getAccountList():
     try:
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = "SELECT * FROM Account a join Company c on a.company_id = c.company_id where a.Account_Role = '2'"
@@ -271,18 +278,20 @@ def getAccountList():
                 rowDict[col_name] = row[i]
             
             resultDict.append(rowDict)
-        
+            
+        await closeConn(cursor, conn_ng999)
         return resultDict
     
     except Exception as e:
-        print(e)
-        if cursor: cursor.close()
-        
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
 async def checkCustDB(accountID, phoneNumber):
     try:
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
+        
         query = """
     
         select * from Customer where account_id = %s and Customer_Phone_Number = %s
@@ -294,20 +303,22 @@ async def checkCustDB(accountID, phoneNumber):
         result = cursor.fetchone()
         
         if result and len(list(result)) > 0:
-            if cursor: cursor.close()
+            await closeConn(cursor, conn_ng999)
             return True 
         
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         return False
     
     except Exception as e:
-        print(e)
-        if cursor: cursor.close()
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
         return False
     
 async def checkCustDBDeclare(custID, phoneNumber):
     try:
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
+        
         query = """
     
         select * from Customer where Customer_ID != %s and Customer_Phone_Number = %s
@@ -319,15 +330,15 @@ async def checkCustDBDeclare(custID, phoneNumber):
         result = cursor.fetchone()
         
         if result and len(list(result)) > 0:
-            if cursor: cursor.close()
+            await closeConn(cursor, conn_ng999)
             return True 
         
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         return False
     
     except Exception as e:
-        print(e)
-        if cursor: cursor.close()
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
         return False
     
     
@@ -336,6 +347,7 @@ async def get_ng999_company_datas(request:Request):
     try:
         body = await request.json()
     
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -360,7 +372,7 @@ async def get_ng999_company_datas(request:Request):
             cursor.execute(query, values)
         
         conn_ng999.commit()
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=200)
         
         
@@ -369,14 +381,15 @@ async def get_ng999_company_datas(request:Request):
         print("Message:", str(e), flush=True)
         print("Traceback:")
         traceback.print_exc()
-        conn_ng999.rollback()
-        if cursor: cursor.close()
+        
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={"message": str(e)}, status_code=404)
     
 async def getCount(wholesellerID):
     try:
         body = {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
         
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
         
         queryList = ["""
@@ -406,11 +419,11 @@ async def getCount(wholesellerID):
                 else:
                     body['withoutMigrate'] = list(result)[0]
         
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         return body
     
     except Exception as e:
-        print(e)
+        await closeConn(cursor, conn_ng999)
         return {}
                 
 
@@ -419,7 +432,9 @@ async def get_ng999_company_datas(request:Request):
     try:
         body = await request.json()
         
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
+        
         resultDict = []
         
         query = """
@@ -458,12 +473,12 @@ async def get_ng999_company_datas(request:Request):
 
                 resultDict.append(rowDict)
         
-        if cursor: cursor.close()
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content=resultDict, status_code=200)
             
     except Exception as e:
-        print(e)
-        if cursor: cursor.close()
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
     
@@ -472,8 +487,9 @@ async def insertCompany(request:Request):
     try:
         body = await request.json()
         
-        conn_ng999.begin()
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
+        conn_ng999.begin()
         
         query = """
         insert into Company (Company_Name,Company_Date_Created) values (%s,%s);
@@ -485,11 +501,15 @@ async def insertCompany(request:Request):
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
+            await closeConn(cursor, conn_ng999)
             return JSONResponse(content={}, status_code=200)
+        
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
     
     except Exception as e:
-        conn_ng999.rollback()
         print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
     
@@ -498,8 +518,9 @@ async def deleteCompany(request:Request):
     try:
         body = await request.json()
         
-        conn_ng999.begin()
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
+        conn_ng999.begin()
         
         query = """
         
@@ -512,14 +533,15 @@ async def deleteCompany(request:Request):
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
-            
-            if cursor:cursor.close()
+            await closeConn(cursor, conn_ng999)
             return JSONResponse(content={}, status_code=200)
+        
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
     
     except Exception as e:
-        conn_ng999.rollback()
-        if cursor:cursor.close()
         print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
 
@@ -532,8 +554,9 @@ async def declareCompany(request:Request):
             if await checkCustDBDeclare(body['CustID'], body['PhoneNo']):
                 return JSONResponse(content={'Message': "Duplicated Phone Number"}, status_code=404)
         
-        conn_ng999.begin()
+        conn_ng999 = getSqlCONN()
         cursor = conn_ng999.cursor()
+        conn_ng999.begin()
         
         query = """
         
@@ -546,47 +569,53 @@ async def declareCompany(request:Request):
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
-            if cursor:cursor.close()
+            await closeConn(cursor, conn_ng999)
             return JSONResponse(content={}, status_code=200)
+        
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
     
     except Exception as e:
-        conn_ng999.rollback()
         print(e, flush=True)
-        if cursor:cursor.close()
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={'Message': str(e)}, status_code=404)
     
     
 @app.get("/ng999/admin/dashboard")
-def adminDashboard():
+async def adminDashboard():
     try:
         finalList = {}
         
-        with conn_ng999.cursor() as cursor:
-            query = """
-            select count(*) from Company
-            """
+        conn_ng999 = getSqlCONN()
+        cursor = conn_ng999.cursor()
         
-            cursor.execute(query)
-            result = cursor.fetchall()
-            
-            if result is not None and len(list(result)) > 0:
-                finalList['wholeSaler'] = list(list(result)[0])[0]
-                
-            query = """
-            select count(*) from Customer
-            """
+        query = """
+        select count(*) from Company
+        """
+    
+        cursor.execute(query)
+        result = cursor.fetchall()
         
-            cursor.execute(query)
-            result = cursor.fetchall()
+        if result is not None and len(list(result)) > 0:
+            finalList['wholeSaler'] = list(list(result)[0])[0]
             
-            if result is not None and len(list(result)) > 0:
-                finalList['totalCust'] = list(list(result)[0])[0]
+        query = """
+        select count(*) from Customer
+        """
+    
+        cursor.execute(query)
+        result = cursor.fetchall()
+        
+        if result is not None and len(list(result)) > 0:
+            finalList['totalCust'] = list(list(result)[0])[0]
+            
+        await closeConn(cursor, conn_ng999)
                 
-        print(finalList, flush= True)
         return JSONResponse(content=finalList, status_code=200)
         
     except Exception as e:
         print(str(e), flush=True)
+        await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'Message': str(str(e))}, status_code=404)
     
 
@@ -594,31 +623,52 @@ def adminDashboard():
 async def bundleDeclare(request:Request):
     try:
         body = await request.json()
+        conn_ng999 = getSqlCONN()
+
         conn_ng999.begin()
-    
-        with conn_ng999.cursor() as cursor:
+        cursor = conn_ng999.cursor()
+
+        for cust in body['custID']:
+            query = """
             
-            for cust in body['custID']:
-                query = """
-                
-                update Customer set Customer_Declaration_Date = %s where Customer_ID = %s
-                
-                """
-                values = (datetime.now(), cust)
-                
-                cursor.execute(query, values)
+            update Customer set Customer_Declaration_Date = %s where Customer_ID = %s
             
-            if cursor.rowcount > 0:
-                conn_ng999.commit()
-                    
+            """
+            values = (datetime.now(), cust)
+            
+            cursor.execute(query, values)
+        
+        if cursor.rowcount > 0:
+            conn_ng999.commit()
+        
+        await closeConn(cursor, conn_ng999)
+        
         return JSONResponse(content={}, status_code=200)
                 
     except Exception as e:
-        print(e)
-        conn_ng999.rollback()
+        print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
-        
     
+def getSqlCONN():
+    return MySQLdb.connect('192.168.138.213', 'NG999', 'l]tb8/Eog2q[X5rC', 'NG999') 
+
+async def closeConnRollback(cursor=None, conn_ng999=None):
+    try:
+        conn_ng999.rollback()
+        cursor.close()
+        conn_ng999.close()
+    except Exception as e:
+        pass
+    
+async def closeConn(cursor=None, conn_ng999=None):
+    try:
+        cursor.close()
+        conn_ng999.close()
+    except Exception as e:
+        pass
+    
+
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8888)
     
