@@ -336,8 +336,9 @@
                 return;
             }
 
-
-            let url = '/NG999/bundleDeclarePost';
+            if (window.confirm("I hereby declare that the infomation provided is true and correct")) {
+            
+                let url = '/NG999/bundleDeclarePost';
 
                 fetch(url, {
                     method: 'POST',
@@ -346,19 +347,20 @@
                     },
                     body: JSON.stringify(payload)
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            window.location.reload();
-                        } else {
-                            alert('Failed to declare bundle.');
-                        
-                        }
-                    })
-                    .catch(error => {
-                        alert("Error: " + error);
-                        console.error('Error:', error);
-                        
-                    });
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        alert('Failed to declare bundle.');
+                    
+                    }
+                })
+                .catch(error => {
+                    alert("Error: " + error);
+                    console.error('Error:', error);
+                    
+                });}
+                else{}
         });
     </script>
 </body>

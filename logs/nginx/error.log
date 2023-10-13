@@ -4394,3 +4394,247 @@
 2023/10/13 11:27:19 [notice] 1#1: worker process 31 exited with code 0
 2023/10/13 11:27:19 [notice] 1#1: worker process 32 exited with code 0
 2023/10/13 11:27:19 [notice] 1#1: exit
+2023/10/13 15:57:08 [notice] 1#1: using the "epoll" event method
+2023/10/13 15:57:08 [notice] 1#1: nginx/1.25.2
+2023/10/13 15:57:08 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 15:57:08 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 15:57:08 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 15:57:08 [notice] 1#1: start worker processes
+2023/10/13 15:57:08 [notice] 1#1: start worker process 28
+2023/10/13 15:57:08 [notice] 1#1: start worker process 29
+2023/10/13 15:57:08 [notice] 1#1: start worker process 30
+2023/10/13 15:57:08 [notice] 1#1: start worker process 31
+2023/10/13 16:00:22 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:00:22 [notice] 28#28: gracefully shutting down
+2023/10/13 16:00:22 [notice] 29#29: gracefully shutting down
+2023/10/13 16:00:22 [notice] 29#29: exiting
+2023/10/13 16:00:22 [notice] 30#30: gracefully shutting down
+2023/10/13 16:00:22 [notice] 31#31: gracefully shutting down
+2023/10/13 16:00:22 [notice] 28#28: exiting
+2023/10/13 16:00:22 [notice] 29#29: exit
+2023/10/13 16:00:22 [notice] 30#30: exiting
+2023/10/13 16:00:22 [notice] 31#31: exiting
+2023/10/13 16:00:22 [notice] 28#28: exit
+2023/10/13 16:00:22 [notice] 30#30: exit
+2023/10/13 16:00:22 [notice] 31#31: exit
+2023/10/13 16:00:22 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/13 16:00:22 [notice] 1#1: worker process 29 exited with code 0
+2023/10/13 16:00:22 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:00:22 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/13 16:00:22 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:00:22 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:00:22 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/13 16:00:22 [notice] 1#1: worker process 28 exited with code 0
+2023/10/13 16:00:22 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:00:22 [notice] 1#1: exit
+2023/10/13 16:01:39 [notice] 1#1: using the "epoll" event method
+2023/10/13 16:01:39 [notice] 1#1: nginx/1.25.2
+2023/10/13 16:01:39 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 16:01:39 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 16:01:39 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 16:01:39 [notice] 1#1: start worker processes
+2023/10/13 16:01:39 [notice] 1#1: start worker process 29
+2023/10/13 16:01:39 [notice] 1#1: start worker process 30
+2023/10/13 16:01:39 [notice] 1#1: start worker process 31
+2023/10/13 16:01:39 [notice] 1#1: start worker process 32
+2023/10/13 16:02:38 [warn] 29#29: *1 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000001, client: 192.168.65.1, server: , request: "POST /NG999/uploadMigration HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:02:42 [warn] 30#30: *97 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000002, client: 172.25.0.3, server: , request: "POST /ng999Restapi/ng999/customer/add HTTP/1.1", host: "ng999nginx"
+2023/10/13 16:04:39 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:04:39 [notice] 29#29: gracefully shutting down
+2023/10/13 16:04:39 [notice] 30#30: gracefully shutting down
+2023/10/13 16:04:39 [notice] 31#31: gracefully shutting down
+2023/10/13 16:04:39 [notice] 32#32: gracefully shutting down
+2023/10/13 16:04:39 [notice] 29#29: exiting
+2023/10/13 16:04:39 [notice] 30#30: exiting
+2023/10/13 16:04:39 [notice] 31#31: exiting
+2023/10/13 16:04:39 [notice] 32#32: exiting
+2023/10/13 16:04:39 [notice] 29#29: exit
+2023/10/13 16:04:39 [notice] 30#30: exit
+2023/10/13 16:04:39 [notice] 31#31: exit
+2023/10/13 16:04:39 [notice] 32#32: exit
+2023/10/13 16:04:39 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/13 16:04:39 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:04:39 [notice] 1#1: worker process 32 exited with code 0
+2023/10/13 16:04:39 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:04:39 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:04:39 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/13 16:04:39 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/13 16:04:39 [notice] 1#1: worker process 29 exited with code 0
+2023/10/13 16:04:39 [notice] 1#1: exit
+2023/10/13 16:06:35 [notice] 1#1: using the "epoll" event method
+2023/10/13 16:06:35 [notice] 1#1: nginx/1.25.2
+2023/10/13 16:06:35 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 16:06:35 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 16:06:35 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 16:06:35 [notice] 1#1: start worker processes
+2023/10/13 16:06:35 [notice] 1#1: start worker process 29
+2023/10/13 16:06:35 [notice] 1#1: start worker process 30
+2023/10/13 16:06:35 [notice] 1#1: start worker process 31
+2023/10/13 16:06:35 [notice] 1#1: start worker process 32
+2023/10/13 16:06:49 [warn] 31#31: *13 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000001, client: 192.168.65.1, server: , request: "POST /NG999/uploadMigration HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:06:49 [warn] 32#32: *38 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000002, client: 172.25.0.2, server: , request: "POST /ng999Restapi/ng999/customer/add HTTP/1.1", host: "ng999nginx"
+2023/10/13 16:06:52 [warn] 31#31: *13 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/dataMigration HTTP/1.1", upstream: "http://172.25.0.2:5000/NG999/dataMigration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:08:25 [warn] 32#32: *12 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/4/00/0000000004 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.2:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withDeclaration"
+2023/10/13 16:12:19 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:12:19 [notice] 29#29: gracefully shutting down
+2023/10/13 16:12:19 [notice] 31#31: gracefully shutting down
+2023/10/13 16:12:19 [notice] 31#31: exiting
+2023/10/13 16:12:19 [notice] 30#30: gracefully shutting down
+2023/10/13 16:12:19 [notice] 32#32: gracefully shutting down
+2023/10/13 16:12:19 [notice] 29#29: exiting
+2023/10/13 16:12:19 [notice] 31#31: exit
+2023/10/13 16:12:19 [notice] 30#30: exiting
+2023/10/13 16:12:19 [notice] 32#32: exiting
+2023/10/13 16:12:19 [notice] 29#29: exit
+2023/10/13 16:12:19 [notice] 30#30: exit
+2023/10/13 16:12:19 [notice] 32#32: exit
+2023/10/13 16:12:19 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/13 16:12:19 [notice] 1#1: worker process 29 exited with code 0
+2023/10/13 16:12:19 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:12:19 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:12:19 [notice] 1#1: worker process 32 exited with code 0
+2023/10/13 16:12:19 [notice] 1#1: exit
+2023/10/13 16:13:15 [notice] 1#1: using the "epoll" event method
+2023/10/13 16:13:15 [notice] 1#1: nginx/1.25.2
+2023/10/13 16:13:15 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 16:13:15 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 16:13:15 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 16:13:15 [notice] 1#1: start worker processes
+2023/10/13 16:13:15 [notice] 1#1: start worker process 29
+2023/10/13 16:13:15 [notice] 1#1: start worker process 30
+2023/10/13 16:13:15 [notice] 1#1: start worker process 31
+2023/10/13 16:13:15 [notice] 1#1: start worker process 32
+2023/10/13 16:13:32 [warn] 31#31: *7 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withoutDeclaration"
+2023/10/13 16:13:41 [warn] 30#30: *10 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withDeclaration"
+2023/10/13 16:19:49 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:19:49 [notice] 30#30: gracefully shutting down
+2023/10/13 16:19:49 [notice] 29#29: gracefully shutting down
+2023/10/13 16:19:49 [notice] 32#32: gracefully shutting down
+2023/10/13 16:19:49 [notice] 32#32: exiting
+2023/10/13 16:19:49 [notice] 31#31: gracefully shutting down
+2023/10/13 16:19:49 [notice] 30#30: exiting
+2023/10/13 16:19:49 [notice] 29#29: exiting
+2023/10/13 16:19:49 [notice] 32#32: exit
+2023/10/13 16:19:49 [notice] 31#31: exiting
+2023/10/13 16:19:49 [notice] 30#30: exit
+2023/10/13 16:19:49 [notice] 29#29: exit
+2023/10/13 16:19:49 [notice] 31#31: exit
+2023/10/13 16:19:50 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/13 16:19:50 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:19:50 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:19:50 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/13 16:19:50 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:19:50 [notice] 1#1: worker process 32 exited with code 0
+2023/10/13 16:19:50 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:19:50 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/10/13 16:19:50 [notice] 1#1: worker process 29 exited with code 0
+2023/10/13 16:19:50 [notice] 1#1: exit
+2023/10/13 16:20:43 [notice] 1#1: using the "epoll" event method
+2023/10/13 16:20:43 [notice] 1#1: nginx/1.25.2
+2023/10/13 16:20:43 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 16:20:43 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 16:20:43 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 16:20:43 [notice] 1#1: start worker processes
+2023/10/13 16:20:43 [notice] 1#1: start worker process 30
+2023/10/13 16:20:43 [notice] 1#1: start worker process 31
+2023/10/13 16:20:43 [notice] 1#1: start worker process 32
+2023/10/13 16:20:43 [notice] 1#1: start worker process 33
+2023/10/13 16:21:00 [warn] 32#32: *8 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000001, client: 192.168.65.1, server: , request: "POST /NG999/uploadMigration HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:21:01 [warn] 30#30: *63 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000002, client: 172.25.0.3, server: , request: "POST /ng999Restapi/ng999/customer/add HTTP/1.1", host: "ng999nginx"
+2023/10/13 16:21:05 [warn] 32#32: *8 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/dataMigration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/dataMigration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:21:25 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:21:25 [notice] 30#30: gracefully shutting down
+2023/10/13 16:21:25 [notice] 31#31: gracefully shutting down
+2023/10/13 16:21:25 [notice] 33#33: gracefully shutting down
+2023/10/13 16:21:25 [notice] 32#32: gracefully shutting down
+2023/10/13 16:21:25 [notice] 30#30: exiting
+2023/10/13 16:21:25 [notice] 31#31: exiting
+2023/10/13 16:21:25 [notice] 33#33: exiting
+2023/10/13 16:21:25 [notice] 32#32: exiting
+2023/10/13 16:21:25 [notice] 30#30: exit
+2023/10/13 16:21:25 [notice] 31#31: exit
+2023/10/13 16:21:25 [notice] 33#33: exit
+2023/10/13 16:21:25 [notice] 32#32: exit
+2023/10/13 16:21:25 [notice] 1#1: signal 17 (SIGCHLD) received from 33
+2023/10/13 16:21:25 [notice] 1#1: worker process 33 exited with code 0
+2023/10/13 16:21:25 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:21:25 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/13 16:21:25 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:21:25 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:21:25 [notice] 1#1: worker process 32 exited with code 0
+2023/10/13 16:21:25 [notice] 1#1: exit
+2023/10/13 16:22:09 [notice] 1#1: using the "epoll" event method
+2023/10/13 16:22:09 [notice] 1#1: nginx/1.25.2
+2023/10/13 16:22:09 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 16:22:09 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 16:22:09 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 16:22:09 [notice] 1#1: start worker processes
+2023/10/13 16:22:09 [notice] 1#1: start worker process 29
+2023/10/13 16:22:09 [notice] 1#1: start worker process 30
+2023/10/13 16:22:09 [notice] 1#1: start worker process 31
+2023/10/13 16:22:09 [notice] 1#1: start worker process 32
+2023/10/13 16:22:21 [warn] 29#29: *1 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000001, client: 192.168.65.1, server: , request: "POST /NG999/uploadMigration HTTP/1.1", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:22:22 [warn] 29#29: *63 a client request body is buffered to a temporary file /var/cache/nginx/client_temp/0000000002, client: 172.25.0.3, server: , request: "POST /ng999Restapi/ng999/customer/add HTTP/1.1", host: "ng999nginx"
+2023/10/13 16:22:25 [warn] 29#29: *1 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/dataMigration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/dataMigration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:22:34 [warn] 29#29: *10 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/4/00/0000000004 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:22:51 [warn] 29#29: *11 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/5/00/0000000005 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withoutDeclaration"
+2023/10/13 16:23:02 [warn] 30#30: *2 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/6/00/0000000006 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withoutDeclaration"
+2023/10/13 16:23:28 [warn] 29#29: *9 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/7/00/0000000007 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/dataMigration HTTP/1.1", upstream: "http://172.25.0.3:5000/NG999/dataMigration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withDeclaration"
+2023/10/13 16:28:52 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:28:52 [notice] 29#29: gracefully shutting down
+2023/10/13 16:28:52 [notice] 30#30: gracefully shutting down
+2023/10/13 16:28:52 [notice] 31#31: gracefully shutting down
+2023/10/13 16:28:52 [notice] 32#32: gracefully shutting down
+2023/10/13 16:28:52 [notice] 29#29: exiting
+2023/10/13 16:28:52 [notice] 30#30: exiting
+2023/10/13 16:28:52 [notice] 31#31: exiting
+2023/10/13 16:28:52 [notice] 32#32: exiting
+2023/10/13 16:28:52 [notice] 29#29: exit
+2023/10/13 16:28:52 [notice] 30#30: exit
+2023/10/13 16:28:52 [notice] 31#31: exit
+2023/10/13 16:28:52 [notice] 32#32: exit
+2023/10/13 16:28:52 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/13 16:28:52 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:28:52 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:28:52 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/10/13 16:28:52 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:28:52 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:28:52 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/13 16:28:52 [notice] 1#1: worker process 29 exited with code 0
+2023/10/13 16:28:52 [notice] 1#1: worker process 32 exited with code 0
+2023/10/13 16:28:52 [notice] 1#1: exit
+2023/10/13 16:29:49 [notice] 1#1: using the "epoll" event method
+2023/10/13 16:29:49 [notice] 1#1: nginx/1.25.2
+2023/10/13 16:29:49 [notice] 1#1: built by gcc 12.2.1 20220924 (Alpine 12.2.1_git20220924-r10) 
+2023/10/13 16:29:49 [notice] 1#1: OS: Linux 6.4.16-linuxkit
+2023/10/13 16:29:49 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/10/13 16:29:49 [notice] 1#1: start worker processes
+2023/10/13 16:29:49 [notice] 1#1: start worker process 29
+2023/10/13 16:29:49 [notice] 1#1: start worker process 30
+2023/10/13 16:29:49 [notice] 1#1: start worker process 31
+2023/10/13 16:29:49 [notice] 1#1: start worker process 32
+2023/10/13 16:29:57 [warn] 30#30: *3 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/1/00/0000000001 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.2:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/"
+2023/10/13 16:30:03 [warn] 30#30: *10 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/2/00/0000000002 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/withoutDeclaration HTTP/1.1", upstream: "http://172.25.0.2:5000/NG999/withoutDeclaration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withoutDeclaration"
+2023/10/13 16:30:37 [warn] 30#30: *12 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/3/00/0000000003 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/dataMigration HTTP/1.1", upstream: "http://172.25.0.2:5000/NG999/dataMigration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/withDeclaration"
+2023/10/13 16:30:44 [warn] 29#29: *8 an upstream response is buffered to a temporary file /var/cache/nginx/proxy_temp/4/00/0000000004 while reading upstream, client: 192.168.65.1, server: , request: "GET /NG999/dataMigration HTTP/1.1", upstream: "http://172.25.0.2:5000/NG999/dataMigration", host: "localhost:9042", referrer: "http://localhost:9042/NG999/dataMigration"
+2023/10/13 16:30:47 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/10/13 16:30:47 [notice] 31#31: gracefully shutting down
+2023/10/13 16:30:47 [notice] 29#29: gracefully shutting down
+2023/10/13 16:30:47 [notice] 32#32: gracefully shutting down
+2023/10/13 16:30:47 [notice] 32#32: exiting
+2023/10/13 16:30:47 [notice] 30#30: gracefully shutting down
+2023/10/13 16:30:47 [notice] 31#31: exiting
+2023/10/13 16:30:47 [notice] 29#29: exiting
+2023/10/13 16:30:47 [notice] 32#32: exit
+2023/10/13 16:30:47 [notice] 30#30: exiting
+2023/10/13 16:30:47 [notice] 31#31: exit
+2023/10/13 16:30:47 [notice] 29#29: exit
+2023/10/13 16:30:47 [notice] 30#30: exit
+2023/10/13 16:30:47 [notice] 1#1: signal 17 (SIGCHLD) received from 30
+2023/10/13 16:30:47 [notice] 1#1: worker process 30 exited with code 0
+2023/10/13 16:30:48 [notice] 1#1: signal 29 (SIGIO) received
+2023/10/13 16:30:48 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/10/13 16:30:48 [notice] 1#1: worker process 29 exited with code 0
+2023/10/13 16:30:48 [notice] 1#1: worker process 31 exited with code 0
+2023/10/13 16:30:48 [notice] 1#1: worker process 32 exited with code 0
+2023/10/13 16:30:48 [notice] 1#1: exit

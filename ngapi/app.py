@@ -131,7 +131,7 @@ async def add_ng999_company_data(request: Request):
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={"Message": str(e)}, status_code=404)
     
 @app.post('/ng999/admin/resetPassword')
 async def resetPassword(request:Request):
@@ -344,12 +344,17 @@ async def checkCustDB(accountID, phoneNumber):
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
+        # query = """
+    
+        # select * from Customer where account_id = %s and Customer_Phone_Number = %s
+        # """
+        
         query = """
     
-        select * from Customer where account_id = %s and Customer_Phone_Number = %s
+        select * from Customer where Customer_Phone_Number = %s
         """
         
-        values = (accountID, phoneNumber)
+        values = (phoneNumber,)
         cursor.execute(query, values)
         
         result = cursor.fetchone()
@@ -406,10 +411,10 @@ async def get_ng999_company_datas(request:Request):
         for i in body['data']:
             # No duplicated phone number can be inserted to the db
             address = i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3']
-            if i['CarllerNo'].replace(" ", "") == "" or i['Name'].replace(" ", "") == "" or address.replace(" ", "") == "":
+            if i['CallerNo'].replace(" ", "") == "" or i['Name'].replace(" ", "") == "" or address.replace(" ", "") == "":
                 continue
             
-            if await checkCustDB(body['wholesellerID'], i['CarllerNo']):
+            if await checkCustDB(body['wholesellerID'], i['CallerNo']):
                 continue
             
             query = """
@@ -419,7 +424,7 @@ async def get_ng999_company_datas(request:Request):
             values (%s, %s, %s, %s, %s, %s, %s);
     
             """
-            values = (i['Name'], datetime.now(), i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3'], i['CarllerNo'], i['WholeSaleID'], body['wholesellerID'], i['CustID'])
+            values = (i['Name'], datetime.now(), i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3'], i['CallerNo'], i['WholeSaleID'], body['wholesellerID'], i['CustID'])
 
             cursor.execute(query, values)
         

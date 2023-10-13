@@ -193,7 +193,7 @@
                     aria-labelledby="updateDeclarationModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <form method="POST" action="/NG999/declare">
+                            <form method="POST" action="/NG999/declare" id="declareForm">
 
                                 <div class="modal-header">
                                     <h5 class="modal-title">Update Declaration</h5>
@@ -241,7 +241,7 @@
                                 </div>
 
                                 <div class="modal-footer" style="justify-content: flex-start;">
-                                    <button type="submit" class="btn btn-primary">Update and Declare</button>
+                                    <button type="submit" id="submitDeclare" class="btn btn-primary">Update and Declare</button>
                                 </div>
                             </form>
                         </div>
@@ -390,6 +390,18 @@
                 $('#modalcustID').val(custID);
             });
 
+
+        
+            document.getElementById("submitDeclare").addEventListener("click", function (event) {
+                event.preventDefault();
+                
+                if (window.confirm("I hereby declare that the infomation provided is true and correct")) {
+                    document.getElementById('declareForm').submit();
+                } else {
+
+                }
+            });
+       
 
         </script>
 </body>

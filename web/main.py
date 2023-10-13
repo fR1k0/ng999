@@ -172,9 +172,14 @@ def accountCreate():
         if response.status_code == 200:
             wholeSellerList = response.json()
             return render_template("account-create.html", wholesellerList=wholeSellerList, session=session)
+        
+        flash("Fail to load wholeseller list")
+        return render_template("account-create.html", wholesellerList=[], session=session)
             
     except Exception as e:
         print(e, flush=True)
+        flash("Fail to load wholeseller list")
+        return render_template("account-create.html", wholesellerList=[], session=session)
         
 @app.route(f"{PREFIX}/addAccount", methods=["POST"])
 @login_required
@@ -201,8 +206,11 @@ def addAccount():
         
         flash(f"Failed to create account for {name}")
         return redirect(url_for('accountCreate'))
+    
     except Exception as e:
         print(e, flush=True)
+        flash("Fail to load wholeseller list")
+        return render_template("account-create.html", wholesellerList=[], session=session)
         
 @app.route(f"{PREFIX}/dataMigration", methods=["GET"])
 @login_required
@@ -315,7 +323,7 @@ def uploadMigration():
             raise Exception("Invalid File Extension")
         
         fileContent = file.read()
-        df = pd.read_excel(io.BytesIO(fileContent), dtype={'CarllerNo': str})
+        df = pd.read_excel(io.BytesIO(fileContent), dtype={'CallerNo': str})
         
         rows_list = []
         for index, row in df.iterrows():
@@ -332,6 +340,8 @@ def uploadMigration():
             flash("Uploaded migration list")
             return redirect(url_for('dataMigration'))
         
+        
+        print(response.json(), flush=True)
         flash("Fail to upload migration list")
         return redirect(url_for('dataMigration'))
         
