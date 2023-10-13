@@ -121,7 +121,6 @@ def login():
 @app.route(f'{PREFIX}/logout')
 @login_required
 def logout():
-    print("Here in logout", flush=True)
     session.clear()
     logout_user()
     return redirect(url_for('login'))
@@ -153,7 +152,6 @@ def index():
         if response.status_code == 200:
             body = response.json()
             
-        print(body)
         return render_template("dashboardWholeseller.html", session=session, listCount=body)
     
     except Exception as e:
@@ -165,6 +163,7 @@ def index():
 def accountCreate():
     try:
         if session['role_id'] != '1':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + "/ng999/company/list"
@@ -175,13 +174,14 @@ def accountCreate():
             return render_template("account-create.html", wholesellerList=wholeSellerList, session=session)
             
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         
 @app.route(f"{PREFIX}/addAccount", methods=["POST"])
 @login_required
 def addAccount():
     try:
         if session['role_id'] != '1':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
         
         url= app.config['API_URL'] + "/ng999/account/add"
@@ -202,7 +202,7 @@ def addAccount():
         flash(f"Failed to create account for {name}")
         return redirect(url_for('accountCreate'))
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         
 @app.route(f"{PREFIX}/dataMigration", methods=["GET"])
 @login_required
@@ -210,6 +210,7 @@ def dataMigration():
     try:
         custList = []
         if session['role_id'] != '2':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
@@ -224,7 +225,7 @@ def dataMigration():
         return render_template('dataMigration.html', session=session, customerList=custList)
         
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         flash(str(e))
         return redirect(url_for('index'))
     
@@ -234,6 +235,7 @@ def withDeclaration():
     try:
         custList = []
         if session['role_id'] != '2':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
@@ -248,7 +250,7 @@ def withDeclaration():
         return render_template('withDeclaration.html', session=session, customerList=custList)
         
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         flash(str(e))
         return redirect(url_for('index'))
     
@@ -257,10 +259,11 @@ def withDeclaration():
 @login_required
 def withoutDeclaration():
     try:
+        if session['role_id'] != '2':
+            flash("Unauthorized Access")
+            return redirect(url_for('logout'))
         
         custList = []
-        if session['role_id'] != '2':
-            return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "2"}
@@ -273,7 +276,7 @@ def withoutDeclaration():
         return render_template('withoutDeclaration.html', session=session, customerList=custList)
         
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         flash(str(e))
         return redirect(url_for('index'))
 
@@ -297,6 +300,7 @@ def uploadMigration():
     validExtension = ['xls', 'xlsx']
     
     if session['role_id'] != '2':
+        flash("Unauthorized Access")
         return redirect(url_for('logout'))
     
     try:
@@ -344,6 +348,7 @@ def uploadMigration():
 def accountList():
     try:
         if session['role_id'] != '1':
+            flash("Unauthorized Access")
             return redirect(url_for("logout"))
         
         url = app.config['API_URL'] + "/ng999/account/list"
@@ -365,6 +370,7 @@ def accountList():
 def adminResetPass():
     try:
         if session['role_id'] != '1':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
         
         password = request.form.get('confirmNewPass')
@@ -393,8 +399,8 @@ def adminResetPass():
 @login_required
 def companyList():
     try:
-        
         if session['role_id'] != '1':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + "/ng999/company/list"
@@ -408,7 +414,7 @@ def companyList():
         return render_template('createCompany.html', companyList=cList)
     
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         flash(str(e))
         return redirect(url_for('index'))
     
@@ -416,6 +422,11 @@ def companyList():
 @login_required
 def companyOperations():
     try:
+        if session['role_id'] != '1':
+            flash("Unauthorized Access")
+            return redirect(url_for('logout'))
+        
+        
         body = request.get_json()
         
         if body['mode'] == 1:
@@ -442,6 +453,10 @@ def companyOperations():
 @login_required
 def decalare():
     try:
+        if session['role_id'] != '2':
+            flash("Unauthorized Access")
+            return redirect(url_for('logout'))
+        
         body = {
             'CustID': str(request.form.get('modalcustID')),
             'Name': str(request.form.get('modalCustName')),
@@ -478,9 +493,11 @@ def decalare():
 @login_required
 def bundleDecalare():
     try:
-        custList = []
         if session['role_id'] != '2':
+            flash("Unauthorized Access")
             return redirect(url_for('logout'))
+        
+        custList = []
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "2"}
@@ -493,7 +510,7 @@ def bundleDecalare():
         return render_template("bundleDeclare.html", session=session, customerList=custList)
      
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         flash(str(e))
         return render_template("bundleDeclare.html", session=session)
     
@@ -501,8 +518,11 @@ def bundleDecalare():
 @login_required
 def bundleDecalarePost():
     try:
-        body = request.get_json()
+        if session['role_id'] != '2':
+            flash("Unauthorized Access")
+            return redirect(url_for('logout'))
         
+        body = request.get_json()
         url =  app.config['API_URL'] + '/ng999/customer/bundleDeclare'
         
         response = requests.post(url, json=body)
@@ -514,7 +534,7 @@ def bundleDecalarePost():
 
         
     except Exception as e:
-        print(e)
+        print(e, flush=True)
         flash(str(e))
         return jsonify({}), 404
     
