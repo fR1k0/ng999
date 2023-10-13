@@ -49,62 +49,79 @@ def check_authentication():
 @app.route(f'{PREFIX}/login', methods=["GET", "POST"])
 def login():
     try:
-        if current_user.is_authenticated:
-            return redirect(url_for('index'))
-    
-        if request.method == 'POST':
-            username = request.form.get('username')
-            password = request.form.get('password')
+        if session is not None and 'reset_password_in_progress' in session and session['reset_password_in_progress'] == '1':
+            try:
+                password = request.form.get('passConfirmed')
+                payload = {'user_id': session['user_id'], 'newPassword': password}
             
-            url = app.config['API_URL'] + "/ng999/logon"
-            data = { "username": username, "password": password }
+                url = app.config['API_URL'] + '/ng999/admin/resetPassword'
+                response = requests.post(url, json=payload)
+                
+                if response.status_code == 200:
+                    session.clear()
+                    flash('Please Login with the new password')
+                    return redirect(url_for('login'))
+                
+                session.clear()
+                flash("Failed to reset password")
+                return redirect(url_for('login'))
             
-            response = requests.post(url, json=data)
-            
-            if response.status_code == 200:
-                body = response.json()
+            except Exception as e:
+                print(e, flush=True)
+                session.clear()
+                flash("Failed to reset password")
+                return redirect(url_for('login'))
                 
-                user = User(body['username'])
-                login_user(user)
-                
-                session['user_id'] = body['user_id']
-                session['username'] = body['username']
-                session['role_id'] = body['role']
-                session['name'] = body['accountName']
-                #session['isFirst'] = body['isfirst']
-                
-                # Here to reset password
-                
-                # if session['role_id'] == '2' and session['isFirst'] == True:
-                #     resetPassword()
-                
-                # else:
-                #     flash('Login successful!', 'success')
-                #     return redirect(url_for('index'))
-                    
-                
-      
-                flash('Login successful!', 'success')
+        else:
+
+            if current_user.is_authenticated:
                 return redirect(url_for('index'))
-            
-            else:
-                flash('Incorrect Credentials', 'danger')
-                return render_template("logon.html")
-            
-        return render_template('logon.html')
+        
+            if request.method == 'POST':
+                username = request.form.get('username')
+                password = request.form.get('password')
+                
+                url = app.config['API_URL'] + "/ng999/logon"
+                data = { "username": username, "password": password }
+                
+                response = requests.post(url, json=data)
+                
+                if response.status_code == 200:
+                    body = response.json()
+                    
+                    if body['role'] == '2' and body['isFirst'] == True:
+                        session['reset_password_in_progress'] = '1'
+                        session['user_id'] = body['user_id']
+                        return render_template("resetPassword.html", userID=body['user_id'])
+
+                    else:
+                        user = User(body['username'])
+                        login_user(user)
+                        
+                        session['user_id'] = body['user_id']
+                        session['username'] = body['username']
+                        session['role_id'] = body['role']
+                        session['name'] = body['accountName']
+                        session['isFirst'] = body['isFirst']
+                    
+                        flash('Login successful!', 'success')
+                        return redirect(url_for('index'))
+                
+                else:
+                    flash('Incorrect Credentials', 'danger')
+                    return render_template("logon.html")
+                
+            return render_template('logon.html')
     
     except Exception as e:
         print(str(e), flush=True)
         return render_template("logon.html")
 
-# @login_required
-# def resetPassword():
-#     pass
-    
     
 @app.route(f'{PREFIX}/logout')
 @login_required
 def logout():
+    print("Here in logout", flush=True)
     session.clear()
     logout_user()
     return redirect(url_for('login'))

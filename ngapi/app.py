@@ -57,7 +57,7 @@ def generate_password(length=12):
     return password
 
 async def checkEmail(email):
-    conn_ng999 = getSqlCONN()
+    conn_ng999 = await getSqlCONN()
     cursor = conn_ng999.cursor()
     
     query = """
@@ -88,7 +88,7 @@ async def add_ng999_company_data(request: Request):
         if await checkEmail(body['email']):
             return JSONResponse(content={}, status_code=404)
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -97,28 +97,80 @@ async def add_ng999_company_data(request: Request):
         password = "P@ssw0rd2288"
         
         hashPassword = password_context.hash(password)
-    
+        
         query = """
-        
-        insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email) 
-        values (%s, %s, %s, %s, %s, %s)
-        
-        """
-        
+            
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email) 
+            values (%s, %s, %s, %s, %s, %s)
+            
+            """
+            
         values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'] )
+        
+        if body['role'] == '2':
+            query = """
+            
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, isFirst) 
+            values (%s, %s, %s, %s, %s, %s, %s)
+            
+            
+            """
+            
+            values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], True)
+        
         cursor.execute(query, values)
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
-            if cursor: cursor.close()
+            await closeConn(cursor, conn_ng999)
             return JSONResponse(content={}, status_code=200)
+        
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
     
     except Exception as e:
         print(e, flush=True)
-        conn_ng999.rollback()
-        if cursor: cursor.close()
-        
+        await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
+    
+@app.post('/ng999/admin/resetPassword')
+async def resetPassword(request:Request):
+    try:
+        password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+        body = await request.json()
+        
+        conn_ng999 = await getSqlCONN()
+        cursor = conn_ng999.cursor()
+        conn_ng999.begin()
+        
+        password = body['newPassword']
+        
+        hashPassword = password_context.hash(password)
+        
+        query = """
+        
+        update Account set Account_Password = %s, isFirst = %s where Account_ID = %s
+        
+        """
+        
+        values = (hashPassword, False, body['user_id'])
+        
+        cursor.execute(query, values)
+        
+        if cursor.rowcount > 0:
+            conn_ng999.commit()
+            await closeConn(cursor, conn_ng999)
+            return JSONResponse(content={}, status_code=200)
+            
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
+        
+    except Exception as e:
+        print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
+        
+        
     
 @app.post("/ng999/logon")
 async def ng999_logon(request:Request):
@@ -127,10 +179,10 @@ async def ng999_logon(request:Request):
         
         body = await request.json()
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
-        query = "select account_password, account_role, account_email, account_id, account_name from Account where account_email = %s"
+        query = "select account_password, account_role, account_email, account_id, account_name, isFirst from Account where account_email = %s"
         
         values = (body['username'],)
         cursor.execute(query, values)
@@ -140,7 +192,7 @@ async def ng999_logon(request:Request):
             if list(result)[0] is not None:                
                 if password_context.verify(body['password'], list(result)[0]):
                     await closeConn(cursor, conn_ng999)
-                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4]}, status_code=200)
+                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5]}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'Message': "Incorrect Password"}, status_code=404)
@@ -180,7 +232,7 @@ async def ng999_logon(request:Request):
 # @app.put("/ng999/company/update/{Company_ID}", response_model=Company)
 # def update_ng999_company_data(Company_ID: int, company: Company):
 #     try:
-#         conn_ng999 = getSqlCONN()
+#         conn_ng999 = await getSqlCONN()
 #         cursor = conn_ng999.cursor()
 #         conn_ng999.begin()
         
@@ -207,7 +259,7 @@ async def ng999_logon(request:Request):
 @app.delete("/ng999/company/delete/{id}")
 async def delete_ng999_company_data(Company_ID: int):
     try:
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -228,7 +280,7 @@ async def delete_ng999_company_data(Company_ID: int):
 @app.get("/ng999/company/list")
 async def get_ng999_company_datas():
     try:
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = "SELECT * FROM Company where Company_ID"
@@ -259,7 +311,7 @@ async def get_ng999_company_datas():
 @app.get("/ng999/account/list")
 async def getAccountList():
     try:
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = "SELECT * FROM Account a join Company c on a.company_id = c.company_id where a.Account_Role = '2'"
@@ -289,7 +341,7 @@ async def getAccountList():
     
 async def checkCustDB(accountID, phoneNumber):
     try:
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = """
@@ -316,7 +368,7 @@ async def checkCustDB(accountID, phoneNumber):
     
 async def checkCustDBDeclare(custID, phoneNumber):
     try:
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = """
@@ -347,7 +399,7 @@ async def get_ng999_company_datas(request:Request):
     try:
         body = await request.json()
     
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -389,7 +441,7 @@ async def getCount(wholesellerID):
     try:
         body = {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         queryList = ["""
@@ -432,7 +484,7 @@ async def get_ng999_company_datas(request:Request):
     try:
         body = await request.json()
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         resultDict = []
@@ -487,7 +539,7 @@ async def insertCompany(request:Request):
     try:
         body = await request.json()
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -518,7 +570,7 @@ async def deleteCompany(request:Request):
     try:
         body = await request.json()
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -554,7 +606,7 @@ async def declareCompany(request:Request):
             if await checkCustDBDeclare(body['CustID'], body['PhoneNo']):
                 return JSONResponse(content={'Message': "Duplicated Phone Number"}, status_code=404)
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         
@@ -586,7 +638,7 @@ async def adminDashboard():
     try:
         finalList = {}
         
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
         query = """
@@ -623,7 +675,7 @@ async def adminDashboard():
 async def bundleDeclare(request:Request):
     try:
         body = await request.json()
-        conn_ng999 = getSqlCONN()
+        conn_ng999 = await getSqlCONN()
 
         conn_ng999.begin()
         cursor = conn_ng999.cursor()
@@ -650,7 +702,7 @@ async def bundleDeclare(request:Request):
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
-def getSqlCONN():
+async def getSqlCONN():
     return MySQLdb.connect('192.168.138.213', 'NG999', 'l]tb8/Eog2q[X5rC', 'NG999') 
 
 async def closeConnRollback(cursor=None, conn_ng999=None):
