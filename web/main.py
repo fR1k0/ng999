@@ -360,11 +360,43 @@ def accountList():
         flash(str(e))
         return redirect(url_for('index'))
     
+@app.route(f"{PREFIX}/updateWhosellerPass", methods=["POST"])
+@login_required
+def adminResetPass():
+    try:
+        if session['role_id'] != '1':
+            return redirect(url_for('logout'))
+        
+        password = request.form.get('confirmNewPass')
+        accountID = request.form.get('accountID')
+        
+        payload = {'user_id': accountID, 'newPassword': password}
+    
+        url = app.config['API_URL'] + '/ng999/admin/resetPassword'
+        response = requests.post(url, json=payload)
+        
+        if response.status_code == 200:
+            flash("Successfully reset password")
+            return redirect(url_for("accountList"))
+        
+        flash("Failed to reset password")
+        return redirect(url_for("accountList"))
+
+        
+    except Exception as e:
+        print(e, flush=True)
+        flash("Failed to reset password")
+        return redirect(url_for("accountList"))
+    
 
 @app.route(f"{PREFIX}/companyList", methods=['GET'])
 @login_required
 def companyList():
     try:
+        
+        if session['role_id'] != '1':
+            return redirect(url_for('logout'))
+        
         url = app.config['API_URL'] + "/ng999/company/list"
         response = requests.get(url)
         
