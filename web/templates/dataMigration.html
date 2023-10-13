@@ -263,9 +263,23 @@
                                         <input type="file" class="custom-file-input" id="uploadFile" name="file">
                                     </div>
 
-                                    <div class="d-flex justify-content-between">
+                                    <div>
+
+                                    <div class="col-md-6" style="padding-bottom: 10px;">
                                         <button type="submit" class="btn btn-primary" id="uploadButton">Upload</button>
                                     </div>
+
+
+                                    <div class="col-md-6 text-md-right">
+                                        <button type="button" id="downloadExcelTemplate" class="btn btn-secondary">Download Excel Template</button>
+                                    </div>
+                                    
+                                    
+                                    </div>
+
+                                    
+
+
                                 </div>
                             </div>
                         </form>
@@ -426,6 +440,36 @@
 
             }
         });
+
+
+        document.getElementById("downloadExcelTemplate").addEventListener("click", function (event) {
+            fetch('/NG999/downloadExcel', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(""),
+                timeout: 300000,
+                })
+                .then(response => {
+                    if (response.status === 200){
+                    return response.blob();
+                    }
+                    else
+                    {
+                    throw new Error('Fail to download CSV');
+                    }
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const temp = document.createElement('a');
+                    temp.href = url;
+
+                    temp.download = 'Migration Template.xlsx';
+                    document.body.appendChild(temp);
+                    temp.click();
+                    window.URL.revokeObjectURL(url);
+                })
+                .catch(error => alert("Error downloading CSV"));
+                });
         
         
         </script>

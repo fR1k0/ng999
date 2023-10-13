@@ -1,10 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, request, json, session, flash, jsonify
+from flask import Flask, render_template, redirect, url_for, request, json, session, flash, jsonify, make_response
 from passlib.context import CryptContext
 from flask_login import LoginManager, login_required, login_user, UserMixin, logout_user, current_user
 import requests
 import pandas as pd
 import io
 import traceback
+import openpyxl
+from openpyxl import Workbook
+from openpyxl.styles import Alignment
 import asyncio
 import waitress
 import MySQLdb
@@ -546,6 +549,42 @@ def bundleDecalarePost():
     except Exception as e:
         print(e, flush=True)
         flash(str(e))
+        return jsonify({}), 404
+    
+@app.route(f"{PREFIX}/downloadExcel", methods=['POST'])
+@login_required
+def downloadExcel():
+    try:
+        workbook = Workbook()
+        
+        sheet = workbook.active
+        sheet.title = "Migration Template"
+        
+        rowData = ["WholeSaleID", "CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
+        sheet.append(rowData)
+        
+        
+        # for column_cells in sheet.columns:
+        #     length = max(len(str(cell.value)) for cell in column_cells)
+        #     col_letter = column_cells[0].column_letter
+        #     sheet.column_dimensions[col_letter].width = length + 2
+            
+        #     for cell in column_cells:
+        #         cell.alignment = Alignment(horizontal="left", vertical="center")
+        
+        
+        excel_file = io.BytesIO()
+        workbook.save(excel_file)
+        excel_file.seek(0)
+
+        response = make_response(excel_file.read())
+        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        response.status_code = 200
+        
+        return response
+        
+    except Exception as e:
+        print(e, flush=True)
         return jsonify({}), 404
     
 if __name__ == '__main__':
