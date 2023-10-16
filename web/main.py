@@ -106,6 +106,12 @@ def login():
                         session['role_id'] = body['role']
                         session['name'] = body['accountName']
                         session['isFirst'] = body['isFirst']
+                        
+                        if session['role_id'] == '2' and not body['isActive']:
+                            session.clear()
+                            logout_user()
+                            flash("Inactive User")
+                            return redirect(url_for('login'))
                     
                         flash('Login successful!', 'success')
                         return redirect(url_for('index'))
@@ -590,6 +596,10 @@ def downloadExcel():
     except Exception as e:
         print(e, flush=True)
         return jsonify({}), 404
+    
+@app.route(f"{PREFIX}/NG999/updateInfo", methods=['POST'])
+def updateInfo():
+    body = request.get_json()
     
 if __name__ == '__main__':
 	app.run(port=5000, threaded=True, use_reloader=True, debug=False)
