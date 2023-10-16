@@ -165,6 +165,67 @@
                 {% include 'debug.html' %}
 
 
+                <div class="modal fade" id="updateInfo" tabindex="-1"
+                    aria-labelledby="updateInfo" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form method="POST" action="/NG999/updateInfo" id="submitForm">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Update Declaration</h5>
+                                    <div class="form-item">
+                                        <input type="text" id="modalcustID" name="modalcustID" class="custom-input"
+                                            readonly hidden>
+                                    </div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustName">Name</label>
+                                                <input type="text" class="custom-input" name="modalCustName"
+                                                    id="modalCustName" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustPhone">Phone No.</label>
+                                                <input type="text" class="custom-input" name="modalCustPhone"
+                                                    id="modalCustPhone" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustAddr">Address</label>
+                                                <input type="text" class="custom-input" name="modalCustAddr"
+                                                    id="modalCustAddr" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustInfo">Additional Info</label>
+                                                <input type="text" class="custom-input" name="modalCustInfo"
+                                                    id="modalCustInfo" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer" style="justify-content: flex-start;">
+                                    <button type="submit" class="btn btn-primary" id="submitDeclare">Update and Declare</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="modal fade" id="updatePass" tabindex="-1"
                     aria-labelledby="updatePass" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -235,8 +296,14 @@
                                                 <td>{{Wholeseller['Account_Name']}}</td>
                                                 <td>{{Wholeseller['Account_Email']}}</td>
                                                 <td>{{Wholeseller['Company_Name']}}</td>
-                                                <td></td>
-                                                <td>{{Wholeseller['Customer_Declaration_Date']}}</td>
+                                                <td>{{Wholeseller['Account_Phone_Number']}}</td>
+
+                                                {% if Wholeseller['isActive'] == 0 %}
+                                                <td>&#x2717;</td>
+                                                {% else %}
+                                                <td>&#x2713;</td>
+                                                {% endif %}
+                                            
                                                 <td>
                                                     <div class="dropdown">
                                                         <a href="#" class="text-muted dropdown-toggle"
@@ -244,8 +311,10 @@
                                                             data-bs-toggle="dropdown" aria-expanded="false">
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="#"
-                                                                onclick="update({{cust}})">Update Info
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                            href="#updatePass" id="updatePassword"
+                                                            data-whole-id="{{Wholeseller['Account_ID']}}">
+                                                            Reset Password
                                                             </a>
 
                                                             <a class="dropdown-item" data-bs-toggle="modal"

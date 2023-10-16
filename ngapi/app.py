@@ -100,23 +100,23 @@ async def add_ng999_company_data(request: Request):
         
         query = """
             
-            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email) 
-            values (%s, %s, %s, %s, %s, %s)
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, Account_Phone_Number) 
+            values (%s, %s, %s, %s, %s, %s, %s)
             
             """
             
-        values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'] )
+        values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], body['pn'])
         
         if body['role'] == '2':
             query = """
             
-            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, isFirst) 
-            values (%s, %s, %s, %s, %s, %s, %s)
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, isFirst, isActive, Account_Phone_Number) 
+            values (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             
             
             """
             
-            values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], True)
+            values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], True, False, body['pn'])
         
         cursor.execute(query, values)
         
@@ -149,11 +149,11 @@ async def resetPassword(request:Request):
         
         query = """
         
-        update Account set Account_Password = %s, isFirst = %s where Account_ID = %s
+        update Account set Account_Password = %s, isFirst = %s, isActive = %s where Account_ID = %s
         
         """
         
-        values = (hashPassword, False, body['user_id'])
+        values = (hashPassword, False, True, body['user_id'])
         
         cursor.execute(query, values)
         
@@ -458,12 +458,19 @@ async def getCount(wholesellerID):
         """,
         """
         select count(*) from Customer where Account_ID = %s and customer_declaration_date is null
-        """]
+        """,
+        """
+        select count(*) from Account where isActive = True;
+        """
+        ]
         
         for index, q in enumerate(queryList):
             
-            values = (wholesellerID, )
-            cursor.execute(q, values)
+            if index < 3:
+                values = (wholesellerID, )
+                cursor.execute(q, values)
+            else:
+                cursor.execute(q)
             
             result = cursor.fetchone()
             
@@ -473,15 +480,19 @@ async def getCount(wholesellerID):
                     body['totalUser'] = list(result)[0]
                 elif index == 1:
                     body['withMigrate'] = list(result)[0]
-                else:
+                elif index == 2:
                     body['withoutMigrate'] = list(result)[0]
+                else:
+                    body['active'] = list(result)[0]
+                    
         
         await closeConn(cursor, conn_ng999)
         return body
     
     except Exception as e:
+        print(e, flush=True)
         await closeConn(cursor, conn_ng999)
-        return {}
+        return {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
                 
 
 @app.post("/ng999/customer/getList")
@@ -649,23 +660,40 @@ async def adminDashboard():
         query = """
         select count(*) from Company
         """
-    
-        cursor.execute(query)
-        result = cursor.fetchall()
         
-        if result is not None and len(list(result)) > 0:
-            finalList['wholeSaler'] = list(list(result)[0])[0]
-            
-        query = """
-        select count(*) from Customer
-        """
-    
-        cursor.execute(query)
-        result = cursor.fetchall()
         
-        if result is not None and len(list(result)) > 0:
-            finalList['totalCust'] = list(list(result)[0])[0]
+        queryList = [
             
+            """
+            select count(*) from Company;
+            """,
+            """
+            select count(*) from Account where isActive = True and Account_Role = '2';
+            """,
+            """
+            select count(*) from Account where isActive = False and Account_Role = '2';
+            """,
+            
+            """
+            select count(*) from Customer;
+            """
+        ]
+        
+        
+        for i, q in enumerate(queryList):
+            cursor.execute(q)
+            result = cursor.fetchall()
+            
+            if result is not None and len(list(result)) > 0:
+                if i == 0:
+                    finalList['wholeSaler'] = list(list(result)[0])[0]
+                elif i == 1:
+                    finalList['active'] = list(list(result)[0])[0]
+                elif i == 2:
+                    finalList['inactive'] = list(list(result)[0])[0]
+                else:
+                    finalList['totalCust'] = list(list(result)[0])[0]
+                    
         await closeConn(cursor, conn_ng999)
                 
         return JSONResponse(content=finalList, status_code=200)

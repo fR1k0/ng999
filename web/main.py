@@ -154,7 +154,8 @@ def index():
         
         if response.status_code == 200:
             body = response.json()
-            
+        
+        # print(body, flush=True)
         return render_template("dashboardWholeseller.html", session=session, listCount=body)
     
     except Exception as e:
@@ -198,8 +199,9 @@ def addAccount():
         role = request.form['role']
         email = request.form['email']
         wholesellerID = request.form['wholesellerID']
+        phoneNumber = request.form['pn']
         
-        body = {'name': name, 'role': role, 'email': email, 'wholesellerID': wholesellerID}
+        body = {'name': name, 'role': role, 'email': email, 'wholesellerID': wholesellerID, 'pn': phoneNumber}
         
         response = requests.post(url, json=body)
         
@@ -371,6 +373,8 @@ def accountList():
     
         if response.status_code == 200:
             body = response.json()
+            
+        print(body, flush=True)
         
         return render_template('accountList.html', WholesellerList=body, session=session)
         
