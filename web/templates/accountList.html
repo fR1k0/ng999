@@ -321,7 +321,11 @@
                                                 <td>{{Wholeseller['Account_Name']}}</td>
                                                 <td>{{Wholeseller['Account_Email']}}</td>
                                                 <td>{{Wholeseller['Company_Name']}}</td>
+                                                 {% if Wholeseller['Account_Phone_Number'] == none %}
+                                                <td></td>
+                                                {% else %}
                                                 <td>{{Wholeseller['Account_Phone_Number']}}</td>
+                                                {% endif %}
 
                                                 {% if Wholeseller['isActive'] == 0 %}
                                                 <td>&#x2717;</td>

@@ -239,6 +239,23 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalpdpa">PDPA</label>
+                                                <input type="checkbox" class="custom-checkbox" name="modalpdpa"
+                                                    id="modalpdpa" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalDisc">Disclaimer</label>
+                                                <input type="checkbox" class="custom-checkbox" name="modalDisc"
+                                                    id="modalDisc" required />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="modal-footer" style="justify-content: flex-start;">
@@ -433,12 +450,21 @@
 
         document.getElementById("submitDeclare").addEventListener("click", function (event) {
             event.preventDefault();
+
+            let pdpa = document.getElementById('modalpdpa');
+            let disclaimer = document.getElementById('modalDisc');
+
+
+            if (pdpa.checked && disclaimer.checked){
             
             if (window.confirm("I hereby declare that the infomation provided is true and correct")) {
                 document.getElementById('submitForm').submit();
             } else {
 
             }
+        }else{
+            alert("Please check PDPA and Disclaimer");
+        }
         });
 
 
