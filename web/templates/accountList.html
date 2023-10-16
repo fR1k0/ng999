@@ -46,6 +46,31 @@
             word-break: break-word;
             overflow-wrap: break-word;
         }
+
+         .form-item {
+            margin-bottom: 20px;
+            /* Add vertical spacing between label-input pairs */
+        }
+
+        .form-item label {
+            display: block;
+            /* Display labels as block elements to stack them above inputs */
+            margin-bottom: 5px;
+            /* Add spacing between label and input */
+        }
+
+
+        .custom-input {
+            width: 300px;
+            /* Set your desired width here */
+            border: 1px solid #ccc;
+            overflow: auto;
+            /* Add a scrollbar if content exceeds the height */
+            padding: 10px;
+            /* Optional padding for better appearance */
+            white-space: pre-wrap;
+            /* Allow text to wrap within the div */
+        }
     </style>
 </head>
 
@@ -174,7 +199,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title">Update Declaration</h5>
                                     <div class="form-item">
-                                        <input type="text" id="modalcustID" name="modalcustID" class="custom-input"
+                                        <input type="text" id="accInfoID" name="accInfoID" class="custom-input"
                                             readonly hidden>
                                     </div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -186,39 +211,39 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-item">
-                                                <label for="modalCustName">Name</label>
-                                                <input type="text" class="custom-input" name="modalCustName"
-                                                    id="modalCustName" required />
+                                                <label for="accName">Name</label>
+                                                <input type="text" class="custom-input" name="accName"
+                                                    id="accName" required />
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-item">
-                                                <label for="modalCustPhone">Phone No.</label>
-                                                <input type="text" class="custom-input" name="modalCustPhone"
-                                                    id="modalCustPhone" required />
+                                                <label for="accPn">Phone No.</label>
+                                                <input type="text" class="custom-input" name="accPn"
+                                                    id="accPn" required />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-item">
-                                                <label for="modalCustAddr">Address</label>
-                                                <input type="text" class="custom-input" name="modalCustAddr"
-                                                    id="modalCustAddr" required />
+                                                <label for="accStatus">Status</label>
+                                                <input type="checkbox" class="custom-checkbox" name="accStatus"
+                                                    id="accStatus" required />
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-item">
-                                                <label for="modalCustInfo">Additional Info</label>
-                                                <input type="text" class="custom-input" name="modalCustInfo"
-                                                    id="modalCustInfo" required />
+                                                <label for="accEmail">Email</label>
+                                                <input type="text" class="custom-input" name="accEmail"
+                                                    id="accEmail" required />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="modal-footer" style="justify-content: flex-start;">
-                                    <button type="submit" class="btn btn-primary" id="submitDeclare">Update and Declare</button>
+                                    <button type="submit" class="btn btn-primary" id="submitInfoUpdate">Update Info</button>
                                 </div>
                             </form>
                         </div>
@@ -312,9 +337,14 @@
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
                                                             <a class="dropdown-item" data-bs-toggle="modal"
-                                                            href="#updatePass" id="updatePassword"
-                                                            data-whole-id="{{Wholeseller['Account_ID']}}">
-                                                            Reset Password
+                                                            href="#updateInfo" id="updateInfomation"
+                                                            data-whole-id="{{Wholeseller['Account_ID']}}"
+                                                            data-name="{{Wholeseller['Account_Name']}}"
+                                                            data-email="{{Wholeseller['Account_Email']}}"
+                                                            data-pn="{{Wholeseller['Account_Phone_Number']}}"
+                                                            data-status="{{Wholeseller['isActive']}}">
+                                                    
+                                                            Update Info
                                                             </a>
 
                                                             <a class="dropdown-item" data-bs-toggle="modal"
@@ -400,6 +430,27 @@
                 $('#accountID').val(accID);
                 $('#newPass').val("");
                 $('#confirmNewPass').val("");
+
+
+            });
+
+
+             $('#updateInfo').on('show.bs.modal', function (event) {
+                let triggerLink = $(event.relatedTarget);
+                let accInfoID = triggerLink.data('whole-id');
+                let name = triggerLink.data('name');
+                let email = triggerLink.data('email');
+                let phoneNumber = triggerLink.data('pn');
+                let status = triggerLink.data('status');
+
+                if (phoneNumber == 'None'){
+                    phoneNumber = '';
+                }
+                $('#accInfoID').val(accInfoID);
+                $('#accName').val(name);
+                $('#accPn').val(phoneNumber);
+                $('#accStatus').prop('checked', status === 1);
+                $('#accEmail').val(email);
 
 
             });
