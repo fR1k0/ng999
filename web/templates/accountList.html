@@ -328,10 +328,10 @@
                                                 <td>{{Wholeseller['Account_Phone_Number']}}</td>
                                                 {% endif %}
 
-                                                {% if Wholeseller['isActive'] == 0 %}
-                                                <td>&#x2717;</td>
+                                                {% if Wholeseller['isActive'] == '0' %}
+                                                <td>Inactive ({{Wholeseller['lastActive']}})</td>
                                                 {% else %}
-                                                <td>&#x2713;</td>
+                                                <td>Active ({{Wholeseller['lastActive']}})</td>
                                                 {% endif %}
                                             
                                                 <td>

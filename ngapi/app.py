@@ -86,6 +86,40 @@ async def checkEmail(email, accountID=None):
     
     await closeConn(cursor, conn_ng999)
     return False
+
+async def checkPhoneNumber(phoneNumber, accID=None):
+    conn_ng999 = await getSqlCONN()
+    cursor = conn_ng999.cursor()
+    
+    if accID is None:
+    
+
+        query = """
+
+        select * from Account where Account_Phone_Number = %s
+        
+        """
+        values = (phoneNumber, )
+    else:
+        
+        query = """
+
+        select * from Account where Account_Phone_Number = %s and Account_ID != %s
+        
+        """
+        values = (phoneNumber,accID)
+        
+   
+    cursor.execute(query, values)
+    
+    result = cursor.fetchone()
+    
+    if result is not None and len(list(result)) > 0:
+        await closeConn(cursor, conn_ng999)
+        return True
+    
+    await closeConn(cursor, conn_ng999)
+    return False
     
 @app.post("/ng999/account/add")
 async def add_ng999_company_data(request: Request):
@@ -94,7 +128,7 @@ async def add_ng999_company_data(request: Request):
         
         body = await request.json()
         
-        if await checkEmail(body['email']):
+        if await checkEmail(body['email']) or await checkPhoneNumber(body['pn']):
             return JSONResponse(content={}, status_code=404)
         
         conn_ng999 = await getSqlCONN()
@@ -109,23 +143,23 @@ async def add_ng999_company_data(request: Request):
         
         query = """
             
-            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, Account_Phone_Number) 
-            values (%s, %s, %s, %s, %s, %s, %s)
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, Account_Phone_Number, lastActive) 
+            values (%s, %s, %s, %s, %s, %s, %s, %s)
             
             """
             
-        values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], body['pn'])
+        values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], body['pn'], datetime.now())
         
         if body['role'] == '2':
             query = """
             
-            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, isFirst, isActive, Account_Phone_Number) 
-            values (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, isFirst, isActive, Account_Phone_Number, lastActive) 
+            values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             
             
             """
             
-            values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], True, False, body['pn'])
+            values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], True, False, body['pn'], datetime.now())
         
         cursor.execute(query, values)
         
@@ -158,11 +192,11 @@ async def resetPassword(request:Request):
         
         query = """
         
-        update Account set Account_Password = %s, isFirst = %s, isActive = %s where Account_ID = %s
+        update Account set Account_Password = %s, isFirst = %s, isActive = %s, lastActive = %s where Account_ID = %s
         
         """
         
-        values = (hashPassword, False, True, body['user_id'])
+        values = (hashPassword, False, True, datetime.now(), body['user_id'])
         
         cursor.execute(query, values)
         
@@ -336,7 +370,7 @@ async def getAccountList():
         for row in list(item):
             rowDict = {}
             for i, col_name in enumerate(columnnName):
-                rowDict[col_name] = row[i]
+                rowDict[col_name] = str(row[i])
             
             resultDict.append(rowDict)
             
@@ -753,17 +787,16 @@ async def updateAccInfo(request:Request):
         conn_ng999.begin()
         cursor = conn_ng999.cursor()
         
-        if await checkEmail(body['email'], body['accID']):
+        if await checkEmail(body['email'], body['accID']) or await checkPhoneNumber(body['PhoneNo'], body['accID']):
             await closeConn(cursor, conn_ng999)
             return JSONResponse(content={}, status_code=404)
             
-        print(body['status'], flush=True)
         query = """
         
-        update Account set Account_Name = %s, Account_Phone_Number = %s, Account_Email = %s, isActive = %s where Account_ID = %s
+        update Account set Account_Name = %s, Account_Phone_Number = %s, Account_Email = %s, isActive = %s, lastActive = %s where Account_ID = %s
         
         """
-        values = (body['name'], body['PhoneNo'], body['email'], body['status'], body['accID'])
+        values = (body['name'], body['PhoneNo'], body['email'], body['status'], datetime.now(), body['accID'])
         
         cursor.execute(query, values)
         
