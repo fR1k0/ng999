@@ -379,8 +379,6 @@ def accountList():
     
         if response.status_code == 200:
             body = response.json()
-            
-        print(body, flush=True)
         
         return render_template('accountList.html', WholesellerList=body, session=session)
         
@@ -551,15 +549,21 @@ def bundleDecalarePost():
         response = requests.post(url, json=body)
         
         if response.status_code == 200:
-            return jsonify({}), 200
+            flash("Successfully declare bundle")
+            return redirect(request.referrer)
+            # return jsonify({}), 200
             
-        return jsonify({}), 404
+        flash("Failed to declare bundle")
+        return redirect(request.referrer)
+        #return jsonify({}), 404
 
         
     except Exception as e:
         print(e, flush=True)
         flash(str(e))
-        return jsonify({}), 404
+        flash("Failed to declare bundle")
+        return redirect(request.referrer)
+        # return jsonify({}), 404
     
 @app.route(f"{PREFIX}/downloadExcel", methods=['POST'])
 @login_required
@@ -597,9 +601,34 @@ def downloadExcel():
         print(e, flush=True)
         return jsonify({}), 404
     
-@app.route(f"{PREFIX}/NG999/updateInfo", methods=['POST'])
+@app.route(f"{PREFIX}/updateInfo", methods=['POST'])
 def updateInfo():
-    body = request.get_json()
+    try:
+        body = {
+                'accID': str(request.form.get('accInfoID')),
+                'name': str(request.form.get('accName')),
+                'PhoneNo': str(request.form.get('accPn')),
+                'email': str(request.form.get('accEmail')),
+                'status': request.form.get('accStatus') is not None
+            }
+        
+        print(body, flush=True)
+        
+        url = app.config['API_URL'] + '/ng999/account/updateInfo'
+        
+        response = requests.post(url, json=body)
+        
+        if response.status_code == 200:
+            flash(f"Updated Account Info for {body['name']}")
+            return redirect(request.referrer)
+            
+        flash("Fail to update account info")
+        return redirect(request.referrer)
+        
+    except Exception as e:
+        flash("Fail to update account info")
+        return redirect(request.referrer)
+    
     
 if __name__ == '__main__':
 	app.run(port=5000, threaded=True, use_reloader=True, debug=False)

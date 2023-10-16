@@ -56,17 +56,26 @@ def generate_password(length=12):
     
     return password
 
-async def checkEmail(email):
+async def checkEmail(email, accountID=None):
     conn_ng999 = await getSqlCONN()
     cursor = conn_ng999.cursor()
     
-    query = """
+    if accountID is None:
+        query = """
 
-    select * from Account where Account_Email = %s
-    
-    """
-    values = (email, )
-    
+        select * from Account where Account_Email = %s
+        
+        """
+        values = (email, )
+    else:
+        
+        query = """
+
+        select * from Account where Account_Email = %s and Account_ID != %s
+        
+        """
+        values = (email, accountID)
+        
     cursor.execute(query, values)
     
     result = cursor.fetchone()
@@ -628,10 +637,10 @@ async def declareCompany(request:Request):
         
         query = """
         
-        update Customer set Customer_Declaration_Date = %s, Customer_Name = %s, Customer_Additional_Info = %s, Customer_Address = %s, Customer_Phone_Number = %s where Customer_ID = %s;
+        update Customer set Customer_PDPA_Date = %s, Customer_Declaration_Date = %s, Customer_Name = %s, Customer_Additional_Info = %s, Customer_Address = %s, Customer_Phone_Number = %s where Customer_ID = %s;
         """
     
-        values = (datetime.now(), body['Name'], body['AdditionalInfo'], body['Address'], body['PhoneNo'], body['CustID'])
+        values = (datetime.now(), datetime.now(), body['Name'], body['AdditionalInfo'], body['Address'], body['PhoneNo'], body['CustID'])
         
         cursor.execute(query, values)
         
@@ -716,12 +725,47 @@ async def bundleDeclare(request:Request):
         for cust in body['custID']:
             query = """
             
-            update Customer set Customer_Declaration_Date = %s where Customer_ID = %s
+            update Customer set Customer_PDPA_Date = %s, Customer_Declaration_Date = %s where Customer_ID = %s
             
             """
-            values = (datetime.now(), cust)
+            values = (datetime.now(), datetime.now(), cust)
             
             cursor.execute(query, values)
+        
+        if cursor.rowcount > 0:
+            conn_ng999.commit()
+        
+        await closeConn(cursor, conn_ng999)
+        
+        return JSONResponse(content={}, status_code=200)
+                
+    except Exception as e:
+        print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
+        return JSONResponse(content={}, status_code=404)
+        
+@app.post("/ng999/account/updateInfo")
+async def updateAccInfo(request:Request):
+    try:
+        body = await request.json()
+        conn_ng999 = await getSqlCONN()
+
+        conn_ng999.begin()
+        cursor = conn_ng999.cursor()
+        
+        if await checkEmail(body['email'], body['accID']):
+            await closeConn(cursor, conn_ng999)
+            return JSONResponse(content={}, status_code=404)
+            
+        print(body['status'], flush=True)
+        query = """
+        
+        update Account set Account_Name = %s, Account_Phone_Number = %s, Account_Email = %s, isActive = %s where Account_ID = %s
+        
+        """
+        values = (body['name'], body['PhoneNo'], body['email'], body['status'], body['accID'])
+        
+        cursor.execute(query, values)
         
         if cursor.rowcount > 0:
             conn_ng999.commit()

@@ -198,9 +198,19 @@
                                     <div class="col">
                                         <h4 class="card-title">Customer List</h4>
                                     </div>
+
                                     <div class="col text-end">
+
+                                        <label for="modalpdpa">PDPA</label>
+                                        <input type="checkbox" class="custom-checkbox" name="modalpdpa" id="modalpdpa" required/><br>
+                        
+                                        <label for="modalDisc">Disclaimer</label>
+                                        <input type="checkbox" class="custom-checkbox" name="modalDisc" id="modalDisc" required/><br>
+
                                         <button class="btn btn-primary" id="getSelected">Declare Selected</button>
                                     </div>
+
+                                   
                                 </div>
                                 <hr>
                                 <div class="table-responsive">
@@ -336,6 +346,12 @@
                 return;
             }
 
+            let pdpa = document.getElementById('modalpdpa');
+            let disclaimer = document.getElementById('modalDisc');
+
+
+            if (pdpa.checked && disclaimer.checked){
+
             if (window.confirm("I hereby declare that the infomation provided is true and correct")) {
             
                 let url = '/NG999/bundleDeclarePost';
@@ -361,6 +377,9 @@
                     
                 });}
                 else{}
+            }else{
+                alert("Please check PDPA and Disclaimer");
+            }
         });
     </script>
 </body>
