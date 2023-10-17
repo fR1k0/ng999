@@ -106,6 +106,7 @@ def login():
                         session['role_id'] = body['role']
                         session['name'] = body['accountName']
                         session['isFirst'] = body['isFirst']
+                        session['compID'] = body['compID']
                         
                         if session['role_id'] == '2' and not body['isActive']:
                             session.clear()
@@ -152,7 +153,7 @@ def index():
             return render_template("index.html", session=session, dashList=finalList) 
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
-        payload = {"wholesellerID": session['user_id'], "mode": "4"}
+        payload = {"wholesellerID": session['user_id'], "mode": "4", 'compID': session['compID']}
         
         response = requests.post(url, json=payload)
         

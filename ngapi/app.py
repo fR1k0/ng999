@@ -225,7 +225,7 @@ async def ng999_logon(request:Request):
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
-        query = "select account_password, account_role, account_email, account_id, account_name, isFirst, isActive from Account where account_email = %s"
+        query = "select account_password, account_role, account_email, account_id, account_name, isFirst, isActive, Company_ID from Account where account_email = %s"
         
         values = (body['username'],)
         cursor.execute(query, values)
@@ -235,7 +235,7 @@ async def ng999_logon(request:Request):
             if list(result)[0] is not None:                
                 if password_context.verify(body['password'], list(result)[0]):
                     await closeConn(cursor, conn_ng999)
-                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6]}, status_code=200)
+                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': list(result)[7]}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'Message': "Incorrect Password"}, status_code=404)
@@ -495,7 +495,7 @@ async def get_ng999_company_datas(request:Request):
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={"message": str(e)}, status_code=404)
     
-async def getCount(wholesellerID):
+async def getCount(wholesellerID, companyID=None):
     try:
         body = {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
         
@@ -513,20 +513,21 @@ async def getCount(wholesellerID):
         select count(*) from Customer where Account_ID = %s and customer_declaration_date is null
         """,
         """
-        select count(*) from Account where isActive = True and Account_ID = %s;
+        select count(*) from Account where isActive = True and Company_ID = %s;
         """
         ]
         
         for index, q in enumerate(queryList):
             
-            values = (wholesellerID, )
-            cursor.execute(q, values)
+            # values = (wholesellerID, )
+            # cursor.execute(q, values)
             
-            # if index < 3:
-            #     values = (wholesellerID, )
-            #     cursor.execute(q, values)
-            # else:
-            #     cursor.execute(q)
+            if index < 3:
+                values = (wholesellerID, )
+                cursor.execute(q, values)
+            else:
+                values = (companyID, )
+                cursor.execute(q, values)
             
             result = cursor.fetchone()
             
@@ -576,7 +577,7 @@ async def get_ng999_company_datas(request:Request):
             """
             
         elif body['mode'] == "4":
-            return JSONResponse(content=await getCount(body['wholesellerID']), status_code=200)
+            return JSONResponse(content=await getCount(body['wholesellerID'], body['compID']), status_code=200)
             
         values = (body['wholesellerID'],)
             
