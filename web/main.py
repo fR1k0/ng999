@@ -510,9 +510,9 @@ def decalare():
         flash(str(e))
         return redirect(request.referrer)
     
-@app.route(f"{PREFIX}/bundleDeclare", methods=["GET"])
+@app.route(f"{PREFIX}/bundleDeclare/<mode>", methods=["GET"])
 @login_required
-def bundleDecalare():
+def bundleDecalare(mode):
     try:
         if session['role_id'] != '2':
             flash("Unauthorized Access")
@@ -527,6 +527,9 @@ def bundleDecalare():
         
         if response.status_code == 200:
             custList = response.json()
+        
+        if str(mode) == "1":
+            flash("Successful bundle declare")
             
         return render_template("bundleDeclare.html", session=session, customerList=custList)
      
@@ -548,22 +551,15 @@ def bundleDecalarePost():
         
         response = requests.post(url, json=body)
         
-        if response.status_code == 200:
-            flash("Successfully declare bundle")
-            return redirect(request.referrer)
-            # return jsonify({}), 200
+        if response.status_code == 200:    
+            return jsonify({}), 200
             
-        flash("Failed to declare bundle")
-        return redirect(request.referrer)
-        #return jsonify({}), 404
+        return jsonify({}), 404
 
-        
     except Exception as e:
         print(e, flush=True)
         flash(str(e))
-        flash("Failed to declare bundle")
-        return redirect(request.referrer)
-        # return jsonify({}), 404
+        return jsonify({}), 404
     
 @app.route(f"{PREFIX}/downloadExcel", methods=['POST'])
 @login_required
