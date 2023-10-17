@@ -513,17 +513,20 @@ async def getCount(wholesellerID):
         select count(*) from Customer where Account_ID = %s and customer_declaration_date is null
         """,
         """
-        select count(*) from Account where isActive = True;
+        select count(*) from Account where isActive = True and Account_ID = %s;
         """
         ]
         
         for index, q in enumerate(queryList):
             
-            if index < 3:
-                values = (wholesellerID, )
-                cursor.execute(q, values)
-            else:
-                cursor.execute(q)
+            values = (wholesellerID, )
+            cursor.execute(q, values)
+            
+            # if index < 3:
+            #     values = (wholesellerID, )
+            #     cursor.execute(q, values)
+            # else:
+            #     cursor.execute(q)
             
             result = cursor.fetchone()
             
