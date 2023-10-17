@@ -239,7 +239,30 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="modal-footer" style="justify-content: flex-start;">
+                                    <button type="submit" class="btn btn-primary" id="submitDeclare">Update and Declare</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="confirmationModal" tabindex="-1"
+                    aria-labelledby="confirmationModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">I hereby declare that the infomation provided is true and correct</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    </button>
+                                </div>
+
+
+                                <div class="modal-body">
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-item">
@@ -259,9 +282,8 @@
                                 </div>
 
                                 <div class="modal-footer" style="justify-content: flex-start;">
-                                    <button type="submit" class="btn btn-primary" id="submitDeclare">Update and Declare</button>
+                                    <button type="submit" id="submitConfirmation" class="btn btn-primary">Confirm and Submit</button>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -450,22 +472,33 @@
 
         document.getElementById("submitDeclare").addEventListener("click", function (event) {
             event.preventDefault();
+            let confirmModal = document.getElementById('confirmationModal');
+            $(confirmModal).modal('show');
+        });
 
+
+        document.getElementById("submitConfirmation").addEventListener("click", function (event) {
             let pdpa = document.getElementById('modalpdpa');
             let disclaimer = document.getElementById('modalDisc');
 
-
             if (pdpa.checked && disclaimer.checked){
-            
-            if (window.confirm("I hereby declare that the infomation provided is true and correct")) {
-                document.getElementById('submitForm').submit();
-            } else {
-
+                document.getElementById('declareForm').submit();
             }
-        }else{
-            alert("Please check PDPA and Disclaimer");
-        }
-        });
+            else{
+                alert("Please check PDPA and Disclaimer");
+                }
+            });
+
+
+
+            $(document.getElementById("confirmationModal")).on('hidden.bs.modal', function (e) {
+                let pdpaCheckbox = document.getElementById("modalpdpa");
+                let discCheckbox = document.getElementById("modalDisc");
+
+                pdpaCheckbox.checked = false;
+                discCheckbox.checked = false;
+
+            });
 
 
         document.getElementById("downloadExcelTemplate").addEventListener("click", function (event) {

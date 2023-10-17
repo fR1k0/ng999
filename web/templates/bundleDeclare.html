@@ -188,6 +188,49 @@
             <!-- ============================================================== -->
             <div class="container-fluid">
                 {% include 'debug.html' %}
+
+
+                <div class="modal fade" id="confirmationModal" tabindex="-1"
+                    aria-labelledby="confirmationModal" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">I hereby declare that the infomation provided is true and correct</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    </button>
+                                </div>
+
+
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalpdpa">PDPA</label>
+                                                <input type="checkbox" class="custom-checkbox" name="modalpdpa"
+                                                    id="modalpdpa" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalDisc">Disclaimer</label>
+                                                <input type="checkbox" class="custom-checkbox" name="modalDisc"
+                                                    id="modalDisc" required />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer" style="justify-content: flex-start;">
+                                    <button type="submit" id="submitConfirmation" class="btn btn-primary">Confirm and Submit</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
                 <div class="row">
                     <div class="col-12">
                         <h2 class="card-title" style="margin-bottom: 20px;">Bundle Declaration Customer List</h2>
@@ -200,13 +243,6 @@
                                     </div>
 
                                     <div class="col text-end">
-
-                                        <label for="modalpdpa">PDPA</label>
-                                        <input type="checkbox" class="custom-checkbox" name="modalpdpa" id="modalpdpa" required/><br>
-                        
-                                        <label for="modalDisc">Disclaimer</label>
-                                        <input type="checkbox" class="custom-checkbox" name="modalDisc" id="modalDisc" required/><br>
-
                                         <button class="btn btn-primary" id="getSelected">Declare Selected</button>
                                     </div>
 
@@ -325,11 +361,10 @@
 
         </script>
 
-
+        
         <script>
-        document.getElementById('getSelected').addEventListener('click', function () {
+        document.getElementById('submitConfirmation').addEventListener('click', function () {
             let checkedBox = document.querySelectorAll('.form-check-input');
-
             let payload = {'custID': []};
 
             checkedBox.forEach(function (checkbox) {
@@ -337,21 +372,12 @@
                     payload['custID'].push(checkbox.value);
                 }
             });
-            console.log('Selected Customer IDs:', payload['custID']);
 
-            if (payload['custID'].length <= 0){
-                alert("No Customer Seleted");
-                return;
-            }
-
+        
             let pdpa = document.getElementById('modalpdpa');
             let disclaimer = document.getElementById('modalDisc');
 
-
             if (pdpa.checked && disclaimer.checked){
-
-            if (window.confirm("I hereby declare that the infomation provided is true and correct")) {
-            
                 let url = '/NG999/bundleDeclarePost';
 
                 fetch(url, {
@@ -373,12 +399,45 @@
                     alert("Error: " + error);
                     console.error('Error:', error);
                     
-                });}
-                else{}
+                });
+                
             }else{
                 alert("Please check PDPA and Disclaimer");
             }
         });
+
+
+
+        document.getElementById("getSelected").addEventListener("click", function (event) {
+            let checkedBox = document.querySelectorAll('.form-check-input');
+            let payload = {'custID': []};
+
+            checkedBox.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    payload['custID'].push(checkbox.value);
+                }
+            });
+
+            if (payload['custID'].length <= 0){
+                alert("No Customer Seleted");
+                return;
+            }
+
+            let confirmModal = document.getElementById('confirmationModal');
+            $(confirmModal).modal('show');
+
+            });
+
+
+
+    $(document.getElementById("confirmationModal")).on('hidden.bs.modal', function (e) {
+        let pdpaCheckbox = document.getElementById("modalpdpa");
+        let discCheckbox = document.getElementById("modalDisc");
+
+        pdpaCheckbox.checked = false;
+        discCheckbox.checked = false;
+
+    });
     </script>
 </body>
 
