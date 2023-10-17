@@ -370,7 +370,17 @@ async def getAccountList():
         for row in list(item):
             rowDict = {}
             for i, col_name in enumerate(columnnName):
-                rowDict[col_name] = str(row[i])
+                if col_name == 'lastActive':
+                        try:
+                            dateObject = datetime.strptime(str(row[i]), "%Y-%m-%d %H:%M:%S")
+                            formattedDate = dateObject.strftime("%d/%m/%Y %H:%M:%S")
+                            rowDict[col_name] = str(formattedDate)
+                        except Exception as e:
+                            rowDict[col_name] = str(row[i])
+                else:
+                    rowDict[col_name] = str(row[i])
+                    
+                # rowDict[col_name] = str(row[i])
             
             resultDict.append(rowDict)
             
@@ -580,7 +590,15 @@ async def get_ng999_company_datas(request:Request):
                     if str(row[i]).replace(" ", "") == "":
                         rowDict[col_name] = ""
                     else:
-                        rowDict[col_name] = str(row[i])
+                        if col_name == 'Customer_PDPA_Date' or col_name == 'Customer_Declaration_Date' or col_name == 'Customer_Migration_Date':
+                            try:
+                                dateObject = datetime.strptime(str(row[i]), "%Y-%m-%d %H:%M:%S")
+                                formattedDate = dateObject.strftime("%d/%m/%Y %H:%M:%S")
+                                rowDict[col_name] = str(formattedDate)
+                            except Exception as e:
+                                rowDict[col_name] = str(row[i])
+                        else:
+                            rowDict[col_name] = str(row[i])
 
                 resultDict.append(rowDict)
         
