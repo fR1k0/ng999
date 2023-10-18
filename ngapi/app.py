@@ -480,10 +480,11 @@ async def get_ng999_company_datas(request:Request):
             values = (i['Name'], datetime.now(), i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3'], i['CallerNo'], i['WholeSaleID'], body['wholesellerID'], i['CustID'])
 
             cursor.execute(query, values)
-        
+            
+        uploadedCount = cursor.rowcount
         conn_ng999.commit()
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=200)
+        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records"}, status_code=200)
         
         
     except Exception as e:

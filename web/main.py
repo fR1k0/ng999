@@ -349,7 +349,8 @@ def uploadMigration():
         response = requests.post(url, json=payload)
         
         if response.status_code == 200:
-            flash("Uploaded migration list")
+            message = response.json()
+            flash(message['message'])
             return redirect(url_for('dataMigration'))
         
         
