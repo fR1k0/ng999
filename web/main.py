@@ -142,6 +142,9 @@ def logout():
 @login_required
 def index(): 
     try:
+        url2 = app.config['API_URL'] + '/ng999/account/getDashboardlist'
+        recordList = []
+        
         if session['role_id'] == '1':
             
             finalList = {'wholeSaler': 0, 'active': 0, 'inactive': 0, 'totalCust': 0}
@@ -149,23 +152,34 @@ def index():
             url = app.config['API_URL'] + '/ng999/admin/dashboard'
             response = requests.get(url)
             
-            if response.status_code == 200:
-                finalList = response.json()
+            payload = {'mode': '1'}
+            response2 = requests.post(url2, json=payload)
             
-            return render_template("index.html", session=session, dashList=finalList) 
+            if response.status_code == 200 and response2.status_code == 200:
+                finalList = response.json()
+                recordList = response2.json()
+            
+            # print(recordList, flush=True)
+            return render_template("index.html", session=session, dashList=finalList, recordList=recordList) 
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
+        
         payload = {"wholesellerID": session['user_id'], "mode": "4", 'compID': session['compID']}
+        payload2 = {'compID': session['compID'], 'mode': '2'}
         
         response = requests.post(url, json=payload)
+        response2 = requests.post(url2, json=payload2)
         
         body = {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
         
-        if response.status_code == 200:
+        if response.status_code == 200 and response2.status_code == 200:
             body = response.json()
+            recordList = response2.json()
+        
+        # print(recordList, flush=True)
         
         # print(body, flush=True)
-        return render_template("dashboardWholeseller.html", session=session, listCount=body)
+        return render_template("dashboardWholeseller.html", session=session, listCount=body, recordList=recordList)
     
     except Exception as e:
         flash(str(e))
@@ -345,7 +359,8 @@ def uploadMigration():
             rows_list.append(cleaned_row)
         
 
-        payload = {'data': rows_list, 'wholesellerID': session['user_id']}
+        payload = {'data': rows_list, 'wholesellerID': session['user_id'], 'compID': session['compID'], 
+                   'accountID': session['user_id']}
 
         url = app.config['API_URL'] + "/ng999/customer/add"
         response = requests.post(url, json=payload)

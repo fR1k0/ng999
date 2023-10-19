@@ -182,6 +182,37 @@
               </div>
             </div>
 
+
+            <div class="card">
+              <div class="card-body">
+                  <h4 class="card-title">Migration Log Record</h4>
+                  <hr>
+                  <div class="table-responsive">
+                      <table id="recList" class="table mt-3" style="width: 100%">
+                          <thead>
+                              <tr>
+                                  <th class="col-3">Account Name</th>
+                                  <th class="col-3">Company Name</th>
+                                  <th class="col-3">Migrate Record No</th>
+                                  <th class="col-2">Migration Date</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+
+                              {% for rec in recordList %}
+                              <tr>
+                                  <td>{{rec['accountName']}}</td>
+                                  <td>{{rec['companyName']}}</td>
+                                  <td>{{rec['recordNo']}}</td>
+                                  <td>{{rec['date']}}</td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+
             
           </div>
         </div>
@@ -239,8 +270,8 @@
   <script src="/NG999/static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="/NG999/static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
   <script>
-    $("#zero_config").DataTable({
-      order: [[4, 'desc']],
+    $("#recList").DataTable({
+      order: [[3, 'desc']],
     });
   </script>
 </body>

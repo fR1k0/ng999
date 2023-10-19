@@ -482,7 +482,17 @@ async def get_ng999_company_datas(request:Request):
             cursor.execute(query, values)
             
         uploadedCount = cursor.rowcount
+        
+        query = """
+        
+        Insert into Log_Record (Log_Date, Log_Record_No, Account_ID, Log_Company_ID)
+        values (%s, %s, %s, %s)
+        """
+        
+        values= (datetime.now(), uploadedCount, body['accountID'], body['compID'])
+        cursor.execute(query, values)
         conn_ng999.commit()
+        
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records"}, status_code=200)
         
@@ -495,6 +505,67 @@ async def get_ng999_company_datas(request:Request):
         
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={"message": str(e)}, status_code=404)
+    
+@app.post('/ng999/account/getDashboardlist')
+async def getDashboardList(request:Request):
+    try:
+        returnDict = []
+        body = await request.json()
+        
+        conn_ng999 = await getSqlCONN()
+        cursor = conn_ng999.cursor()
+        
+        if body['mode'] == '1':
+            query = """
+            
+            SELECT a.Account_Name, c.Company_Name, l.Log_Date, l.Log_Record_No 
+            FROM Log_Record l join Company c on l.Log_Company_ID = c.Company_ID 
+            join Account a on a.Account_ID = l.Account_ID;
+            
+            """
+            cursor.execute(query)
+            
+        else:
+        
+            query = """
+            
+            SELECT a.Account_Name, c.Company_Name, l.Log_Date, l.Log_Record_No 
+            FROM Log_Record l join Company c on l.Log_Company_ID = c.Company_ID 
+            join Account a on a.Account_ID = l.Account_ID 
+            where l.Log_Company_ID = %s;
+            """
+            values = (body['compID'],)
+            cursor.execute(query, values)
+
+        result = cursor.fetchall()
+        
+        if result is not None and len(list(result)):
+            for row in list(result):
+                tempDict = {}
+                
+                try:
+                    dateObject = datetime.strptime(str(row[2]), "%Y-%m-%d %H:%M:%S")
+                    formattedDate = dateObject.strftime("%d/%m/%Y %H:%M:%S")
+                    tempDict['date']= str(formattedDate)
+                    
+                except Exception as e:
+                    tempDict['date'] = str(row[2])
+                    
+                tempDict['recordNo'] = str(row[3])
+                tempDict['accountName'] = str(row[0])
+                tempDict['companyName'] = str(row[1])
+                
+                returnDict.append(tempDict)
+                
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content=returnDict, status_code=200)
+    
+    except Exception as e:
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content=[], status_code=404)
+        
+    
     
 async def getCount(wholesellerID, companyID=None):
     try:
