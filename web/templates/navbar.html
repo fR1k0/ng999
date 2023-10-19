@@ -47,6 +47,13 @@
           <div class="ms-2">
             <h4 class="mb-0 text-white">{{session.name}}</h4>
             <p class="mb-0">{{session.username}}</p>
+
+            {% if session.role_id == '1'%}
+            <p class="mb-0">Role: Admin</p>
+            {% else %}
+            <p class="mb-0">Role: Wholesaler</p>
+            {% endif %}
+
           </div>
         </div>
         <!--

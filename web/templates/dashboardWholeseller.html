@@ -149,14 +149,16 @@
                   <div class="col-md-3">
                     <div class="card">
                       <div class="card-body">
+                      <i class="mdi mdi-account"></i>
                         <h4 class="card-title">Active User</h4>
-                        <p class="card-text">{{listCount['active']}}</p>
+                        <p class="card-text" style="color: green;">{{listCount['active']}}</p>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="card">
                       <div class="card-body">
+                       <i class="mdi mdi-account-multiple"></i>
                         <h4 class="card-title">TOTAL MIGRATE USER(S)</h4>
                         <p class="card-text">{{listCount['totalUser']}}</p>
                       </div>
@@ -165,17 +167,18 @@
                   <div class="col-md-3">
                     <div class="card">
                       <div class="card-body">
+                       <i class="mdi mdi-checkbox-marked"></i>
                         <h4 class="card-title">MIGRATE WITH DECLARATION</h4>
-                        <p class="card-text">{{listCount['withMigrate']}}</p>
+                        <p class="card-text" style="color: green;">{{listCount['withMigrate']}}</p>
                       </div>
                     </div>
                   </div>
                   <div class="col-md-3">
                     <div class="card">
                       <div class="card-body">
-                        <!-- Card content for Card 4 -->
+                        <i class="mdi mdi-close-box"></i>
                         <h4 class="card-title">MIGRATE WITHOUT DECLARATION</h4>
-                        <p class="card-text">{{listCount['withoutMigrate']}}</p>
+                        <p class="card-text" style="color: red;">{{listCount['withoutMigrate']}}</p>
                       </div>
                     </div>
                   </div>

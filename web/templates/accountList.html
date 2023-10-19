@@ -329,9 +329,9 @@
                                                 {% endif %}
 
                                                 {% if Wholeseller['isActive'] == '0' %}
-                                                <td>Inactive ({{Wholeseller['lastActive']}})</td>
+                                                <td style="color: red;">Inactive ({{Wholeseller['lastActive']}})</td>
                                                 {% else %}
-                                                <td>Active ({{Wholeseller['lastActive']}})</td>
+                                                <td style="color: green;">Active ({{Wholeseller['lastActive']}})</td>
                                                 {% endif %}
                                             
                                                 <td>
