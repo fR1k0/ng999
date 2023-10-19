@@ -75,7 +75,8 @@
             <span class="logo-text">
               <!-- dark Logo text -->
               <img src="/NG999/static/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-              <img src="/NG999/static/assets/images/Redtone.png" alt="homepage" class="light-logo" width="135" height="50" />
+              <img src="/NG999/static/assets/images/Redtone.png" alt="homepage" class="light-logo" width="135"
+                height="50" />
             </span>
           </a>
           <!-- ============================================================== -->
@@ -139,81 +140,81 @@
           <div class="col-12">
             <h2 class="card-title" style="margin-bottom: 20px;">
               Dashboard
-          </h2>
+            </h2>
 
 
             <div class="card">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-3">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">Active User</h4>
-                              <p class="card-text">{{listCount['active']}}</p>
-                          </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">Active User</h4>
+                        <p class="card-text">{{listCount['active']}}</p>
                       </div>
+                    </div>
                   </div>
                   <div class="col-md-3">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">TOTAL MIGRATE USER(S)</h4>
-                              <p class="card-text">{{listCount['totalUser']}}</p>
-                          </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">TOTAL MIGRATE USER(S)</h4>
+                        <p class="card-text">{{listCount['totalUser']}}</p>
                       </div>
+                    </div>
                   </div>
                   <div class="col-md-3">
-                      <div class="card">
-                          <div class="card-body">
-                              <h4 class="card-title">MIGRATE WITH DECLARATION</h4>
-                              <p class="card-text">{{listCount['withMigrate']}}</p>
-                          </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <h4 class="card-title">MIGRATE WITH DECLARATION</h4>
+                        <p class="card-text">{{listCount['withMigrate']}}</p>
                       </div>
+                    </div>
                   </div>
                   <div class="col-md-3">
-                      <div class="card">
-                          <div class="card-body">
-                              <!-- Card content for Card 4 -->
-                              <h4 class="card-title">MIGRATE WITHOUT DECLARATION</h4>
-                              <p class="card-text">{{listCount['withoutMigrate']}}</p>
-                          </div>
+                    <div class="card">
+                      <div class="card-body">
+                        <!-- Card content for Card 4 -->
+                        <h4 class="card-title">MIGRATE WITHOUT DECLARATION</h4>
+                        <p class="card-text">{{listCount['withoutMigrate']}}</p>
                       </div>
+                    </div>
                   </div>
-              </div>
+                </div>
               </div>
             </div>
 
 
             <div class="card">
               <div class="card-body">
-                  <h4 class="card-title">Migration Log Record</h4>
-                  <hr>
-                  <div class="table-responsive">
-                      <table id="recList" class="table mt-3" style="width: 100%">
-                          <thead>
-                              <tr>
-                                  <th class="col-3">Account Name</th>
-                                  <th class="col-3">Company Name</th>
-                                  <th class="col-3">Migrate Record No</th>
-                                  <th class="col-2">Migration Date</th>
-                              </tr>
-                          </thead>
-                          <tbody>
+                <h4 class="card-title">Migration Log Record</h4>
+                <hr>
+                <div class="table-responsive">
+                  <table id="recList" class="table mt-3" style="width: 100%">
+                    <thead>
+                      <tr>
+                        <th class="col-2">Account Name</th>
+                        <th class="col-2">Company Name</th>
+                        <th class="col-2">Migrate Record No</th>
+                        <th class="col-2">Migration Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
-                              {% for rec in recordList %}
-                              <tr>
-                                  <td>{{rec['accountName']}}</td>
-                                  <td>{{rec['companyName']}}</td>
-                                  <td>{{rec['recordNo']}}</td>
-                                  <td>{{rec['date']}}</td>
-                              </tr>
-                              {% endfor %}
-                          </tbody>
-                      </table>
-                  </div>
+                      {% for rec in recordList %}
+                      <tr>
+                        <td>{{rec['accountName']}}</td>
+                        <td>{{rec['companyName']}}</td>
+                        <td>{{rec['recordNo']}}</td>
+                        <td>{{rec['date']}}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
               </div>
-          </div>
+            </div>
 
-            
+
           </div>
         </div>
 
