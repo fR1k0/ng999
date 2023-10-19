@@ -460,6 +460,7 @@ async def get_ng999_company_datas(request:Request):
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
+        insertedCount: int = 0
         
         for i in body['data']:
             # No duplicated phone number can be inserted to the db
@@ -469,6 +470,8 @@ async def get_ng999_company_datas(request:Request):
             
             if await checkCustDB(body['wholesellerID'], i['CallerNo']):
                 continue
+            
+            insertedCount += 1
             
             query = """
             
@@ -481,7 +484,8 @@ async def get_ng999_company_datas(request:Request):
 
             cursor.execute(query, values)
             
-        uploadedCount = cursor.rowcount
+            
+        uploadedCount = insertedCount
         
         query = """
         

@@ -536,6 +536,8 @@ def decalare():
             'WholeSellerID': session['user_id'],
             'bundle': "0"
         }
+        
+        print(body, flush=True)
                         
         checkData = {key: str(value).replace(" ", "") for key, value in body.items()}
         
