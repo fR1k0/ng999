@@ -112,7 +112,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand" href = "/NG999/">
+                    <a class="navbar-brand" href="/NG999/">
                         <!-- Logo icon -->
                         {#<b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -127,8 +127,8 @@
                         <span class="logo-text">
                             <!-- dark Logo text -->
                             <img src="/NG999/static/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                            <img src="/NG999/static/assets/images/Redtone.png" alt="homepage" class="light-logo" width="135"
-                                height="50" />
+                            <img src="/NG999/static/assets/images/Redtone.png" alt="homepage" class="light-logo"
+                                width="135" height="50" />
                         </span>
                     </a>
                     <!-- ============================================================== -->
@@ -189,16 +189,20 @@
             <div class="container-fluid">
                 {% include 'debug.html' %}
 
-
-                <div class="modal fade" id="confirmationModal" tabindex="-1"
-                    aria-labelledby="confirmationModal" aria-hidden="true">
+                <div class="modal fade" id="updateDeclarationModal" tabindex="-1"
+                    aria-labelledby="updateDeclarationModal" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
+                            <form method="POST" action="/NG999/declare" id="declareForm">
+
                                 <div class="modal-header">
-                                    <h5 class="modal-title">I hereby declare that the infomation provided is true and correct</h5>
+                                    <h5 class="modal-title">Update Declaration</h5>
+                                    <div class="form-item">
+                                        <input type="text" id="modalcustID" name="modalcustID" class="custom-input"
+                                            readonly hidden>
+                                    </div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                    </button>
+                                        aria-label="Close"></button>
                                 </div>
 
 
@@ -206,51 +210,97 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-item">
-                                                <label for="modalpdpa">PDPA</label>
-                                                <input type="checkbox" class="custom-checkbox" name="modalpdpa"
-                                                    id="modalpdpa" required />
+                                                <label for="modalCustName">Name</label>
+                                                <input type="text" class="custom-input" name="modalCustName"
+                                                    id="modalCustName" required />
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-item">
-                                                <label for="modalDisc">Disclaimer</label>
-                                                <input type="checkbox" class="custom-checkbox" name="modalDisc"
-                                                    id="modalDisc" required />
+                                                <label for="modalCustPhone">Phone No.</label>
+                                                <input type="text" class="custom-input" name="modalCustPhone"
+                                                    id="modalCustPhone" required />
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustAddr">Address</label>
+                                                <input type="text" class="custom-input" name="modalCustAddr"
+                                                    id="modalCustAddr" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-item">
+                                                <label for="modalCustInfo">Additional Info</label>
+                                                <input type="text" class="custom-input" name="modalCustInfo"
+                                                    id="modalCustInfo" required />
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="modal-footer" style="justify-content: flex-start;">
-                                    <button type="submit" id="submitConfirmation" class="btn btn-primary">Confirm and Submit</button>
+                                    <button type="submit" id="submitDeclare" class="btn btn-primary">Update and
+                                        Declare</button>
                                 </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
 
+                <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">I hereby declare that the infomation provided is true and
+                                    correct</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                </button>
+                            </div>
 
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-item">
+                                            <label for="modalpdpa">PDPA</label>
+                                            <input type="checkbox" class="custom-checkbox" name="modalpdpa"
+                                                id="modalpdpa" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-item">
+                                            <label for="modalDisc">Disclaimer</label>
+                                            <input type="checkbox" class="custom-checkbox" name="modalDisc"
+                                                id="modalDisc" required />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="justify-content: flex-start;">
+                                <button type="submit" id="submitConfirmation" class="btn btn-primary">Confirm and
+                                    Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="card-title" style="margin-bottom: 20px;">Bundle Declaration Customer List</h2>
+                        <h2 class="card-title" style="margin-bottom: 20px;">Customer List (Without Declaration)</h2>
 
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h4 class="card-title">Customer List</h4>
-                                    </div>
-
-                                    <div class="col text-end">
-                                        <button class="btn btn-primary" id="getSelected">Declare Selected</button>
-                                    </div>
-
-                                   
-                                </div>
+                                <h4 class="card-title">Customer List</h4>
                                 <hr>
                                 <div class="table-responsive">
-                                    <table id="bundleList" class="table mt-3" style="width: 100%">
+                                    <table id="allcustList" class="table mt-3" style="width: 100%">
                                         <thead>
                                             <tr>
                                                 <th class="col-3">Phone Number</th>
@@ -258,6 +308,7 @@
                                                 <th class="col-3">Address</th>
                                                 <th class="col-2">Additional Info</th>
                                                 <th class="col-1">Migration Date</th>
+                                                <th class="col-1">Declaration Date</th>
                                                 <th class="col-1">Action</th>
                                             </tr>
                                         </thead>
@@ -270,13 +321,39 @@
                                                 <td>{{cust['Customer_Address']}}</td>
                                                 <td>{{cust['Customer_Additional_Info']}}</td>
                                                 <td>{{cust['Customer_Migration_Date']}}</td>
+
+                                                {% if cust['Customer_Declaration_Date'] != 'None' %}
+                                                <td>{{cust['Customer_Declaration_Date']}}</td>
+                                                {% else %}
+                                                <td></td>
+                                                {% endif %}
+
+
+                                                {% if cust['Customer_Declaration_Date'] == 'None'%}
                                                 <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            value="{{ cust['Customer_ID'] }}"
-                                                            id="checkbox-{{ loop.index }}">
+                                                    <div class="dropdown">
+                                                        <a href="#" class="text-muted dropdown-toggle"
+                                                            id="dropdownMenuButton-{{ loop.index }}"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+
+                                                        </a>
+                                                        <div class="dropdown-menu dropdown-menu-end">
+                                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                                href="#updateDeclarationModal" id="updateLink"
+                                                                data-cust-name="{{cust['Customer_Name']}}"
+                                                                data-cust-phone="{{cust['Customer_Phone_Number']}}"
+                                                                data-cust-address="{{cust['Customer_Address']}}"
+                                                                data-cust-info="{{cust['Customer_Additional_Info']}}"
+                                                                data-cust-id="{{cust['Customer_ID']}}">
+                                                                Update and Declare
+                                                            </a>
+
+                                                        </div>
                                                     </div>
                                                 </td>
+                                                {% else %}
+                                                <td></td>
+                                                {% endif %}
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -338,7 +415,7 @@
         <script src="/NG999/static/assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
         <script src="/NG999/static/assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
         <script>
-            $("#bundleList").DataTable({
+            $("#allcustList").DataTable({
                 order: [[4, 'desc']],
             });
 
@@ -359,87 +436,41 @@
             });
 
 
+
+            document.getElementById("submitDeclare").addEventListener("click", function (event) {
+                event.preventDefault();
+                let confirmModal = document.getElementById('confirmationModal');
+
+                $(confirmModal).modal('show');
+            });
+
+
+            document.getElementById("submitConfirmation").addEventListener("click", function (event) {
+                let pdpa = document.getElementById('modalpdpa');
+                let disclaimer = document.getElementById('modalDisc');
+
+                if (pdpa.checked && disclaimer.checked) {
+                    document.getElementById('declareForm').submit();
+
+                }
+                else {
+                    alert("Please check PDPA and Disclaimer");
+                }
+            });
+
+
+
+            $(document.getElementById("confirmationModal")).on('hidden.bs.modal', function (e) {
+                let pdpaCheckbox = document.getElementById("modalpdpa");
+                let discCheckbox = document.getElementById("modalDisc");
+
+                pdpaCheckbox.checked = false;
+                discCheckbox.checked = false;
+
+            });
+
+
         </script>
-
-        
-        <script>
-        document.getElementById('submitConfirmation').addEventListener('click', function () {
-            let checkedBox = document.querySelectorAll('.form-check-input');
-            let payload = {'custID': []};
-
-            checkedBox.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    payload['custID'].push(checkbox.value);
-                }
-            });
-
-        
-            let pdpa = document.getElementById('modalpdpa');
-            let disclaimer = document.getElementById('modalDisc');
-
-            if (pdpa.checked && disclaimer.checked){
-                let url = '/NG999/bundleDeclarePost';
-
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = "/NG999/bundleDeclare/1";
-                    } else {
-                        alert('Failed to declare bundle.');
-                    }
-                    
-                    
-                })
-                .catch(error => {
-                    alert("Error: " + error);
-                    console.error('Error:', error);
-                    
-                });
-                
-            }else{
-                alert("Please check PDPA and Disclaimer");
-            }
-        });
-
-
-
-        document.getElementById("getSelected").addEventListener("click", function (event) {
-            let checkedBox = document.querySelectorAll('.form-check-input');
-            let payload = {'custID': []};
-
-            checkedBox.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    payload['custID'].push(checkbox.value);
-                }
-            });
-
-            if (payload['custID'].length <= 0){
-                alert("No Customer Seleted");
-                return;
-            }
-
-            let confirmModal = document.getElementById('confirmationModal');
-            $(confirmModal).modal('show');
-
-            });
-
-
-
-    $(document.getElementById("confirmationModal")).on('hidden.bs.modal', function (e) {
-        let pdpaCheckbox = document.getElementById("modalpdpa");
-        let discCheckbox = document.getElementById("modalDisc");
-
-        pdpaCheckbox.checked = false;
-        discCheckbox.checked = false;
-
-    });
-    </script>
 </body>
 
 </html>

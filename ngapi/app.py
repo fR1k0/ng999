@@ -635,23 +635,32 @@ async def get_ng999_company_datas(request:Request):
         resultDict = []
         
         query = """
-        select * from Customer where Account_ID = %s and date(customer_migration_date) = curdate()
+        
+        SELECT * FROM Customer c join Account a on c.Account_ID = a.Account_ID where a.Company_ID = %s and date(c.customer_migration_date) = curdate()
+        
         """
         
         if body['mode'] == "1":
             query = """
-            select * from Customer where Account_ID = %s and customer_declaration_date is not null
+            SELECT * FROM Customer c join Account a on c.Account_ID = a.Account_ID where a.Company_ID = %s and c.customer_declaration_date is not null
             """
         elif body['mode'] == "2":
             query = """
             
-            select * from Customer where Account_ID = %s and customer_declaration_date is null
+            SELECT * FROM Customer c join Account a on c.Account_ID = a.Account_ID where a.Company_ID = %s and c.customer_declaration_date is null
+            """
+            
+        elif body['mode'] == "5":
+            query = """
+            
+            SELECT * FROM Customer c join Account a on c.Account_ID = a.Account_ID where a.Company_ID = %s
+            
             """
             
         elif body['mode'] == "4":
             return JSONResponse(content=await getCount(body['wholesellerID'], body['compID']), status_code=200)
             
-        values = (body['wholesellerID'],)
+        values = (body['compID'],)
             
         cursor.execute(query, values)
         result = cursor.fetchall()

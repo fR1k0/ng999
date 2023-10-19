@@ -121,7 +121,7 @@ def login():
                 
                 else:
                     flash('Incorrect Credentials', 'danger')
-                    return render_template("logon.html")
+                    return render_template("logon.html", logonImg=base64Img)
                 
             return render_template('logon.html', logonImg=base64Img)
     
@@ -253,7 +253,7 @@ def dataMigration():
             return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
-        payload = {"wholesellerID": session['user_id'], "mode": "3"}
+        payload = {"wholesellerID": session['user_id'], "mode": "3", 'compID': session['compID']}
         
         response = requests.post(url, json=payload)
         
@@ -278,7 +278,7 @@ def withDeclaration():
             return redirect(url_for('logout'))
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
-        payload = {"wholesellerID": session['user_id'], "mode": "1"}
+        payload = {"wholesellerID": session['user_id'], "mode": "1", 'compID': session['compID']}
         
         response = requests.post(url, json=payload)
         
@@ -305,7 +305,7 @@ def withoutDeclaration():
         custList = []
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
-        payload = {"wholesellerID": session['user_id'], "mode": "2"}
+        payload = {"wholesellerID": session['user_id'], "mode": "2", 'compID': session['compID']}
         
         response = requests.post(url, json=payload)
         
@@ -313,6 +313,33 @@ def withoutDeclaration():
             custList = response.json()
         
         return render_template('withoutDeclaration.html', session=session, customerList=custList)
+        
+    except Exception as e:
+        print(e, flush=True)
+        flash(str(e))
+        return redirect(url_for('index'))
+    
+@app.route(f"{PREFIX}/fullList", methods=["GET"])
+@login_required
+def fullList():
+    try:
+        if session['role_id'] != '2':
+            flash("Unauthorized Access")
+            return redirect(url_for('logout'))
+        
+        custList = []
+        
+        url = app.config['API_URL'] + '/ng999/customer/getList'
+        payload = {"wholesellerID": session['user_id'], "mode": "5", 'compID': session['compID']}
+        
+        response = requests.post(url, json=payload)
+        
+        if response.status_code == 200:
+            custList = response.json()
+            
+        # print(custList, flush=True)
+        
+        return render_template('allMigration.html', session=session, customerList=custList)
         
     except Exception as e:
         print(e, flush=True)
@@ -543,7 +570,7 @@ def bundleDecalare(mode):
         custList = []
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
-        payload = {"wholesellerID": session['user_id'], "mode": "2"}
+        payload = {"wholesellerID": session['user_id'], "mode": "2", 'compID': session['compID']}
         
         response = requests.post(url, json=payload)
         
