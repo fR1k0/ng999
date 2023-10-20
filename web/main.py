@@ -259,10 +259,11 @@ def addAccount():
 @login_required
 def dataMigration():
     try:
-        custList = []
         if session['role_id'] != '2':
             flash("Unauthorized Access")
             return redirect(url_for('logout'))
+        
+        custList = []
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "3", 'compID': session['compID']}
@@ -284,10 +285,12 @@ def dataMigration():
 @login_required
 def withDeclaration():
     try:
-        custList = []
+        
         if session['role_id'] != '2':
             flash("Unauthorized Access")
             return redirect(url_for('logout'))
+        
+        custList = []
         
         url = app.config['API_URL'] + '/ng999/customer/getList'
         payload = {"wholesellerID": session['user_id'], "mode": "1", 'compID': session['compID']}
@@ -375,11 +378,11 @@ def convert_to_string(value):
 @app.route(f"{PREFIX}/uploadMigration", methods=['POST'])
 @login_required
 def uploadMigration():
-    validExtension = ['xls', 'xlsx']
-    
     if session['role_id'] != '2':
         flash("Unauthorized Access")
         return redirect(url_for('logout'))
+    
+    validExtension = ['xls', 'xlsx']
     
     try:
         if 'file' not in request.files:
@@ -549,7 +552,7 @@ def decalare():
             'bundle': "0"
         }
         
-        print(body, flush=True)
+        # print(body, flush=True)
                         
         checkData = {key: str(value).replace(" ", "") for key, value in body.items()}
         
@@ -663,6 +666,10 @@ def downloadExcel():
 @app.route(f"{PREFIX}/updateInfo", methods=['POST'])
 def updateInfo():
     try:
+        if session['role_id'] != '1':
+            flash("Unauthorized Access")
+            return redirect(url_for('logout'))
+        
         if not validateEmail(str(request.form.get('accEmail'))):
             flash("Invalid email format")
             return redirect(request.referrer)
@@ -675,7 +682,7 @@ def updateInfo():
                 'status': request.form.get('accStatus') is not None
             }
         
-        print(body, flush=True)
+        # print(body, flush=True)
         
         url = app.config['API_URL'] + '/ng999/account/updateInfo'
         

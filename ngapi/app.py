@@ -51,7 +51,7 @@ class Company(BaseModel):
         
 #         return JSONResponse(content={}, status_code=404)
     
-def generate_password(length=12):
+def generate_password(length=12) -> str:
     characters = string.ascii_letters + string.digits + string.punctuation
     password = ''.join(secrets.choice(characters) for _ in range(length))
     
@@ -66,7 +66,7 @@ async def validateEmail(email) -> bool:
         print(e, flush=True)
         return False
 
-async def checkEmail(email, accountID=None):
+async def checkEmail(email, accountID=None) -> bool:
     conn_ng999 = await getSqlCONN()
     cursor = conn_ng999.cursor()
     
@@ -97,7 +97,7 @@ async def checkEmail(email, accountID=None):
     await closeConn(cursor, conn_ng999)
     return False
 
-async def checkPhoneNumber(phoneNumber, accID=None):
+async def checkPhoneNumber(phoneNumber, accID=None) -> bool:
     conn_ng999 = await getSqlCONN()
     cursor = conn_ng999.cursor()
     
@@ -258,59 +258,6 @@ async def ng999_logon(request:Request):
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
 
-
-# # Route to read an item   
-# @app.get("/ng999/company/get/{id}")
-# def get_ng999_company_data(Company_ID: int):
-#     try:
-#         cursor = conn_ng999.cursor()
-        
-#         query = "SELECT Company_ID , Company_Name, Company_Date_Created FROM Company WHERE Company_ID=%s"
-#         cursor.execute(query, (Company_ID,))
-        
-#         item = cursor.fetchone()
-#         if cursor: cursor.close()
-        
-        
-#         if item is None:
-#             raise HTTPException(status_code=404, detail="Data not found")
-        
-#         return {"Company_ID": item[0], "Company_Name": item[1], "Company_Date_Created": item[2]}
-    
-#     except Exception as e:
-#         print(e, flush=True)
-#         if cursor: cursor.close()
-        
-#         return JSONResponse(content={}, status_code=404)
-
-
-# # Route to update an item
-# @app.put("/ng999/company/update/{Company_ID}", response_model=Company)
-# def update_ng999_company_data(Company_ID: int, company: Company):
-#     try:
-#         conn_ng999 = await getSqlCONN()
-#         cursor = conn_ng999.cursor()
-#         conn_ng999.begin()
-        
-#         query = "UPDATE Company SET Company_Name=%s, Company_Date_Created=%s WHERE Company_ID=%s"
-        
-#         cursor.execute(query, (company.Company_Name, company.Company_Date_Created, Company_ID))
-#         conn_ng999.commit()
-        
-#         company.Company_ID = Company_ID
-        
-#         await closeConn(cursor, conn_ng999)
-    
-#         return company
-
-#     except Exception as e:
-#         print(e, flush=True)
-        
-#         conn_ng999.rollback()
-#         if cursor: cursor.close()
-        
-#         return JSONResponse(content={}, status_code=404)
-
 # Route to delete an item
 @app.delete("/ng999/company/delete/{id}")
 async def delete_ng999_company_data(Company_ID: int):
@@ -405,7 +352,7 @@ async def getAccountList():
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=404)
     
-async def checkCustDB(accountID, phoneNumber):
+async def checkCustDB(accountID, phoneNumber) -> bool:
     try:
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
@@ -437,7 +384,7 @@ async def checkCustDB(accountID, phoneNumber):
         await closeConn(cursor, conn_ng999)
         return False
     
-async def checkCustDBDeclare(custID, phoneNumber):
+async def checkCustDBDeclare(custID, phoneNumber) -> bool:
     try:
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
@@ -584,7 +531,7 @@ async def getDashboardList(request:Request):
         
     
     
-async def getCount(wholesellerID, companyID=None):
+async def getCount(wholesellerID, companyID=None) -> dict:
     try:
         body = {"active": 0, "totalUser": 0, "withMigrate": 0, "withoutMigrate": 0}
         
