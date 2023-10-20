@@ -12,6 +12,7 @@ import asyncio
 import waitress
 import MySQLdb
 import bcrypt
+import re
 from werkzeug.middleware.proxy_fix import ProxyFix
   
 app = Flask(__name__, static_url_path='/NG999/static') 
@@ -48,6 +49,17 @@ def load_user(user_id):
 def check_authentication():
     if not current_user.is_authenticated and request.endpoint != 'login':
         return redirect(url_for('login'))
+    
+@login_required
+def validateEmail(email) -> bool:
+    try:
+        pattern = r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$'
+        return bool(re.match(pattern, email))
+    
+    except Exception as e:
+        print(e, flush=True)
+        return False
+    
 
 @app.route(f'{PREFIX}/login', methods=["GET", "POST"])
 def login():
@@ -235,12 +247,12 @@ def addAccount():
             flash(f"Successfully created account for {name}")
             return redirect(url_for('accountCreate'))
         
-        flash(f"Failed to create account for {name}")
+        flash(f"Failed to create account for {name} ({response.json()['message']})")
         return redirect(url_for('accountCreate'))
     
     except Exception as e:
         print(e, flush=True)
-        flash("Fail to load wholeseller list")
+        flash("Fail create account")
         return render_template("account-create.html", wholesellerList=[], session=session)
         
 @app.route(f"{PREFIX}/dataMigration", methods=["GET"])
@@ -651,6 +663,10 @@ def downloadExcel():
 @app.route(f"{PREFIX}/updateInfo", methods=['POST'])
 def updateInfo():
     try:
+        if not validateEmail(str(request.form.get('accEmail'))):
+            flash("Invalid email format")
+            return redirect(request.referrer)
+            
         body = {
                 'accID': str(request.form.get('accInfoID')),
                 'name': str(request.form.get('accName')),

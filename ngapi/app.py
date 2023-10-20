@@ -12,6 +12,7 @@ import secrets
 import string
 import MySQLdb
 import traceback
+import re
 
 
 
@@ -55,6 +56,15 @@ def generate_password(length=12):
     password = ''.join(secrets.choice(characters) for _ in range(length))
     
     return password
+
+async def validateEmail(email) -> bool:
+    try:
+        pattern = r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$'
+        return bool(re.match(pattern, email))
+    
+    except Exception as e:
+        print(e, flush=True)
+        return False
 
 async def checkEmail(email, accountID=None):
     conn_ng999 = await getSqlCONN()
@@ -125,11 +135,14 @@ async def checkPhoneNumber(phoneNumber, accID=None):
 async def add_ng999_company_data(request: Request):
     password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     try:
-        
         body = await request.json()
         
         if await checkEmail(body['email']) or await checkPhoneNumber(body['pn']):
-            return JSONResponse(content={}, status_code=404)
+            return JSONResponse(content={'message': 'Duplicate email/phone number'}, status_code=404)
+        
+        if not await validateEmail(body['email']):
+            return JSONResponse(content={'message': 'Invalid email format'}, status_code=404)
+            
         
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
@@ -169,7 +182,7 @@ async def add_ng999_company_data(request: Request):
             return JSONResponse(content={}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={"message": "Uncatched Error"}, status_code=404)
     
     except Exception as e:
         print(e, flush=True)
