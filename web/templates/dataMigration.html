@@ -493,14 +493,14 @@
 
 
 
-            $(document.getElementById("confirmationModal")).on('hidden.bs.modal', function (e) {
-                let pdpaCheckbox = document.getElementById("modalpdpa");
-                let discCheckbox = document.getElementById("modalDisc");
+        $(document.getElementById("confirmationModal")).on('hidden.bs.modal', function (e) {
+            let pdpaCheckbox = document.getElementById("modalpdpa");
+            let discCheckbox = document.getElementById("modalDisc");
 
-                pdpaCheckbox.checked = false;
-                discCheckbox.checked = false;
+            pdpaCheckbox.checked = false;
+            discCheckbox.checked = false;
 
-            });
+        });
 
 
         document.getElementById("downloadExcelTemplate").addEventListener("click", function (event) {

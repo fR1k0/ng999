@@ -416,7 +416,7 @@ def uploadMigration():
             return redirect(url_for('dataMigration'))
         
         
-        print(response.json(), flush=True)
+        # print(response.json(), flush=True)
         flash("Fail to upload migration list")
         return redirect(url_for('dataMigration'))
         
