@@ -392,6 +392,7 @@ def uploadMigration():
         
         if file.filename == '':
             raise Exception("Invalid File Name")
+        
         if not allowed_file(file.filename, validExtension):
             raise Exception("Invalid File Extension")
         
