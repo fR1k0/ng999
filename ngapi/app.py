@@ -421,14 +421,29 @@ async def get_ng999_company_datas(request:Request):
         cursor = conn_ng999.cursor()
         conn_ng999.begin()
         insertedCount: int = 0
+        duplicatedPhoneNumber: int = 0
+        emptyPhoneNumber: int = 0
+        emptyAddress: int = 0
+        emptyName: int = 0
         
         for i in body['data']:
             # No duplicated phone number can be inserted to the db
             address = i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3']
-            if i['CallerNo'].replace(" ", "") == "" or i['Name'].replace(" ", "") == "" or address.replace(" ", "") == "":
+            
+            if i['CallerNo'].replace(" ", "") == "":
+                emptyPhoneNumber += 1
                 continue
             
+            if i['Name'].replace(" ", "") == "":
+                emptyName += 1
+                continue
+            
+            if address.replace(" ", "") == "":
+                emptyAddress += 1
+                continue
+                
             if await checkCustDB(body['wholesellerID'], i['CallerNo']):
+                duplicatedPhoneNumber += 1
                 continue
             
             insertedCount += 1
@@ -458,7 +473,7 @@ async def get_ng999_company_datas(request:Request):
         conn_ng999.commit()
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records"}, status_code=200)
+        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records\n Duplicate Phone Number {str(duplicatedPhoneNumber)}\n Empty Name {str(emptyName)}\n Empty Phone Number {str(emptyPhoneNumber)}\n Empty Addess {str(emptyAddress)}"}, status_code=200)
         
         
     except Exception as e:
