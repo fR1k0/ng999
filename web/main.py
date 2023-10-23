@@ -637,7 +637,7 @@ def downloadExcel():
         sheet = workbook.active
         sheet.title = "Migration Template"
         
-        rowData = ["WholeSaleID", "CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
+        rowData = ["CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
         sheet.append(rowData)
         
         
