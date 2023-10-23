@@ -473,7 +473,7 @@ async def get_ng999_company_datas(request:Request):
         conn_ng999.commit()
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records\n Duplicate Phone Number {str(duplicatedPhoneNumber)}\n Empty Name {str(emptyName)}\n Empty Phone Number {str(emptyPhoneNumber)}\n Empty Addess {str(emptyAddress)}"}, status_code=200)
+        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records. Duplicate Phone Number {str(duplicatedPhoneNumber)}. Empty Name {str(emptyName)}. Empty Phone Number {str(emptyPhoneNumber)}. Empty Addess {str(emptyAddress)}."}, status_code=200)
         
         
     except Exception as e:
