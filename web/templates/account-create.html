@@ -268,6 +268,24 @@
         $("#zero_config").DataTable({
             order: [[4, 'desc']],
         });
+
+
+
+        $(document).ready(function() {
+            var wholesellerList = $('#wholesellerID').html();
+
+            $('#role').on('change', function() {
+                let selectedValue = $(this).val();
+        
+                if (selectedValue === '1') {
+                    $('#wholesellerID').empty();
+                    $('#wholesellerID').prop('disabled', true);
+                } else {
+                    $('#wholesellerID').html(wholesellerList);
+                    $('#wholesellerID').prop('disabled', false);
+                }
+            });
+        });
     </script>
 </body>
 

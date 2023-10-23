@@ -157,12 +157,12 @@ async def add_ng999_company_data(request: Request):
         
         query = """
             
-            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Company_ID, Account_Email, Account_Phone_Number, lastActive) 
-            values (%s, %s, %s, %s, %s, %s, %s, %s)
+            insert into Account (Account_Password, Account_name, Account_Role, Account_date_Created, Account_Email, Account_Phone_Number, lastActive) 
+            values (%s, %s, %s, %s, %s, %s, %s)
             
             """
             
-        values = (hashPassword, body['name'], body['role'], datetime.now(), body['wholesellerID'], body['email'], body['pn'], datetime.now())
+        values = (hashPassword, body['name'], body['role'], datetime.now(), body['email'], body['pn'], datetime.now())
         
         if body['role'] == '2':
             query = """
@@ -239,7 +239,7 @@ async def ng999_logon(request:Request):
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
-        query = "select account_password, account_role, account_email, account_id, account_name, isFirst, isActive, Company_ID from Account where account_email = %s"
+        query = "select account_password, account_role, account_email, account_id, account_name, isFirst, isActive, Account.Company_ID, Company.wholeSalerID from Account left join Company on Account.Company_ID = Company.Company_ID where account_email = %s"
         
         values = (body['username'],)
         cursor.execute(query, values)
@@ -249,7 +249,14 @@ async def ng999_logon(request:Request):
             if list(result)[0] is not None:                
                 if password_context.verify(body['password'], list(result)[0]):
                     await closeConn(cursor, conn_ng999)
-                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': list(result)[7]}, status_code=200)
+                    compID = ""
+                    wholeSalerID = ""
+                    
+                    if list(result)[1] == '2':
+                        compID = list(result)[7]
+                        wholeSalerID = list(result)[8]
+                        
+                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': compID, 'wID': wholeSalerID}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'Message': "Incorrect Password"}, status_code=400)
@@ -895,9 +902,11 @@ async def updateAccInfo(request:Request):
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=400)
     
-    
-async def getWholessalerFromBilling():
+@app.post("/ng999/customer/getWholeSalerCust")
+async def getWholeSalerFromBilling(request:Request):
     try:
+        body = await request.json()
+        
         conn_ng999 = await getMSSQLConn()
         cursor = conn_ng999.cursor()
         

@@ -120,7 +120,13 @@ def login():
                         session['role_id'] = body['role']
                         session['name'] = body['accountName']
                         session['isFirst'] = body['isFirst']
-                        session['compID'] = body['compID']
+                        
+                        if session['role_id'] == '2':
+                            session['compID'] = body['compID']
+                            session['billingWholeSalerID'] = body['wID']
+                            
+                            
+                        # print(session, flush=True)
                         
                         if session['role_id'] == '2' and not body['isActive']:
                             session.clear()
@@ -236,7 +242,12 @@ def addAccount():
         name = request.form['name']
         role = request.form['role']
         email = request.form['email']
-        wholesellerID = request.form['wholesellerID']
+        
+        if role == '2':
+            wholesellerID = request.form['wholesellerID']
+        else:
+            wholesellerID = ""
+            
         phoneNumber = request.form['pn']
         
         body = {'name': name, 'role': role, 'email': email, 'wholesellerID': wholesellerID, 'pn': phoneNumber}
@@ -632,6 +643,17 @@ def bundleDecalarePost():
 @login_required
 def downloadExcel():
     try:
+        
+        if session['roleid'] != '2':
+            return jsonify({}), 400
+        
+        
+        resultList = []
+        
+        url = app.config['API_URL'] + '/ng999/customer/getWholeSalerCust'
+        payload = {'wholeSalerID': session['billingWholeSalerID']}
+        
+        
         workbook = Workbook()
         
         sheet = workbook.active
@@ -639,6 +661,9 @@ def downloadExcel():
         
         rowData = ["CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
         sheet.append(rowData)
+        
+        url = app.config['API_URL'] + '/ng999/customer/getWholeSalerCust'
+        payload = {'wholeSalerID': session['billingWholeSalerID']}
         
         
         # for column_cells in sheet.columns:
