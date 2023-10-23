@@ -528,12 +528,12 @@ def companyOperations():
         if response.status_code == 200:
             return jsonify({}), 200
         else:
-            return jsonify({}), 404
+            return jsonify({}), 400
             
         
     except Exception as e:
         print(e, flush=True)
-        return jsonify({}), 404
+        return jsonify({}), 400
     
 @app.route(f"{PREFIX}/declare", methods=["POST"])
 @login_required
@@ -621,12 +621,12 @@ def bundleDecalarePost():
         if response.status_code == 200:    
             return jsonify({}), 200
             
-        return jsonify({}), 404
+        return jsonify({}), 400
 
     except Exception as e:
         print(e, flush=True)
         flash(str(e))
-        return jsonify({}), 404
+        return jsonify({}), 400
     
 @app.route(f"{PREFIX}/downloadExcel", methods=['POST'])
 @login_required
@@ -662,7 +662,7 @@ def downloadExcel():
         
     except Exception as e:
         print(e, flush=True)
-        return jsonify({}), 404
+        return jsonify({}), 400
     
 @app.route(f"{PREFIX}/updateInfo", methods=['POST'])
 def updateInfo():

@@ -13,6 +13,7 @@ import string
 import MySQLdb
 import traceback
 import re
+import pymssql
 
 
 
@@ -49,7 +50,7 @@ class Company(BaseModel):
 #         conn_ng999.rollback()
 #         if cursor: cursor.close()
         
-#         return JSONResponse(content={}, status_code=404)
+#         return JSONResponse(content={}, status_code=400)
     
 def generate_password(length=12) -> str:
     characters = string.ascii_letters + string.digits + string.punctuation
@@ -138,10 +139,10 @@ async def add_ng999_company_data(request: Request):
         body = await request.json()
         
         if await checkEmail(body['email']) or await checkPhoneNumber(body['pn']):
-            return JSONResponse(content={'message': 'Duplicate email/phone number'}, status_code=404)
+            return JSONResponse(content={'message': 'Duplicate email/phone number'}, status_code=400)
         
         if not await validateEmail(body['email']):
-            return JSONResponse(content={'message': 'Invalid email format'}, status_code=404)
+            return JSONResponse(content={'message': 'Invalid email format'}, status_code=400)
             
         
         conn_ng999 = await getSqlCONN()
@@ -182,12 +183,12 @@ async def add_ng999_company_data(request: Request):
             return JSONResponse(content={}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={"message": "Uncatched Error"}, status_code=404)
+        return JSONResponse(content={"message": "Uncatched Error"}, status_code=400)
     
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={"Message": str(e)}, status_code=404)
+        return JSONResponse(content={"Message": str(e)}, status_code=400)
     
 @app.post('/ng999/admin/resetPassword')
 async def resetPassword(request:Request):
@@ -219,12 +220,12 @@ async def resetPassword(request:Request):
             return JSONResponse(content={}, status_code=200)
             
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
         
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
         
         
     
@@ -251,12 +252,12 @@ async def ng999_logon(request:Request):
                     return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': list(result)[7]}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'Message': "Incorrect Password"}, status_code=404)
+        return JSONResponse(content={'Message': "Incorrect Password"}, status_code=400)
                 
     except Exception as e:
         print(e, flush=True)
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
 
 # Route to delete an item
 @app.delete("/ng999/company/delete/{id}")
@@ -277,7 +278,7 @@ async def delete_ng999_company_data(Company_ID: int):
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
    
 
 @app.get("/ng999/company/list")
@@ -294,7 +295,7 @@ async def get_ng999_company_datas():
         resultDict = []
         
         if item is None:
-            raise HTTPException(status_code=404, detail="Data not found")
+            raise HTTPException(status_code=400, detail="Data not found")
         
         for row in list(item):
             rowDict = {}
@@ -309,7 +310,7 @@ async def get_ng999_company_datas():
     except Exception as e:
         print(e, flush=True)
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
 @app.get("/ng999/account/list")
 async def getAccountList():
@@ -325,7 +326,7 @@ async def getAccountList():
         resultDict = []
         
         if item is None:
-            raise HTTPException(status_code=404, detail="Data not found")
+            raise HTTPException(status_code=400, detail="Data not found")
         
         for row in list(item):
             rowDict = {}
@@ -350,7 +351,7 @@ async def getAccountList():
     except Exception as e:
         print(e, flush=True)
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
 async def checkCustDB(accountID, phoneNumber) -> bool:
     try:
@@ -483,7 +484,7 @@ async def get_ng999_company_datas(request:Request):
         traceback.print_exc()
         
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={"message": str(e)}, status_code=404)
+        return JSONResponse(content={"message": str(e)}, status_code=400)
     
 @app.post('/ng999/account/getDashboardlist')
 async def getDashboardList(request:Request):
@@ -542,7 +543,7 @@ async def getDashboardList(request:Request):
     except Exception as e:
         print(e, flush=True)
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content=[], status_code=404)
+        return JSONResponse(content=[], status_code=400)
         
     
     
@@ -672,7 +673,7 @@ async def get_ng999_company_datas(request:Request):
     except Exception as e:
         print(e, flush=True)
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
     
 @app.post("/ng999/company/insertCompany")
@@ -698,12 +699,12 @@ async def insertCompany(request:Request):
             return JSONResponse(content={}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
     
 @app.post("/ng999/company/deleteCompany")
@@ -730,12 +731,12 @@ async def deleteCompany(request:Request):
             return JSONResponse(content={}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
 
 @app.post("/ng999/company/declare")
@@ -745,7 +746,7 @@ async def declareCompany(request:Request):
         
         if body['bundle'] == '0':
             if await checkCustDBDeclare(body['CustID'], body['PhoneNo']):
-                return JSONResponse(content={'Message': "Duplicated Phone Number"}, status_code=404)
+                return JSONResponse(content={'Message': "Duplicated Phone Number"}, status_code=400)
         
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
@@ -766,12 +767,12 @@ async def declareCompany(request:Request):
             return JSONResponse(content={}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
     
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={'Message': str(e)}, status_code=404)
+        return JSONResponse(content={'Message': str(e)}, status_code=400)
     
     
 @app.get("/ng999/admin/dashboard")
@@ -826,7 +827,7 @@ async def adminDashboard():
     except Exception as e:
         print(str(e), flush=True)
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'Message': str(str(e))}, status_code=404)
+        return JSONResponse(content={'Message': str(str(e))}, status_code=400)
     
 
 @app.post("/ng999/customer/bundleDeclare")
@@ -858,7 +859,7 @@ async def bundleDeclare(request:Request):
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
         
 @app.post("/ng999/account/updateInfo")
 async def updateAccInfo(request:Request):
@@ -871,7 +872,7 @@ async def updateAccInfo(request:Request):
         
         if await checkEmail(body['email'], body['accID']) or await checkPhoneNumber(body['PhoneNo'], body['accID']):
             await closeConn(cursor, conn_ng999)
-            return JSONResponse(content={}, status_code=404)
+            return JSONResponse(content={}, status_code=400)
             
         query = """
         
@@ -892,10 +893,62 @@ async def updateAccInfo(request:Request):
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=404)
+        return JSONResponse(content={}, status_code=400)
+    
+    
+async def getWholessalerFromBilling():
+    try:
+        conn_ng999 = await getMSSQLConn()
+        cursor = conn_ng999.cursor()
+        
+        query = """
+                SELECT a.WholeSaleID ,b.Name,
+                b.CustID, b.Telephone
+                ,CASE a.[status]
+                WHEN 1 THEN 'Active'
+                WHEN 0 THEN 'Suspended'
+                WHEN 2 THEN 'Locked'
+                END AS status2
+                FROM [dbo].[Account_MasterData] a
+                LEFT JOIN [dbo].[Customer] b
+                ON a.accountid = b.custid
+                LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[UserDetailExt] c
+                ON CONVERT(VARCHAR, a.accountid) = c.accountid
+                LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[UserDetail] d
+                ON CONVERT(VARCHAR, a.accountid) = d.accountid
+                """
+
+        cursor.execute(query)
+        result = cursor.fetchall()
+        
+        resultDict = []
+        
+        columnnName = [desc[0] for desc in cursor.description]
+
+
+        for row in list(result):
+            rowDict = {}
+            for i, col_name in enumerate(columnnName):
+                rowDict[col_name] = str(row[i])
+            
+            resultDict.append(rowDict)
+            
+        await closeConn(cursor, conn_ng999)
+        
+        return JSONResponse(content=resultDict, status_code=200)
+        
+    except Exception as e:
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content=[], status_code=400)
+        
+        
     
 async def getSqlCONN():
     return MySQLdb.connect('192.168.138.213', 'NG999', 'l]tb8/Eog2q[X5rC', 'NG999') 
+
+
+async def getMSSQLConn():
+    return pymssql.connect(server='192.168.138.120', user='GuestReadOnly', password='GuestReadOnly', database='Online_WS_CallBilling')
 
 async def closeConnRollback(cursor=None, conn_ng999=None):
     try:
