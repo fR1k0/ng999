@@ -662,9 +662,6 @@ def downloadExcel():
         rowData = ["CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
         sheet.append(rowData)
         
-        url = app.config['API_URL'] + '/ng999/customer/getWholeSalerCust'
-        payload = {'wholeSalerID': session['billingWholeSalerID']}
-        
         
         # for column_cells in sheet.columns:
         #     length = max(len(str(cell.value)) for cell in column_cells)
