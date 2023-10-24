@@ -69,7 +69,7 @@ def login():
         if session is not None and 'reset_password_in_progress' in session and session['reset_password_in_progress'] == '1':
             try:
                 password = request.form.get('passConfirmed')
-                payload = {'user_id': session['user_id'], 'newPassword': password}
+                payload = {'user_id': session['user_id'], 'newPassword': password, 'email': session['username']}
             
                 url = app.config['API_URL'] + '/ng999/admin/resetPassword'
                 response = requests.post(url, json=payload)
@@ -109,6 +109,7 @@ def login():
                     if body['role'] == '2' and body['isFirst'] == True:
                         session['reset_password_in_progress'] = '1'
                         session['user_id'] = body['user_id']
+                        session['username'] = body['username']
                         return render_template("resetPassword.html", userID=body['user_id'], logonImg=base64Img)
 
                     else:
@@ -476,7 +477,7 @@ def adminResetPass():
         password = request.form.get('confirmNewPass')
         accountID = request.form.get('accountID')
         
-        payload = {'user_id': accountID, 'newPassword': password}
+        payload = {'user_id': accountID, 'newPassword': password, 'email': session['username']}
     
         url = app.config['API_URL'] + '/ng999/admin/resetPassword'
         response = requests.post(url, json=payload)

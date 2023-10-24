@@ -14,6 +14,9 @@ import MySQLdb
 import traceback
 import re
 import pymssql
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 
@@ -26,6 +29,15 @@ class Company(BaseModel):
    Company_ID: int | None = None
    Company_Name: str
    Company_Date_Created: date
+   
+class mailSetting():
+    port = 587
+    smtp_server = "mail.redtone.com"
+    sender_email = "frim@biz.redtone.com"
+    password = '6elk@hkU'
+    theme = "NG999 Notification"
+    sender = "noreply@ng999.redtone.com"
+    cc = "yungsheng.ho@redtone.com"
 
 # Route to create an item
 # @app.post("/ng999/company/add",response_model=Company)
@@ -179,7 +191,9 @@ async def add_ng999_company_data(request: Request):
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
+            
             await closeConn(cursor, conn_ng999)
+            await sendEmail(body['email'], password, '1')
             return JSONResponse(content={}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
@@ -216,7 +230,10 @@ async def resetPassword(request:Request):
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
+            
             await closeConn(cursor, conn_ng999)
+            await sendEmail(body['email'], password, '0')
+            
             return JSONResponse(content={}, status_code=200)
             
         await closeConn(cursor, conn_ng999)
@@ -226,9 +243,74 @@ async def resetPassword(request:Request):
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=400)
-        
-        
     
+async def sendEmail(to, password, isCreate):
+    server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
+    
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = mailSetting.sender
+        msg['To'] = to
+        msg['Cc'] = mailSetting.cc
+        
+        content = await generateEmailContent(to, password, isCreate)
+        
+        msg['Subject'] = content[0]
+        msg.attach(MIMEText(content[1], 'html'))
+
+        server.starttls()
+        server.login(mailSetting.sender_email, mailSetting.password)
+        server.sendmail(mailSetting.sender_email, [mailSetting.to, mailSetting.cc], msg.as_string())
+        server.quit()
+        
+        
+    except Exception as e:
+        try:
+            server.quit()
+        except Exception as ex:
+            print(ex, flush=True)
+            pass
+        print(e, flush=True)
+        pass
+        
+
+async def generateEmailContent(email, newPassword, isCreate):
+    try:
+        email_subject = "NG999 System Password Reset Notification"
+
+        email_template = """
+        <html>
+        <head></head>
+        <body>
+            <p>Hello,</p>
+            <p>{mode}</p>
+            <ul>
+                <li><strong>Username:</strong> {username}</li>
+                <li><strong>New Password:</strong> {pwd}</li>
+            </ul>
+            <p>Make sure to keep your login details secure. If you did not request this password reset, please contact our support team immediately.</p>
+            <p>Thank you for using our service.</p>
+            <p>Sincerely,</p>
+            <p>Your Support Team</p>
+            <p>Thank You,</p><p>Regards.</p>
+        </body>
+        </html>
+        """
+        
+        modeTitle = 'Your password has been reset. Here are your new login details:'
+        
+        if isCreate == '1':
+            modeTitle = 'Your account has been created successfully. Here are your default login details:'
+            
+        email_content = email_template.format(pwd=newPassword, mode=modeTitle, username=email)
+
+        return email_subject, email_content
+        
+    except Exception as e:
+        print(e)
+
+
+
 @app.post("/ng999/logon")
 async def ng999_logon(request:Request):
     try:
