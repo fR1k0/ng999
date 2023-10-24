@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, Depends, HTTPException, Request
+from httpx import AsyncClient
 import uvicorn
 from typing import Any, Dict, AnyStr, List, Union,Annotated
 from fastapi.responses import JSONResponse
@@ -24,45 +25,15 @@ app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 data = []
 
-
-class Company(BaseModel):
-   Company_ID: int | None = None
-   Company_Name: str
-   Company_Date_Created: date
-   
 class mailSetting():
     port = 587
     smtp_server = "mail.redtone.com"
     sender_email = "frim@biz.redtone.com"
     password = '6elk@hkU'
-    theme = "NG999 Notification"
+    theme = "NG999 System Notification"
     sender = "noreply@ng999.redtone.com"
     cc = "yungsheng.ho@redtone.com"
 
-# Route to create an item
-# @app.post("/ng999/company/add",response_model=Company)
-# def add_ng999_company_data(company: Company):
-# 	#return company.Company_ID
-#     try:
-#         cursor = conn_ng999.cursor()
-#         conn_ng999.begin()
-        
-#         query = "insert into Company (Company_Name,Company_Date_Created) values (%s,%s)"
-        
-#         cursor.execute(query, (company.Company_Name,company.Company_Date_Created,))
-#         conn_ng999.commit()
-        
-#         company.Company_ID = cursor.lastrowid
-#         if cursor: cursor.close()
-        
-#         return company
-    
-#     except Exception as e:
-#         print(e, flush=True)
-#         conn_ng999.rollback()
-#         if cursor: cursor.close()
-        
-#         return JSONResponse(content={}, status_code=400)
     
 def generate_password(length=12) -> str:
     characters = string.ascii_letters + string.digits + string.punctuation
@@ -245,38 +216,49 @@ async def resetPassword(request:Request):
         return JSONResponse(content={}, status_code=400)
     
 async def sendEmail(to, password, isCreate):
-    server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
-    
     try:
-        msg = MIMEMultipart()
-        msg['From'] = mailSetting.sender
-        msg['To'] = to
-        msg['Cc'] = mailSetting.cc
-        
         content = await generateEmailContent(to, password, isCreate)
+        url = "https://apis.redtone.com:9999/email/add"
+        payload = {
+                    "id": 0,
+                    "to_list": to,
+                    "cc": "",
+                    "bcc": "yungsheng.ho@redtone.com",
+                    "subject": content[0],
+                    "body": content[1],
+                    "url": "",
+                    "url_title": "",
+                    "ishtml": 1,
+                    "template": 1
+                    }
         
-        msg['Subject'] = content[0]
-        msg.attach(MIMEText(content[1], 'html'))
+        async with AsyncClient() as client:
+            response = await client.post(url, json=payload)
+            
+        # server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
+        # msg = MIMEMultipart()
+        # msg['From'] = mailSetting.sender
+        # msg['To'] = to
+        # msg['Cc'] = mailSetting.cc
+        
+        # content = await generateEmailContent(to, password, isCreate)
+        
+        # msg['Subject'] = content[0]
+        # msg.attach(MIMEText(content[1], 'html'))
 
-        server.starttls()
-        server.login(mailSetting.sender_email, mailSetting.password)
-        server.sendmail(mailSetting.sender_email, [mailSetting.to, mailSetting.cc], msg.as_string())
-        server.quit()
-        
+        # server.starttls()
+        # server.login(mailSetting.sender_email, mailSetting.password)
+        # server.sendmail(mailSetting.sender_email, [mailSetting.to, mailSetting.cc], msg.as_string())
+        # server.quit()
         
     except Exception as e:
-        try:
-            server.quit()
-        except Exception as ex:
-            print(ex, flush=True)
-            pass
         print(e, flush=True)
         pass
         
 
 async def generateEmailContent(email, newPassword, isCreate):
     try:
-        email_subject = "NG999 System Password Reset Notification"
+        email_subject = "NG999 System Notification"
 
         email_template = """
         <html>
@@ -307,7 +289,7 @@ async def generateEmailContent(email, newPassword, isCreate):
         return email_subject, email_content
         
     except Exception as e:
-        print(e)
+        print(e, flush=True)
 
 
 
