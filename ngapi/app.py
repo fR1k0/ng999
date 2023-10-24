@@ -217,10 +217,10 @@ async def resetPassword(request:Request):
     
 async def sendEmail(to, password, isCreate):
     try:
+        
         content = await generateEmailContent(to, password, isCreate)
         url = "https://apis.redtone.com:9999/email/add"
         payload = {
-                    "id": 0,
                     "to_list": to,
                     "cc": "",
                     "bcc": "yungsheng.ho@redtone.com",
@@ -234,6 +234,10 @@ async def sendEmail(to, password, isCreate):
         
         async with AsyncClient() as client:
             response = await client.post(url, json=payload)
+            
+            if response.status_code == 200:
+                url = "https://apis.redtone.com:9999/email/send"
+                response = await client.get(url)
             
         # server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
         # msg = MIMEMultipart()
@@ -253,9 +257,7 @@ async def sendEmail(to, password, isCreate):
         
     except Exception as e:
         print(e, flush=True)
-        pass
         
-
 async def generateEmailContent(email, newPassword, isCreate):
     try:
         email_subject = "NG999 System Notification"
