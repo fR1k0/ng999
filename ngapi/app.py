@@ -239,7 +239,7 @@ async def ng999_logon(request:Request):
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
-        query = "select account_password, account_role, account_email, account_id, account_name, isFirst, isActive, Account.Company_ID, Company.wholeSalerID from Account left join Company on Account.Company_ID = Company.Company_ID where account_email = %s"
+        query = "select account_password, account_role, account_email, account_id, account_name, isFirst, isActive, Account.Company_ID, Company.wholeSalerID, Company.Company_Name from Account left join Company on Account.Company_ID = Company.Company_ID where account_email = %s"
         
         values = (body['username'],)
         cursor.execute(query, values)
@@ -251,12 +251,14 @@ async def ng999_logon(request:Request):
                     await closeConn(cursor, conn_ng999)
                     compID = ""
                     wholeSalerID = ""
+                    cName = ""
                     
                     if list(result)[1] == '2':
                         compID = list(result)[7]
                         wholeSalerID = list(result)[8]
+                        cName = list(result)[9]
                         
-                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': compID, 'wID': wholeSalerID}, status_code=200)
+                    return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': compID, 'wID': wholeSalerID, 'cName': cName}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content={'Message': "Incorrect Password"}, status_code=400)
@@ -905,48 +907,56 @@ async def updateAccInfo(request:Request):
 @app.post("/ng999/customer/getWholeSalerCust")
 async def getWholeSalerFromBilling(request:Request):
     try:
+        resultDict = []
         body = await request.json()
         
         conn_ng999 = await getMSSQLConn()
         cursor = conn_ng999.cursor()
         
         query = """
-                SELECT a.WholeSaleID ,b.Name,
-                b.CustID, b.Telephone
-                ,CASE a.[status]
-                WHEN 1 THEN 'Active'
-                WHEN 0 THEN 'Suspended'
-                WHEN 2 THEN 'Locked'
-                END AS status2
-                FROM [dbo].[Account_MasterData] a
-                LEFT JOIN [dbo].[Customer] b
+            SELECT
+            a.AccountID as 'CustID', b.Name as 'Name', b.Address as 'Address', b.Address1 as 'Address1', b.Address2  as 'Address2', b.Address3  as 'Address3', e.callerid as 'CallerNo'
+            FROM [dbo].[Account_MasterData] a
+            LEFT JOIN [dbo].[Customer] b
                 ON a.accountid = b.custid
-                LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[UserDetailExt] c
+            LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[UserDetailExt] c
                 ON CONVERT(VARCHAR, a.accountid) = c.accountid
-                LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[UserDetail] d
+            LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[UserDetail] d
                 ON CONVERT(VARCHAR, a.accountid) = d.accountid
+
+            LEFT JOIN [NewIddGateway].[NewIddGateway].[dbo].[Authentication] e
+                on convert(varchar, a.accountid) = e.accountid
+
+            WHERE[WholeSaleID] = %s and e.CallerID NOT IN (SELECT
+                CallerID
+                FROM [NewIddGateway].[NewIddGateway].dbo.[Authentication] c
+                INNER JOIN [NewIddGateway].[NewIddGateway].dbo.BB_Authentication d
+                ON c.CallerID = d.bb_RT015 where c.callerID = convert(varchar, a.AccountID))
+                
                 """
 
-        cursor.execute(query)
+        values = (body['wholeSalerID'],)
+        cursor.execute(query, values)
         result = cursor.fetchall()
-        
-        resultDict = []
-        
+                
         columnnName = [desc[0] for desc in cursor.description]
-
 
         for row in list(result):
             rowDict = {}
             for i, col_name in enumerate(columnnName):
-                rowDict[col_name] = str(row[i])
+                if row[i] == None:
+                    rowDict[col_name] = ""
+                else:
+                    rowDict[col_name] = str(row[i])
             
             resultDict.append(rowDict)
             
+       
         await closeConn(cursor, conn_ng999)
-        
         return JSONResponse(content=resultDict, status_code=200)
         
     except Exception as e:
+        print(e, flush=True)
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content=[], status_code=400)
         
@@ -955,9 +965,9 @@ async def getWholeSalerFromBilling(request:Request):
 async def getSqlCONN():
     return MySQLdb.connect('192.168.138.213', 'NG999', 'l]tb8/Eog2q[X5rC', 'NG999') 
 
-
 async def getMSSQLConn():
     return pymssql.connect(server='192.168.138.120', user='GuestReadOnly', password='GuestReadOnly', database='Online_WS_CallBilling')
+
 
 async def closeConnRollback(cursor=None, conn_ng999=None):
     try:

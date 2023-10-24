@@ -523,8 +523,8 @@
                     const url = window.URL.createObjectURL(blob);
                     const temp = document.createElement('a');
                     temp.href = url;
-
-                    temp.download = 'Migration Template.xlsx';
+                    let companyName = "{{session['companyName']}}"
+                    temp.download = 'Migration Template for ' + companyName +   '.xlsx';
                     document.body.appendChild(temp);
                     temp.click();
                     window.URL.revokeObjectURL(url);

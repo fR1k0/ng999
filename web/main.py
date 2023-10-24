@@ -125,6 +125,9 @@ def login():
                             session['compID'] = body['compID']
                             session['billingWholeSalerID'] = body['wID']
                             
+                            session['companyName'] = body['cName'].lstrip()
+                            session['companyName'] = session['companyName'].rstrip()
+                            
                             
                         # print(session, flush=True)
                         
@@ -644,23 +647,33 @@ def bundleDecalarePost():
 def downloadExcel():
     try:
         
-        if session['roleid'] != '2':
+        if session['role_id'] != '2':
             return jsonify({}), 400
-        
         
         resultList = []
         
         url = app.config['API_URL'] + '/ng999/customer/getWholeSalerCust'
         payload = {'wholeSalerID': session['billingWholeSalerID']}
+        # print(payload, flush=True)
         
+        response = requests.post(url, json=payload)
+
+        if response.status_code == 200:
+            # print(response.json(), flush=True)
+            resultList = response.json()
         
         workbook = Workbook()
         
         sheet = workbook.active
         sheet.title = "Migration Template"
         
-        rowData = ["CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
-        sheet.append(rowData)
+        header = ["CustID", "Name", "Address", "Address1", "Address2", "Address3", "CallerNo"]
+        sheet.append(header)
+        
+        
+        for data in resultList:
+            rowData = [data.get(column_name, "") for column_name in header]
+            sheet.append(rowData)
         
         
         # for column_cells in sheet.columns:

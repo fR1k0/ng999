@@ -17,7 +17,11 @@ RUN apt-get update && apt-get install -y \
     libmariadb-dev \
     cron \
     python3-pip \
-    gunicorn
+    gunicorn \
+    unixodbc \
+    unixodbc-dev \
+    freetds-dev
+
 
 RUN pip install --upgrade pip
 RUN pip install gunicorn
