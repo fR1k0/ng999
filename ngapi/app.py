@@ -17,6 +17,7 @@ import re
 import pymssql
 import smtplib
 import time
+import random
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -338,7 +339,7 @@ async def ng999_logon(request:Request):
                     return JSONResponse(content={'user_id': list(result)[3], 'username': list(result)[2], 'role': list(result)[1], 'accountName': list(result)[4], 'isFirst': list(result)[5], 'isActive': list(result)[6], 'compID': compID, 'wID': wholeSalerID, 'cName': cName}, status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'Message': "Incorrect Password"}, status_code=400)
+        return JSONResponse(content={'Message': "Incorrect Credentials"}, status_code=400)
                 
     except Exception as e:
         print(e, flush=True)
@@ -1036,9 +1037,117 @@ async def getWholeSalerFromBilling(request:Request):
         print(e, flush=True)
         await closeConn(cursor, conn_ng999)
         return JSONResponse(content=[], status_code=400)
-        
-        
     
+@app.post("/ng999/admin/forgetPassword")
+async def forgetPassword(request:Request):
+    try:
+        body = await request.json()
+        conn_ng999 = await getSqlCONN()
+
+        conn_ng999.begin()
+        cursor = conn_ng999.cursor()
+        
+        if not await checkEmail(body['email']):
+            await closeConn(cursor, conn_ng999)
+            
+            return JSONResponse(content=[], status_code=400)
+        
+        verificationCode = random.randint(100000, 999999)
+        
+        query = """
+        insert into VerificationCode (code) VALUES (%s);
+        
+        """
+        
+        values = (verificationCode, )
+        cursor.execute(query, values)
+        id = cursor.lastrowid
+        
+        if cursor.rowcount > 0:
+            conn_ng999.commit()
+            
+            await closeConn(cursor, conn_ng999)
+            return JSONResponse(content={'id': id}, status_code=200)
+        
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content=[], status_code=400)
+            
+    except Exception as e:
+        print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
+        return JSONResponse(content=[], status_code=400)
+    
+
+@app.post("/ng999/admin/forgetPasswordReset")
+async def forgetPasswordReset(request:Request):
+    try:
+        password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+        
+        body = await request.json()
+        conn_ng999 = await getSqlCONN()
+
+        conn_ng999.begin()
+        cursor = conn_ng999.cursor()
+        
+        if not await checkVerificationCode(body['id'], body['code']):
+            return JSONResponse(content={'message': 'Unmatched verification code'}, status_code=400)
+        
+        password = body['password']
+        
+        hashPassword = password_context.hash(password)
+        
+        query = """
+        
+        update Account set Account_Password = %s where Account_Email = %s
+        
+        """
+        
+        values = (hashPassword, body['email'])
+        cursor.execute(query, values)
+        
+        if cursor.rowcount > 0:
+            conn_ng999.commit()
+            await closeConn(cursor, conn_ng999)
+            return JSONResponse(content=[], status_code=200)
+        
+        await closeConn(cursor, conn_ng999)
+        return JSONResponse(content={'message': 'No update'}, status_code=400)
+        
+    except Exception as e:
+        print(e, flush=True)
+        await closeConnRollback(cursor, conn_ng999)
+        return JSONResponse(content={'message': str(e)}, status_code=400)
+    
+
+async def checkVerificationCode(id, code) -> bool:
+    try:
+        conn_ng999 = await getSqlCONN()
+
+        conn_ng999.begin()
+        cursor = conn_ng999.cursor()
+        
+        query = """
+
+        select * from VerificationCode where id = %s and code = %s and TIMESTAMPDIFF(SECOND, CreatedDateTime, NOW()) <= 40000;
+        
+        """
+        values = (id, code)
+        cursor.execute(query, values)
+        result = cursor.fetchone()
+
+        if result is not None and len(list(result)) > 0:
+            await closeConn(cursor, conn_ng999)
+            return True
+
+        await closeConn(cursor, conn_ng999)
+        return False
+        
+    except Exception as e:
+        print(e, flush=True)
+        await closeConn(cursor, conn_ng999)
+        return False
+        
+        
 async def getSqlCONN():
     return MySQLdb.connect('192.168.138.213', 'NG999', 'l]tb8/Eog2q[X5rC', 'NG999') 
 

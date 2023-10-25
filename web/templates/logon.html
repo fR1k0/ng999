@@ -75,6 +75,20 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        .forgot-password-button {
+            background-color: #007bff; /* Blue background color */
+            color: #fff; /* White text color */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    
+        .forgot-password-button:hover {
+            background-color: #0056b3; /* Darker blue color on hover */
+        }
     </style>
 </head>
 <body>
@@ -90,11 +104,10 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" style="font-size: 12px;">
+            <input type="button" class="forgot-password-button" value="Forgot Password" onclick="window.location.href='/NG999/forgetPassword';">
         </form>
-        <div class="error-message">
-            <!-- Display login error message here, if any -->
-        </div>
+        
     </div>
 </body>
 </html>
