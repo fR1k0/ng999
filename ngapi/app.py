@@ -238,17 +238,14 @@ async def sendEmail(to, password, isCreate):
         
         async with AsyncClient() as client:
             response = await client.post(url, json=payload)
-            
-            # print(response.json(), flush=True)
             while response.status_code != 200:
                 response = await client.post(url, json=payload)
                 
             if response.status_code == 200:
                 # url = "http://172.31.0.1:8888/email/send"
-                
                 url = "https://apis.redtone.com:9999/email/send"
-                responseSend = await client.get(url)
                 
+                responseSend = await client.get(url)
                 while responseSend.status_code != 200:
                     responseSend = await client.get(url)
                     
