@@ -16,6 +16,7 @@ import traceback
 import re
 import pymssql
 import smtplib
+import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -239,13 +240,19 @@ async def sendEmail(to, password, isCreate):
             response = await client.post(url, json=payload)
             
             # print(response.json(), flush=True)
-            
+            while response.status_code != 200:
+                response = await client.post(url, json=payload)
+                
             if response.status_code == 200:
                 # url = "http://172.31.0.1:8888/email/send"
+                
                 url = "https://apis.redtone.com:9999/email/send"
-                response = await client.get(url)
+                responseSend = await client.get(url)
+                
+                while responseSend.status_code != 200:
+                    responseSend = await client.get(url)
+                    
                 # print(response, flush=True)
-            
         # server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
         # msg = MIMEMultipart()
         # msg['From'] = mailSetting.sender
