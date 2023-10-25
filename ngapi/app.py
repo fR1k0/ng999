@@ -217,8 +217,11 @@ async def resetPassword(request:Request):
     
 async def sendEmail(to, password, isCreate):
     try:
-        
         content = await generateEmailContent(to, password, isCreate)
+        # print(content, flush=True)
+        # print(to, flush=True)
+        
+        # url = "http://172.31.0.1:8888/email/add"
         url = "https://apis.redtone.com:9999/email/add"
         payload = {
                     "to_list": to,
@@ -235,9 +238,13 @@ async def sendEmail(to, password, isCreate):
         async with AsyncClient() as client:
             response = await client.post(url, json=payload)
             
+            # print(response.json(), flush=True)
+            
             if response.status_code == 200:
+                # url = "http://172.31.0.1:8888/email/send"
                 url = "https://apis.redtone.com:9999/email/send"
                 response = await client.get(url)
+                # print(response, flush=True)
             
         # server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
         # msg = MIMEMultipart()
@@ -254,7 +261,6 @@ async def sendEmail(to, password, isCreate):
         # server.login(mailSetting.sender_email, mailSetting.password)
         # server.sendmail(mailSetting.sender_email, [mailSetting.to, mailSetting.cc], msg.as_string())
         # server.quit()
-        
     except Exception as e:
         print(e, flush=True)
         
@@ -266,7 +272,7 @@ async def generateEmailContent(email, newPassword, isCreate):
         <html>
         <head></head>
         <body>
-            <p>Hello,</p>
+            <p>Hi,</p>
             <p>{mode}</p>
             <ul>
                 <li><strong>Username:</strong> {username}</li>
@@ -276,7 +282,6 @@ async def generateEmailContent(email, newPassword, isCreate):
             <p>Thank you for using our service.</p>
             <p>Sincerely,</p>
             <p>Your Support Team</p>
-            <p>Thank You,</p><p>Regards.</p>
         </body>
         </html>
         """
