@@ -278,7 +278,7 @@ async def generateEmailContent(email, newPassword, isCreate):
                 <li><strong>Username:</strong> {username}</li>
                 <li><strong>New Password:</strong> {pwd}</li>
             </ul>
-            <p>Make sure to keep your login details secure. If you did not request this password reset, please contact our support team immediately.</p>
+            <p>Make sure to keep your login details secure.{isReset}</p>
             <p>Thank you for using our service.</p>
             <p>Sincerely,</p>
             <p>Your Support Team</p>
@@ -287,11 +287,13 @@ async def generateEmailContent(email, newPassword, isCreate):
         """
         
         modeTitle = 'Your password has been reset. Here are your new login details:'
+        resetBody = ' If you did not request this password reset, please contact our support team immediately.'
         
         if isCreate == '1':
             modeTitle = 'Your account has been created successfully. Here are your default login details:'
+            resetBody = ""
             
-        email_content = email_template.format(pwd=newPassword, mode=modeTitle, username=email)
+        email_content = email_template.format(pwd=newPassword, mode=modeTitle, username=email, isReset=resetBody)
 
         return email_subject, email_content
         
