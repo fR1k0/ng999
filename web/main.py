@@ -83,7 +83,7 @@ def login():
                     return redirect(url_for('login'))
                 
                 session.clear()
-                flash("Failed to reset password")
+                flash(response.json()['message'])
                 return redirect(url_for('login'))
             
             except Exception as e:
@@ -550,7 +550,7 @@ def adminResetPass():
             flash("Successfully reset password")
             return redirect(url_for("accountList"))
         
-        flash("Failed to reset password")
+        flash(response.json()['message'])
         return redirect(url_for("accountList"))
 
         

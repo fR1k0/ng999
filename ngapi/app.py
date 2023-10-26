@@ -189,6 +189,10 @@ async def resetPassword(request:Request):
         
         password = body['newPassword']
         
+        if await verifyPassword(None, password, body['user_id']):
+            await closeConn(cursor, conn_ng999)
+            return JSONResponse(content={'message': 'New password cannot be the same as the old password'}, status_code=400)
+            
         hashPassword = password_context.hash(password)
         
         query = """
@@ -210,12 +214,12 @@ async def resetPassword(request:Request):
             return JSONResponse(content={}, status_code=200)
             
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=400)
+        return JSONResponse(content={'message': 'Unsuccessful password reset'}, status_code=400)
         
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
-        return JSONResponse(content={}, status_code=400)
+        return JSONResponse(content={'message': str(e)}, status_code=400)
     
 async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
     try:
@@ -1148,18 +1152,28 @@ async def forgetPasswordReset(request:Request):
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={'message': str(e)}, status_code=400)
     
-async def verifyPassword(email, newPass):
+async def verifyPassword(email, newPass, id=None):
     password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     try:
         conn_ng999 = await getSqlCONN()
         cursor = conn_ng999.cursor()
         
-        query = """
-        
-        select Account_Password from Account where Account_Email = %s
-        
-        """
-        values = (email,)
+        if id is None:
+            
+            query = """
+            
+            select Account_Password from Account where Account_Email = %s
+            
+            """
+            values = (email,)
+        else:
+            query = """
+            
+            select Account_Password from Account where Account_ID = %s
+            
+            """
+            values = (id,)
+            
         cursor.execute(query, values)
         result = cursor.fetchone()
         await closeConn(cursor, conn_ng999)
