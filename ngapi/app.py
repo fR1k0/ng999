@@ -5,7 +5,7 @@ from typing import Any, Dict, AnyStr, List, Union,Annotated
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 from pydantic import BaseModel
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pydantic import BaseModel
 import bcrypt
 from passlib.context import CryptContext
@@ -217,14 +217,15 @@ async def resetPassword(request:Request):
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={}, status_code=400)
     
-async def sendEmail(to, password, isCreate):
+async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
     try:
-        content = await generateEmailContent(to, password, isCreate)
+        content = await generateEmailContent(to, password, isCreate, code, generatedTime)
         # print(content, flush=True)
         # print(to, flush=True)
         
-        # url = "http://172.31.0.1:8888/email/add"
+        # url = "http://172.18.0.1:8888/email/add"
         url = "https://apis.redtone.com:9999/email/add"
+        
         payload = {
                     "to_list": to,
                     "cc": "",
@@ -239,16 +240,17 @@ async def sendEmail(to, password, isCreate):
         
         async with AsyncClient() as client:
             response = await client.post(url, json=payload)
-            while response.status_code != 200:
-                response = await client.post(url, json=payload)
+            # while response.status_code != 200:
+            #     response = await client.post(url, json=payload)
                 
             if response.status_code == 200:
-                # url = "http://172.31.0.1:8888/email/send"
+                # url = "http://172.18.0.1:8888/email/send"
                 url = "https://apis.redtone.com:9999/email/send"
                 
                 responseSend = await client.get(url)
-                while responseSend.status_code != 200:
-                    responseSend = await client.get(url)
+                # print(responseSend, flush=True)
+                # while responseSend.status_code != 200:
+                #     responseSend = await client.get(url)
                     
                 # print(response, flush=True)
         # server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
@@ -269,37 +271,60 @@ async def sendEmail(to, password, isCreate):
     except Exception as e:
         print(e, flush=True)
         
-async def generateEmailContent(email, newPassword, isCreate):
+async def generateEmailContent(email, newPassword, isCreate, code=None, generatedTime=None):
     try:
         email_subject = "NG999 System Notification"
 
-        email_template = """
-        <html>
-        <head></head>
-        <body>
-            <p>Hi,</p>
-            <p>{mode}</p>
-            <ul>
-                <li><strong>Username:</strong> {username}</li>
-                <li><strong>New Password:</strong> {pwd}</li>
-            </ul>
-            <p>Make sure to keep your login details secure.{isReset}</p>
-            <p>Thank you for using our service.</p>
-            <p>Sincerely,</p>
-            <p>Your Support Team</p>
-        </body>
-        </html>
-        """
-        
-        modeTitle = 'Your password has been reset. Here are your new login details:'
-        resetBody = ' If you did not request this password reset, please contact our support team immediately.'
-        
-        if isCreate == '1':
-            modeTitle = 'Your account has been created successfully. Here are your default login details:'
-            resetBody = ""
+        if code is None and generatedTime is None:
+            email_template = """
+            <html>
+            <head></head>
+            <body>
+                <p>Hi,</p>
+                <p>{mode}</p>
+                <ul>
+                    <li><strong>Username:</strong> {username}</li>
+                    <li><strong>New Password:</strong> {pwd}</li>
+                </ul>
+                <p>Make sure to keep your login details secure.{isReset}</p>
+                <p>Thank you for using our service.</p>
+                <p>Sincerely,</p>
+                <p>Your Support Team</p>
+            </body>
+            </html>
+            """
             
-        email_content = email_template.format(pwd=newPassword, mode=modeTitle, username=email, isReset=resetBody)
-
+            modeTitle = 'Your password has been reset. Here are your new login details:'
+            resetBody = ' If you did not request this password reset, please contact our support team immediately.'
+            
+            if isCreate == '1':
+                modeTitle = 'Your account has been created successfully. Here are your default login details:'
+                resetBody = ""
+                
+            email_content = email_template.format(pwd=newPassword, mode=modeTitle, username=email, isReset=resetBody)
+        else:
+            email_template = """
+            <html>
+            <head></head>
+            <body>
+                <p>Hi,</p>
+                <p>{mode}</p>
+                <ul>
+                    <li><strong>Code:</strong> {cd}</li>
+                    <li><strong>Code Expiry Date Time:</strong> {dt}</li>
+                </ul>
+                <p>Kindly don't share this code with anyone else</p>
+                <p>Thank you for using our service.</p>
+                <p>Sincerely,</p>
+                <p>Your Support Team</p>
+            </body>
+            </html>
+            """
+            
+            modeTitle = 'Your verification code:'        
+            email_content = email_template.format(mode=modeTitle, cd=code, dt=generatedTime)
+            
+            
         return email_subject, email_content
         
     except Exception as e:
@@ -1053,19 +1078,20 @@ async def forgetPassword(request:Request):
             return JSONResponse(content=[], status_code=400)
         
         verificationCode = random.randint(100000, 999999)
+        generatedTime = datetime.now()
         
         query = """
-        insert into VerificationCode (code) VALUES (%s);
+        insert into VerificationCode (code, CreatedDateTime) VALUES (%s, %s);
         
         """
         
-        values = (verificationCode, )
+        values = (verificationCode, generatedTime)
         cursor.execute(query, values)
         id = cursor.lastrowid
         
         if cursor.rowcount > 0:
             conn_ng999.commit()
-            
+            await sendEmail(body['email'], None, '2', verificationCode, (generatedTime + timedelta(minutes=5)).strftime("%d/%m/%Y %H:%M:%S"))
             await closeConn(cursor, conn_ng999)
             return JSONResponse(content={'id': id}, status_code=200)
         
@@ -1128,7 +1154,7 @@ async def checkVerificationCode(id, code) -> bool:
         
         query = """
 
-        select * from VerificationCode where id = %s and code = %s and TIMESTAMPDIFF(SECOND, CreatedDateTime, NOW()) <= 40000;
+        select * from VerificationCode where id = %s and code = %s and TIMESTAMPDIFF(SECOND, CreatedDateTime, NOW()) <= 300;
         
         """
         values = (id, code)
