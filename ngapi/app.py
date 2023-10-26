@@ -1155,7 +1155,7 @@ async def forgetPasswordReset(request:Request):
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={'message': str(e)}, status_code=400)
     
-async def verifyPassword(email, newPass, id=None):
+async def verifyPassword(email, newPass, id=None) -> bool:
     password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     try:
         conn_ng999 = await getSqlCONN()
