@@ -175,7 +175,7 @@ def forgetPasswordPost():
             session.clear
             return redirect(url_for('login'))
         
-        flash("Unsuccessful password reset")
+        flash(response.json()['message'])
         return redirect(url_for('logout'))
         
     except Exception as e:

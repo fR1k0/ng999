@@ -1120,6 +1120,10 @@ async def forgetPasswordReset(request:Request):
         
         password = body['password']
         
+        if await verifyPassword(body['email'], password):
+            await closeConn(cursor, conn_ng999)
+            return JSONResponse(content={'message': 'New password cannot be the same as the old password'}, status_code=400)
+        
         hashPassword = password_context.hash(password)
         
         query = """
@@ -1137,12 +1141,39 @@ async def forgetPasswordReset(request:Request):
             return JSONResponse(content=[], status_code=200)
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'message': 'No update'}, status_code=400)
+        return JSONResponse(content={'message': 'Unsuccessful password reset'}, status_code=400)
         
     except Exception as e:
         print(e, flush=True)
         await closeConnRollback(cursor, conn_ng999)
         return JSONResponse(content={'message': str(e)}, status_code=400)
+    
+async def verifyPassword(email, newPass):
+    password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    try:
+        conn_ng999 = await getSqlCONN()
+        cursor = conn_ng999.cursor()
+        
+        query = """
+        
+        select Account_Password from Account where Account_Email = %s
+        
+        """
+        values = (email,)
+        cursor.execute(query, values)
+        result = cursor.fetchone()
+        await closeConn(cursor, conn_ng999)
+        
+        if result is not None and len(list(result)) > 0:
+            if password_context.verify(newPass, list(result)[0]):
+                await closeConn(cursor, conn_ng999)
+                return True
+            return False   
+        return False         
+    
+    except Exception as e:
+        print(e, flush=True)
+        return True
     
 
 async def checkVerificationCode(id, code) -> bool:
