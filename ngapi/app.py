@@ -1144,6 +1144,7 @@ async def forgetPasswordReset(request:Request):
         if cursor.rowcount > 0:
             conn_ng999.commit()
             await closeConn(cursor, conn_ng999)
+            await sendEmail(body['email'], password, '0')
             return JSONResponse(content=[], status_code=200)
         
         await closeConn(cursor, conn_ng999)
