@@ -228,6 +228,7 @@ async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
         # print(to, flush=True)
         
         url = "http://10.80.10.28:8888/email/add"
+        # url = "http://172.18.0.1:8888/email/add"
         # url = "https://apis.redtone.com:9999/email/add"
         
         payload = {
@@ -247,14 +248,15 @@ async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
             # while response.status_code != 200:
             #     response = await client.post(url, json=payload)
             
-            # print(response.status_code, flush=True)
+            print(response.status_code, flush=True)
                 
             if response.status_code == 200:
                 url = "http://10.80.10.28:8888/email/send"
+                # url = "http://172.18.0.1:8888/email/send"
                 # url = "https://apis.redtone.com:9999/email/send"
                 
                 responseSend = await client.get(url)
-                # print(responseSend, flush=True)
+                print(responseSend, flush=True)
                 # while responseSend.status_code != 200:
                 #     responseSend = await client.get(url)
                     
