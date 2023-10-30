@@ -1198,7 +1198,6 @@ async def getSqlCONN():
 async def getMSSQLConn():
     return pymssql.connect(server='192.168.138.120', user='GuestReadOnly', password='GuestReadOnly', database='Online_WS_CallBilling')
 
-
 async def closeConnRollback(cursor=None, conn_ng999=None):
     try:
         conn_ng999.rollback()
@@ -1225,7 +1224,7 @@ async def getEmailServer():
     
     return server
 
-def render_template(template, **kwargs):
+async def render_template(template, **kwargs):
     if not os.path.exists(template):
         print('No template file present: %s' % template)
         return None
@@ -1238,20 +1237,24 @@ def render_template(template, **kwargs):
     return templ.render(**kwargs)
 
 async def sendEmailBody(server, payload):
-    html = render_template("templates/email.html", **locals())
-    
-    if html is None:
-        return
-    
-    msg = MIMEMultipart('alternative')
-    msg['From']    = payload['sender']
-    msg['Subject'] = payload['subject']
-    msg['To']      = payload['to']
-    msg['Cc']      = ""
-    msg['Bcc']     = 'yungsheng.ho@redtone.com'
-    msg.attach(MIMEText(html, 'html'))
-    
-    server.sendmail(payload['sender'], payload['to'], msg.as_string())
+    try:
+        html = await render_template("templates/email.html", **locals())
+        
+        if html is None:
+            return
+        
+        msg = MIMEMultipart('alternative')
+        msg['From']    = payload['sender']
+        msg['Subject'] = payload['subject']
+        msg['To']      = payload['to']
+        msg['Cc']      = ""
+        # msg['Bcc']     = "yungsheng.ho@redtone.com"
+        msg.attach(MIMEText(html, 'html'))
+        
+        server.sendmail(payload['sender'], [payload['to'], 'yungsheng.ho@redtone.com'], msg.as_string())
+        
+    except Exception as e:
+        print(e, flush=True)
     
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8888)
