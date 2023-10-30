@@ -20,8 +20,9 @@ import time
 import random
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-
+import jinja2
+import os
+import sys
 
 app = FastAPI()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -223,60 +224,27 @@ async def resetPassword(request:Request):
     
 async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
     try:
+        server = await getEmailServer()
         content = await generateEmailContent(to, password, isCreate, code, generatedTime)
-        # print(content, flush=True)
-        # print(to, flush=True)
-        
-        # url = "http://10.80.10.28:8888/email/add"
-        # url = "http://172.18.0.1:8888/email/add"
-        url = "https://apis.redtone.com:9999/email/add"
         
         payload = {
-                    "to_list": to,
+                    "sender": 'REDtone<noreply_mis@biz.redtone.com>',
+                    "to": to,
                     "cc": "",
                     "bcc": "yungsheng.ho@redtone.com",
                     "subject": content[0],
                     "body": content[1],
-                    "url": "",
-                    "url_title": "",
-                    "ishtml": 1,
-                    "template": 1
                     }
         
-        async with AsyncClient() as client:
-            response = await client.post(url, json=payload)
-            # while response.status_code != 200:
-            #     response = await client.post(url, json=payload)
-            
-            # print(response.status_code, flush=True)
-                
-            if response.status_code == 200:
-                # url = "http://10.80.10.28:8888/email/send"
-                # url = "http://172.18.0.1:8888/email/send"
-                url = "https://apis.redtone.com:9999/email/send"
-                
-                responseSend = await client.get(url)
-                # print(responseSend, flush=True)
-                # while responseSend.status_code != 200:
-                #     responseSend = await client.get(url)
-                    
-                # print(response, flush=True)
-        # server = smtplib.SMTP(mailSetting.smtp_server, mailSetting.port)
-        # msg = MIMEMultipart()
-        # msg['From'] = mailSetting.sender
-        # msg['To'] = to
-        # msg['Cc'] = mailSetting.cc
+        await sendEmailBody(server, payload)
+        server.quit()
         
-        # content = await generateEmailContent(to, password, isCreate)
-        
-        # msg['Subject'] = content[0]
-        # msg.attach(MIMEText(content[1], 'html'))
-
-        # server.starttls()
-        # server.login(mailSetting.sender_email, mailSetting.password)
-        # server.sendmail(mailSetting.sender_email, [mailSetting.to, mailSetting.cc], msg.as_string())
-        # server.quit()
     except Exception as e:
+        try:
+            server.quit()
+        except Exception as ex:
+            print(ex, flush=True)
+            pass
         print(e, flush=True)
         
 async def generateEmailContent(email, newPassword, isCreate, code=None, generatedTime=None):
@@ -1245,6 +1213,45 @@ async def closeConn(cursor=None, conn_ng999=None):
         conn_ng999.close()
     except Exception as e:
         pass
+    
+async def getEmailServer():
+    smtp_port = 587
+    smtp_server = "mail.redtone.com"
+    login = "noreply_mis@biz.redtone.com"
+    password = "xtraprotectionMIS" 
+    
+    server = smtplib.SMTP(smtp_server, smtp_port)
+    server.login(login, password)
+    
+    return server
+
+def render_template(template, **kwargs):
+    if not os.path.exists(template):
+        print('No template file present: %s' % template)
+        return None
+        # sys.exit()
+
+    templateLoader = jinja2.FileSystemLoader(searchpath="./")
+    templateEnv = jinja2.Environment(loader=templateLoader)
+    templ = templateEnv.get_template(template)
+    
+    return templ.render(**kwargs)
+
+async def sendEmailBody(server, payload):
+    html = render_template("templates/email.html", **locals())
+    
+    if html is None:
+        return
+    
+    msg = MIMEMultipart('alternative')
+    msg['From']    = payload['sender']
+    msg['Subject'] = payload['subject']
+    msg['To']      = payload['to']
+    msg['Cc']      = ""
+    msg['Bcc']     = 'yungsheng.ho@redtone.com'
+    msg.attach(MIMEText(html, 'html'))
+    
+    server.sendmail(payload['sender'], payload['to'], msg.as_string())
     
 # if __name__ == "__main__":
 #     uvicorn.run(app, host="0.0.0.0", port=8888)
