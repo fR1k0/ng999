@@ -540,8 +540,9 @@ def adminResetPass():
         
         password = request.form.get('confirmNewPass')
         accountID = request.form.get('accountID')
+        email = request.form.get('emailPassReset')
         
-        payload = {'user_id': accountID, 'newPassword': password, 'email': session['username']}
+        payload = {'user_id': accountID, 'newPassword': password, 'email': email}
     
         url = app.config['API_URL'] + '/ng999/admin/resetPassword'
         response = requests.post(url, json=payload)

@@ -540,11 +540,11 @@ async def get_ng999_company_datas(request:Request):
             query = """
             
             Insert into Customer (Customer_Name, Customer_Migration_Date,
-            Customer_Address, Customer_Phone_Number, Customer_Additional_Info, Account_ID, CustBillingID) 
-            values (%s, %s, %s, %s, %s, %s, %s);
+            Customer_Address, Customer_Phone_Number, Account_ID, CustBillingID) 
+            values (%s, %s, %s, %s, %s, %s);
     
             """
-            values = (i['Name'], datetime.now(), i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3'], i['CallerNo'], i['WholeSaleID'], body['wholesellerID'], i['CustID'])
+            values = (i['Name'], datetime.now(), i['Address'] + " " + i['Address1'] + " " + i['Address2'] + " " + i['Address3'], i['CallerNo'], body['wholesellerID'], i['CustID'])
 
             cursor.execute(query, values)
             

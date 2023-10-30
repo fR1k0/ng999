@@ -262,6 +262,7 @@
                                     <h5 class="modal-title">Password Reset</h5>
                                     <div class="form-item">
                                     <input type="text" id="accountID" name="accountID" class="custom-input" readonly hidden>
+                                    <input type="text" id="emailPassReset" name="emailPassReset" class="custom-input" readonly hidden>
                                     </div>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
@@ -354,7 +355,9 @@
 
                                                             <a class="dropdown-item" data-bs-toggle="modal"
                                                             href="#updatePass" id="updatePassword"
-                                                            data-whole-id="{{Wholeseller['Account_ID']}}">
+                                                            data-whole-id="{{Wholeseller['Account_ID']}}"
+                                                            data-email-pass="{{Wholeseller['Account_Email']}}"
+                                                            >
                                                             Reset Password
                                                             </a>
                                                         </div>
@@ -431,8 +434,10 @@
             $('#updatePass').on('show.bs.modal', function (event) {
                 let triggerLink = $(event.relatedTarget);
                 let accID = triggerLink.data('whole-id');
+                let emailPass = triggerLink.data('email-pass');
               
                 $('#accountID').val(accID);
+                $('#emailPassReset').val(emailPass);
                 $('#newPass').val("");
                 $('#confirmNewPass').val("");
 
