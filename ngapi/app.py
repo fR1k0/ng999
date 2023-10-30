@@ -235,6 +235,8 @@ async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
                     "bcc": "yungsheng.ho@redtone.com",
                     "subject": content[0],
                     "body": content[1],
+                    "url": "",
+                    "url_title": ""
                     }
         
         await sendEmailBody(server, payload)
@@ -1249,6 +1251,8 @@ async def sendEmailBody(server, payload):
         msg['Subject'] = payload['subject']
         msg['To']      = payload['to']
         msg['Cc']      = ""
+        msg['url']     = payload['url']
+        msg['url_title'] = payload['url_title']
         # msg['Bcc']     = "yungsheng.ho@redtone.com"
         msg.attach(MIMEText(html, 'html'))
         
