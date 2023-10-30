@@ -46,7 +46,8 @@ def generate_password(length=12) -> str:
 
 async def validateEmail(email) -> bool:
     try:
-        pattern = r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$'
+        # pattern = r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$'
+        pattern = r'^[a-zA-Z0-9_]*\.?[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)?com$'
         return bool(re.match(pattern, email))
     
     except Exception as e:
