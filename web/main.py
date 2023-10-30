@@ -56,7 +56,6 @@ def check_authentication():
 @login_required
 def validateEmail(email) -> bool:
     try:
-        # pattern = r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$'
         pattern = r'^[a-zA-Z0-9_]*\.?[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)?com$'
         return bool(re.match(pattern, email))
     

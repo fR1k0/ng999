@@ -46,7 +46,6 @@ def generate_password(length=12) -> str:
 
 async def validateEmail(email) -> bool:
     try:
-        # pattern = r'^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.com$'
         pattern = r'^[a-zA-Z0-9_]*\.?[a-zA-Z0-9]+@([a-zA-Z0-9]+\.)?com$'
         return bool(re.match(pattern, email))
     
@@ -235,8 +234,8 @@ async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
                     "bcc": "yungsheng.ho@redtone.com",
                     "subject": content[0],
                     "body": content[1],
-                    "url": "",
-                    "url_title": ""
+                    "url": "https://apps.redtone.com/NG999/",
+                    "url_title": "NG999 URL"
                     }
         
         await sendEmailBody(server, payload)
