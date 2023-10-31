@@ -66,8 +66,6 @@ def validateEmail(email) -> bool:
 
 @app.route(f'{PREFIX}/login', methods=["GET", "POST"])
 def login():
-    
-    
     try:
         if session is not None and 'reset_password_in_progress' in session and session['reset_password_in_progress'] == '1':
             try:
@@ -364,7 +362,6 @@ def dataMigration():
 @login_required
 def withDeclaration():
     try:
-        
         if session['role_id'] != '2':
             flash("Unauthorized Access")
             return redirect(url_for('logout'))
@@ -712,7 +709,6 @@ def bundleDecalarePost():
 @login_required
 def downloadExcel():
     try:
-        
         if session['role_id'] != '2':
             return jsonify({}), 400
         
