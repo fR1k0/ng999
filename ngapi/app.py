@@ -224,29 +224,58 @@ async def resetPassword(request:Request):
     
 async def sendEmail(to, password, isCreate, code=None, generatedTime=None):
     try:
-        server = await getEmailServer()
+        # server = await getEmailServer()
         content = await generateEmailContent(to, password, isCreate, code, generatedTime)
         
+        # payload = {
+        #             "sender": 'REDtone<noreply_mis@biz.redtone.com>',
+        #             "to": to,
+        #             "cc": "",
+        #             "bcc": "yungsheng.ho@redtone.com",
+        #             "subject": content[0],
+        #             "body": content[1],
+        #             "url": "https://apps.redtone.com/NG999/",
+        #             "url_title": "NG999 URL"
+        #             }
+        
+        # await sendEmailBody(server, payload)
+        # server.quit()
+        
         payload = {
+                    "to_list": to,
                     "sender": 'REDtone<noreply_mis@biz.redtone.com>',
                     "to": to,
                     "cc": "",
-                    "bcc": "yungsheng.ho@redtone.com",
+                    "bcc": "yungsheng.ho@redtone.com;kongjun.ng@redtone.com",
                     "subject": content[0],
                     "body": content[1],
                     "url": "https://apps.redtone.com/NG999/",
-                    "url_title": "NG999 URL"
+                    "url_title": "NG999 URL",
+                    "ishtml": 1,
+                    "template": 1
                     }
         
-        await sendEmailBody(server, payload)
-        server.quit()
+        async with AsyncClient() as client:
+            # url = "http://10.80.10.28:8888/email/add"
+            # url = "http://172.17.0.1:8888/email/add"
+            url = "https://apis.redtone.com:9999/email/add"
+
+            response = await client.post(url, json=payload)
+            print(response.status_code, flush=True)
+              
+            if response.status_code == 200:
+                # url = "http://10.80.10.28:8888/email/send"
+                # url = "http://172.17.0.1:8888/email/send"
+                url = "https://apis.redtone.com:9999/email/send"
+                responseSend = await client.get(url)
+                # print(responseSend.status_code, flush=True)
         
     except Exception as e:
-        try:
-            server.quit()
-        except Exception as ex:
-            print(ex, flush=True)
-            pass
+        # try:
+        #     server.quit()
+        # except Exception as ex:
+        #     print(ex, flush=True)
+        #     pass
         print(e, flush=True)
         
 async def generateEmailContent(email, newPassword, isCreate, code=None, generatedTime=None):
