@@ -52,6 +52,15 @@ async def validateEmail(email) -> bool:
     except Exception as e:
         print(e, flush=True)
         return False
+    
+async def validatePhoneNumber(number) -> bool:
+    try:
+        pattern = r'^(?:\+60|60)(1[0-9]{9}|3[0-9]{8}|8[0-9]{7}|[0-9]{8})|01[0-9]{8}|03[0-9]{7}|08[0-9]{6}|[0-9]{9}$'
+        return bool(re.match(pattern, number))
+    
+    except Exception as e:
+        print(e, flush=True)
+        return False
 
 async def checkEmail(email, accountID=None) -> bool:
     conn_ng999 = await getSqlCONN()
