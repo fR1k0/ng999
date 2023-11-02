@@ -1012,7 +1012,6 @@ async def updateAccInfo(request:Request):
             return JSONResponse(content={}, status_code=400)
             
         query = """
-        
         update Account set Account_Name = %s, Account_Phone_Number = %s, Account_Email = %s, isActive = %s, lastActive = %s where Account_ID = %s
         
         """
