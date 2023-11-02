@@ -310,8 +310,17 @@
 
 
                                     <div class="col-md-6 text-md-right">
+                                        
+                                    <div class="d-flex d-flex align-items-center">
                                         <button type="button" id="downloadExcelTemplate" class="btn btn-secondary">Download Excel Template</button>
+                                        <img src="https://i.gifer.com/ZKZg.gif" id="loading-spinner"  alt="Loading..." style="max-width: 30px; max-height: 30x; display:none; padding-left:10px;"/>
                                     </div>
+                                    
+                                    
+                                    </div>
+
+
+                                    
                                     
                                     
                                     </div>
@@ -504,6 +513,10 @@
 
 
         document.getElementById("downloadExcelTemplate").addEventListener("click", function (event) {
+
+            let loadingSpinner = document.getElementById('loading-spinner');
+            loadingSpinner.style.display = 'block';
+
             fetch('/NG999/downloadExcel', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -511,6 +524,7 @@
                 timeout: 300000,
                 })
                 .then(response => {
+                    loadingSpinner.style.display = 'none';
                     if (response.status === 200){
                     return response.blob();
                     }

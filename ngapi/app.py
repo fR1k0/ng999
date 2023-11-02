@@ -554,6 +554,7 @@ async def get_ng999_company_datas(request:Request):
         emptyPhoneNumber: int = 0
         emptyAddress: int = 0
         emptyName: int = 0
+        invalidPn: int = 0
         
         for i in body['data']:
             # No duplicated phone number can be inserted to the db
@@ -574,6 +575,10 @@ async def get_ng999_company_datas(request:Request):
             if await checkCustDB(body['wholesellerID'], i['CallerNo']):
                 duplicatedPhoneNumber += 1
                 continue
+            
+            if not await validatePhoneNumber(str(i['CallerNo'])):
+                invalidPn += 1
+                continue 
             
             insertedCount += 1
             
@@ -602,7 +607,7 @@ async def get_ng999_company_datas(request:Request):
         conn_ng999.commit()
         
         await closeConn(cursor, conn_ng999)
-        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records. Duplicate Phone Number {str(duplicatedPhoneNumber)}. Empty Name {str(emptyName)}. Empty Phone Number {str(emptyPhoneNumber)}. Empty Addess {str(emptyAddress)}."}, status_code=200)
+        return JSONResponse(content={'message': f"Uploaded {str(uploadedCount)} records. Duplicate Phone Number {str(duplicatedPhoneNumber)}. Empty Name {str(emptyName)}. Empty Phone Number {str(emptyPhoneNumber)}. Empty Addess {str(emptyAddress)}. Invalid Phone Number Format {str(invalidPn)}"}, status_code=200)
         
         
     except Exception as e:
@@ -871,8 +876,12 @@ async def deleteCompany(request:Request):
 async def declareCompany(request:Request):
     try:
         body = await request.json()
+    
         
         if body['bundle'] == '0':
+            if not await validatePhoneNumber(str(body['PhoneNo'])):
+                return JSONResponse(content={'Message': "Invalid phone number format"}, status_code=400)
+                
             if await checkCustDBDeclare(body['CustID'], body['PhoneNo']):
                 return JSONResponse(content={'Message': "Duplicated Phone Number"}, status_code=400)
         

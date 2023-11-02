@@ -63,6 +63,16 @@ def validateEmail(email) -> bool:
         print(e, flush=True)
         return False
     
+@login_required
+def validatePhoneNumber(number) -> bool:
+    try:
+        pattern = r'^(?:\+60|60)(1[0-9]{9}|3[0-9]{8}|8[0-9]{7}|[0-9]{8})|01[0-9]{8}|03[0-9]{7}|08[0-9]{6}|[0-9]{9}$'
+        return bool(re.match(pattern, number))
+    
+    except Exception as e:
+        print(e, flush=True)
+        return False
+    
 
 @app.route(f'{PREFIX}/login', methods=["GET", "POST"])
 def login():
@@ -315,6 +325,12 @@ def addAccount():
             wholesellerID = ""
             
         phoneNumber = request.form['pn']
+        
+        
+        if not validatePhoneNumber(str(phoneNumber)):
+            flash(f"Invalid phone number format")
+            return redirect(url_for('accountCreate'))
+            
         
         body = {'name': name, 'role': role, 'email': email, 'wholesellerID': wholesellerID, 'pn': phoneNumber}
         
@@ -634,7 +650,7 @@ def decalare():
                         
         checkData = {key: str(value).replace(" ", "") for key, value in body.items()}
         
-        if any(value == "" for value in checkData.values()):
+        if any(value == "" for key, value in checkData.items() if key != 'AdditionalInfo'):
             flash(f"Failed declaration at least one field is blank")
             return redirect(url_for("withoutDeclaration"))
             
@@ -771,6 +787,12 @@ def updateInfo():
         if not validateEmail(str(request.form.get('accEmail'))):
             flash("Invalid email format")
             return redirect(request.referrer)
+        
+        
+        if not validatePhoneNumber(str(str(request.form.get('accPn')))):
+            flash("Invalid phone number format")
+            return redirect(request.referrer)
+            
             
         body = {
                 'accID': str(request.form.get('accInfoID')),
