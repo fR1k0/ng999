@@ -66,9 +66,8 @@ def validateEmail(email) -> bool:
 @login_required
 def validatePhoneNumber(number) -> bool:
     try:
-        # pattern = r'^(?:\+60|60)(1[0-9]{9}|3[0-9]{8}|8[0-9]{7}|[0-9]{8})|01[0-9]{8}|03[0-9]{7}|08[0-9]{6}|[0-9]{8,11}$'
         backupPat = r'^(?:\+60|60)?(1\d{7,9}|3\d{6,8}|8\d{5,7}|\d{8,10})$'
-        pattern = r'^(?:\+60|60)?(01[0-9]\d{6,8}|1\d{7,9}|3\d{6,8}|8\d{5,7}|\d{8,10})$'
+        pattern = r'^(?:\+601\d{8}|\+6011\d{8}|\+603\d{7}|\+608\d{6}|\+60\d{8}|01\d{8}|011\d{8}|03\d{7}|08\d{6}|0\d{8}|601\d{8}|6011\d{8}|603\d{7}|608\d{6}|60\d{8})$'
         return bool(re.match(pattern, number))
     
     except Exception as e:
