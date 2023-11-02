@@ -55,7 +55,9 @@ async def validateEmail(email) -> bool:
     
 async def validatePhoneNumber(number) -> bool:
     try:
-        pattern = r'^(?:\+60|60)(1[0-9]{9}|3[0-9]{8}|8[0-9]{7}|[0-9]{8})|01[0-9]{8}|03[0-9]{7}|08[0-9]{6}|[0-9]{9}$'
+        # pattern = r'^(?:\+60|60)(1[0-9]{9}|3[0-9]{8}|8[0-9]{7}|[0-9]{8})|01[0-9]{8}|03[0-9]{7}|08[0-9]{6}|[0-9]{9}$'
+        backupPat = r'^(?:\+60|60)?(1\d{7,9}|3\d{6,8}|8\d{5,7}|\d{8,10})$'
+        pattern = r'^(?:\+60|60)?(01[0-9]\d{6,8}|1\d{7,9}|3\d{6,8}|8\d{5,7}|\d{8,10})$'
         return bool(re.match(pattern, number))
     
     except Exception as e:
