@@ -689,14 +689,14 @@ async def getCount(wholesellerID, companyID=None) -> dict:
         cursor = conn_ng999.cursor()
         
         queryList = ["""
-        select count(*) from Customer where Account_ID = %s
+        select count(*) from Customer cs join Account a on cs.Account_ID = a.Account_ID join Company c on a.Company_ID = c.Company_ID where c.Company_ID = %s
         """,
         """
-        select count(*) from Customer where Account_ID = %s and customer_declaration_date is not null
+        select count(*) from Customer cs join Account a on cs.Account_ID = a.Account_ID join Company c on a.Company_ID = c.Company_ID where c.Company_ID = %s and customer_declaration_date is not null
         
         """,
         """
-        select count(*) from Customer where Account_ID = %s and customer_declaration_date is null
+        select count(*) from Customer cs join Account a on cs.Account_ID = a.Account_ID join Company c on a.Company_ID = c.Company_ID where c.Company_ID = %s and customer_declaration_date is null
         """,
         """
         select count(*) from Account where isActive = True and Company_ID = %s;
@@ -708,12 +708,9 @@ async def getCount(wholesellerID, companyID=None) -> dict:
             # values = (wholesellerID, )
             # cursor.execute(q, values)
             
-            if index < 3:
-                values = (wholesellerID, )
-                cursor.execute(q, values)
-            else:
-                values = (companyID, )
-                cursor.execute(q, values)
+            
+            values = (companyID, )
+            cursor.execute(q, values)
             
             result = cursor.fetchone()
             
