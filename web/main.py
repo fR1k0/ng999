@@ -45,7 +45,6 @@ class User:
 def load_user(user_id):
     return User(user_id)
 
-
 @app.before_request
 def check_authentication():    
     exempted_routes = ['login', 'forgetPassword', 'forgetPasswordPost']
