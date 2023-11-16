@@ -15,7 +15,7 @@ import bcrypt
 import re
 from werkzeug.middleware.proxy_fix import ProxyFix
 import img
-  
+
 app = Flask(__name__, static_url_path='/NG999/static') 
 login_manager = LoginManager(app)
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
